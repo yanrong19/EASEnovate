@@ -5,13 +5,16 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAlKs3YlvecTJ9jnfQhy3LLfwKjEmTqjdE",
-  authDomain: "democcp-cecc4.firebaseapp.com",
-  projectId: "democcp-cecc4",
-  storageBucket: "democcp-cecc4.appspot.com",
-  messagingSenderId: "552598603729",
-  appId: "1:552598603729:web:c00a47c3e6ac804e5202f0",
+  apiKey: "AIzaSyCYis36TTyQbJOzN274h27lt_slIleDRoc",
+  authDomain: "easenovate-25a4c.firebaseapp.com",
+  projectId: "easenovate-25a4c",
+  storageBucket: "easenovate-25a4c.appspot.com",
+  messagingSenderId: "532566551614",
+  appId: "1:532566551614:web:2085500428aafff729f56f",
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
