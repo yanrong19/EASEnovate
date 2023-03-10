@@ -1,13 +1,11 @@
 <template>
-  <div>Home</div>
-  <div v-if="dataLoaded">
-    <div>{{ name }}</div>
-    <div>{{ usertype }}</div>
-    <button v-on:click="goCustomer">Profile Page</button>
-  </div>
-  
-  <div v-else>Loading</div>
+    <div> <h2> Customer Profile Page </h2> </div>
+    <div> Name: {{ name }} </div>
+    <div> Type of User: {{ usertype }} </div>
+    <div> Email Address: {{ email }} </div>
+    <li v-for="item in services"> {{ item }} </li>
 </template>
+
 
 <script>
 import { getDoc, doc } from "@firebase/firestore";
@@ -20,6 +18,8 @@ export default {
     return {
       name: "",
       usertype: "",
+      services: [],
+      email: "",
       dataLoaded: false,
     };
   },
@@ -28,9 +28,6 @@ export default {
       const docSnap = await getDoc(docRef);
       return docSnap;
     },
-    goCustomer() {
-      this.$router.push("profile");
-    }
   },
   beforeCreate() {
     console.log("beforecreate");
@@ -50,6 +47,8 @@ export default {
         console.log(data.data());
         this.name = data.data().name;
         this.usertype = data.data().usertype;
+        this.email = data.data().email;
+        this.services = data.data().Services;
         this.dataLoaded = true;
       });
     });
