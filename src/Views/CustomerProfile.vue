@@ -3,7 +3,11 @@
     <div> Name: {{ name }} </div>
     <div> Type of User: {{ usertype }} </div>
     <div> Email Address: {{ email }} </div>
+    <div> Contact Number: {{ contact }} </div>
+    <div> Services Provided: </div>
     <li v-for="item in services"> {{ item }} </li>
+    <br><br>
+    <button @click="editDetails"> Edit Information </button>
 </template>
 
 
@@ -20,6 +24,7 @@ export default {
       usertype: "",
       services: [],
       email: "",
+      contact: "",
       dataLoaded: false,
     };
   },
@@ -27,6 +32,9 @@ export default {
     async getUserData(docRef) {
       const docSnap = await getDoc(docRef);
       return docSnap;
+    },
+    editDetails() {
+      this.$router.push("profile/edit");
     },
   },
   beforeCreate() {
@@ -48,6 +56,7 @@ export default {
         this.name = data.data().name;
         this.usertype = data.data().usertype;
         this.email = data.data().email;
+        this.contact = data.data().contact;
         this.services = data.data().Services;
         this.dataLoaded = true;
       });

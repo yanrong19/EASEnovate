@@ -3,7 +3,7 @@
   <div v-if="dataLoaded">
     <div>{{ name }}</div>
     <div>{{ usertype }}</div>
-    <button v-on:click="goCustomer">Profile Page</button>
+    <button @click="goCustomer">Profile Page</button>
   </div>
   
   <div v-else>Loading</div>

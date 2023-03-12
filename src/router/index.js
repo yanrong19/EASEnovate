@@ -3,6 +3,7 @@ import Start from "../Views/Start.vue";
 import Home from "../Views/Home.vue";
 import Landing from "../Views/Landing.vue";
 import CustomerProfile from "../Views/CustomerProfile.vue";
+import EditProfile from "../Views/EditProfile.vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const routes = [
   {
@@ -27,6 +28,14 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: CustomerProfile,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/profile/edit",
+    name: "edit",
+    component: EditProfile,
     meta: {
       requiresAuth: true,
     },
