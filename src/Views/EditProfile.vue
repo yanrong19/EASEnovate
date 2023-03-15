@@ -1,20 +1,22 @@
 <template>
-    <center>
-        <h2>Edit your Profile Details</h2>
-        <div class="container">
-            <form id="myform">
-                <div class="formli">
-                    <label for="name1">Displayed Name: </label>
-                    <input type="text" id="name1" required="" v-model="name" />
-                    <br /><br />
-                    <label for="contact1">Contact Number: </label>
-                    <input
-                        type="number"
-                        id="contact1"
-                        required=""
-                        v-model="contact"
-                    />
-                    <br /><br />
+    <h2>Edit your Profile Details</h2>
+    <div class="container">
+        <form id="myform">
+            <div class="formli">
+                <label for="name1">Displayed Name: </label>
+                <input type="text" id="name1" required="" v-model="name" />
+                <br /><br />
+                <label for="contact1">Contact Number: </label>
+                <input
+                    type="number"
+                    id="contact1"
+                    required=""
+                    v-model="contact"
+                />
+                <br />
+
+                <p>
+                    Preferred Services: <br />
                     <select v-model="services" multiple>
                         <option value="Eco Design">Eco Design</option>
                         <option value="Outdoor Living">Outdoor Living</option>
@@ -28,17 +30,18 @@
                             Art Procurement and Curation
                         </option>
                     </select>
-                    <div class="save">
-                        <button id="savebutton" type="button" @click="savetofs">
-                            Save
-                        </button>
-                    </div>
+                </p>
+
+                <div class="save">
+                    <button @click="enter">Back</button>
+                    <button id="savebutton" type="button" @click="savetofs">
+                        Save
+                    </button>
                 </div>
-            </form>
-            <br />
-            <button @click="enter">Try me</button>
-        </div>
-    </center>
+            </div>
+        </form>
+        <br />
+    </div>
 </template>
 
 <script>
@@ -64,7 +67,8 @@
                 return docSnap;
             },
             enter() {
-                this.$router.go(-1);
+                //this.$router.go(-1);
+                this.$router.push("/profile");
             },
             async savetofs() {
                 try {
@@ -106,4 +110,28 @@
     };
 </script>
 
-<style></style>
+<style scoped>
+    .save {
+        margin-left: 0rem;
+        text-align: auto;
+    }
+
+    button {
+        margin-left: 4rem;
+        background-color: #3aafa9;
+        border: 2px solid #3aafa9;
+        transition-duration: 0.4s;
+    }
+
+    button:hover {
+        background-color: white;
+    }
+
+    .container {
+        padding-left: 2rem;
+    }
+
+    select {
+        margin-left: 4rem;
+    }
+</style>

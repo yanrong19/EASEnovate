@@ -1,7 +1,8 @@
 <template>
     <div class="mainContainer">
         <h2>Customer Profile</h2>
-        <div class="container"><Information /></div>
+        <Information />
+        <!--<div class="container"><Information /></div>-->
     </div>
 </template>
 
@@ -13,9 +14,12 @@
 </script>
 
 <style scoped>
-    .container {
-        right: 0;
-        position: relative;
+    .mainContainer {
         background-color: rgb(239, 243, 242);
+        /*text-align: left; */
+    }
+
+    h2 {
+        padding-left: 2rem;
     }
 </style>
