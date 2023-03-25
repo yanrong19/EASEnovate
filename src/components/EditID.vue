@@ -1,5 +1,5 @@
 <template>
-    <div class="createUpdate">
+    <div class="createUpdate" v-if="user">
       <h1>CREATE/UPDATE YOUR PORTFOLIO</h1>
       <div class="photo">
           <input type="file" ref="file" style="display: none" @change="previewImage" accept="image/*"/>
@@ -29,11 +29,25 @@
   import firebaseApp from '../firebase.js';
   import {getFirestore} from "firebase/firestore";
   import {doc,setDoc} from "firebase/firestore";
+  import {getAuth, onAuthStateChanged} from "firebase/auth"
   const db = getFirestore(firebaseApp);
   export default {
       data(){
         return{
+          user: false,
+          useremail: ''
         }
+      },
+      mounted(){
+        const auth = getAuth();
+        const user = auth.currentUser
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                this.user = user;
+                this.useremail = user.email;
+                console.log(this.useremail)
+            }
+        })
       },
       methods: {
         uploadPhoto(){
@@ -48,11 +62,11 @@
           let expertise = document.getElementById("expertise").value;
           let website = document.getElementById("website").value;
           
-          const docRef = await setDoc(doc(db,"Credentials", "1234"),{
+          const docRef = await setDoc(doc(db,"ID_Credentials", this.useremail),{
             IDname:id_name, Email:email, Comp_desc:comp_desc, Expertise:expertise, Website:website
           });
           document.getElementById("credForm").reset();
-          this.$router.push("/");
+          this.$router.push("/displayid");
         },
       }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="display">
+    <div class="display" v-if="user">
       <h1 id="name"></h1>
       <h1 style= "text-align: left; margin-left: 10vw;">Company Description</h1>
       <div class="companyDesc" id="comID"></div>
@@ -37,16 +37,31 @@
   import firebaseApp from '../firebase.js';
   import {getFirestore} from "firebase/firestore";
   import {getDoc, doc} from "firebase/firestore";
+  import {getAuth, onAuthStateChanged} from "firebase/auth"
   
-  const db = getFirestore(firebaseApp);
-  const docRef = doc(db,"Credentials","1234")
   export default {
       data(){
         return{
+          user: false,
+          useremail: ''
         }
       },
       mounted(){
-        async function display() {
+        const auth = getAuth();
+        const user = auth.currentUser
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                this.user = user;
+                this.useremail = user.email;
+                console.log(this.useremail);
+                this.display(this.useremail);
+            }
+        })
+      },
+      methods:{
+        async display(useremail) {
+          const db = getFirestore(firebaseApp);
+          const docRef = doc(db,"ID_Credentials",useremail)
           let credentials = await getDoc(docRef);
           let cred = credentials.data();
           let name_div = document.getElementById('name');
@@ -58,7 +73,6 @@
           let email_div = document.getElementById('email');
           email_div.innerHTML = "Email Address: " + cred.Email;
         }
-        display();
       }
   }
   </script>

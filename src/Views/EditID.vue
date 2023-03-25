@@ -1,13 +1,13 @@
 <script>
-import editID from '../components/editID.vue'
+import EditID from '../components/EditID.vue'
 export default{
     components:{
-        editID
+        EditID
     }
 }
 </script>
 <template>
-<editID/>
+<EditID/>
 </template>
 <style scoped>
 </style>

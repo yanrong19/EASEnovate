@@ -1,13 +1,13 @@
 <script>
-import displayID from '../components/displayID.vue'
+import DisplayID from '../components/DisplayID.vue'
 export default{
     components:{
-        displayID
+        DisplayID
     }
 }
 </script>
 <template>
-<displayID/>
+<DisplayID/>
 </template>
 <style scoped>
 </style>
