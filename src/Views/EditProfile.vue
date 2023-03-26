@@ -16,4 +16,7 @@
     h2 {
         padding-left: 2rem;
     }
+    .mainContainer {
+        background-color: #a8e7e3;
+    }
 </style>

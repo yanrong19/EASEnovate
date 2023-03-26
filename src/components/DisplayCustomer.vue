@@ -2,17 +2,17 @@
     <center>
         <div class="mainContainer">
             <div class="detailContainer">
-                <h3>Name:</h3>
+                <h3>Name</h3>
             </div>
             <div class="userInfo">{{ name }}</div>
-            <div class="detailContainer"><h3>Type of User:</h3></div>
+            <div class="detailContainer"><h3>Type of User</h3></div>
             <div class="userInfo">{{ usertype }}</div>
-            <div class="detailContainer"><h3>Email Address:</h3></div>
+            <div class="detailContainer"><h3>Email Address</h3></div>
             <div class="userInfo">{{ email }}</div>
-            <div class="detailContainer"><h3>Contact Number:</h3></div>
+            <div class="detailContainer"><h3>Contact Number</h3></div>
             <div class="userInfo">{{ contact }}</div>
-            <div class="detailContainer"><h3>Looking For:</h3></div>
-            <div class="servicesContainer">
+            <div class="detailContainer"><h3>Looking For</h3></div>
+            <div class="userInfo">
                 <li v-for="item in services">{{ item }}</li>
             </div>
             <br /><br />
@@ -81,10 +81,6 @@
 </script>
 
 <style scoped>
-    body {
-        background-color: #a8e7e3;
-    }
-
     button {
         background-color: #3aafa9;
         border: 2px solid #3aafa9;
@@ -94,7 +90,7 @@
 
     .buttonContainer {
         text-align: left;
-        padding-left: 8em;
+        padding-left: 10em;
     }
 
     button:hover {
@@ -113,13 +109,17 @@
 
     .userInfo {
         padding-bottom: 20px;
-        padding-left: 3rem;
         text-align: left;
+        background-color: azure;
+        position: relative;
+        border-radius: 5px;
+        width: 20em;
+        padding: 10px;
+        margin-left: -50em;
     }
 
     ul,
     li {
         text-align: left;
-        padding-left: 3rem;
     }
 </style>
