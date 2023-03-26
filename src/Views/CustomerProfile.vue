@@ -1,24 +1,18 @@
 <template>
     <div class="mainContainer">
         <h2>Customer Profile</h2>
-        <Information />
-        <!--<div class="container"><Information /></div>-->
+        <DisplayCustomer />
     </div>
 </template>
 
 <script>
-    import Information from "../components/Information.vue";
+    import DisplayCustomer from "../components/DisplayCustomer.vue";
     export default {
-        components: { Information },
+        components: { DisplayCustomer },
     };
 </script>
 
 <style scoped>
-    .mainContainer {
-        background-color: rgb(239, 243, 242);
-        /*text-align: left; */
-    }
-
     h2 {
         padding-left: 2rem;
     }

@@ -12,7 +12,9 @@
             <div class="detailContainer"><h3>Contact Number:</h3></div>
             <div class="userInfo">{{ contact }}</div>
             <div class="detailContainer"><h3>Looking For:</h3></div>
-            <li v-for="item in services">{{ item }}</li>
+            <div class="servicesContainer">
+                <li v-for="item in services">{{ item }}</li>
+            </div>
             <br /><br />
             <div class="buttonContainer">
                 <button @click="editDetails">Edit Information</button>
@@ -79,6 +81,10 @@
 </script>
 
 <style scoped>
+    body {
+        background-color: #a8e7e3;
+    }
+
     button {
         background-color: #3aafa9;
         border: 2px solid #3aafa9;
