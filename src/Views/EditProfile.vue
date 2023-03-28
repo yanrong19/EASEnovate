@@ -14,7 +14,7 @@
 
 <style scoped>
     h2 {
-        padding-left: 2rem;
+        padding-left: 1rem;
     }
     .mainContainer {
         background-color: #a8e7e3;

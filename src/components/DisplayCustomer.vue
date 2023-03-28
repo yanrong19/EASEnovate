@@ -5,8 +5,8 @@
                 <h3>Name</h3>
             </div>
             <div class="userInfo">{{ name }}</div>
-            <div class="detailContainer"><h3>Type of User</h3></div>
-            <div class="userInfo">{{ usertype }}</div>
+            <!-- <div class="detailContainer"><h3>Type of User</h3></div>
+            <div class="userInfo">{{ usertype }}</div> -->
             <div class="detailContainer"><h3>Email Address</h3></div>
             <div class="userInfo">{{ email }}</div>
             <div class="detailContainer"><h3>Contact Number</h3></div>
