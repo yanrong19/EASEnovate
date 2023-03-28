@@ -14,6 +14,13 @@
           <div>{{ item.name }}</div>
         </router-link>
       </div>
+      <div class="bottom-aligner"></div>
+
+      <div class="link-to-page logout">
+        <router-link to="/">
+          <div>Log out</div>
+        </router-link>
+      </div>
     </div>
   </aside>
 </template>
@@ -54,10 +61,22 @@ button {
 a {
   text-decoration: none;
 }
+
 .link-to-page:hover {
   background-color: #3aafa9;
 }
+.bottom-aligner {
+  display: inline-block;
+  height: 100%;
+  vertical-align: bottom;
+  width: 3px;
+  background: red;
+}
 
+.is_expanded button {
+  float: right;
+  margin-left: 1px;
+}
 .menu-toggle-wrap {
   margin-left: 1rem;
   margin-top: 1rem;
@@ -73,7 +92,7 @@ a {
 
 .link-to-page {
   display: flex;
-  margin-top: 2rem;
+  margin-top: 3rem;
   background-color: aliceblue;
   border-right-color: #515a5a;
   border-right-width: 1px;
