@@ -1,7 +1,8 @@
 <template>
     <div class="container">
+        <h1>Edit your details</h1>
         <form id="myform">
-            <div class="formli">
+            <div class="infoForm">
                 <label for="name1">Displayed Name: </label>
                 <input type="text" id="name1" required="" v-model="name" />
                 <br /><br />
@@ -13,10 +14,11 @@
                     v-model="contact"
                 />
                 <br />
+                <br />
+                Preferred Services:
 
-                <p>
-                    Preferred Services: <br />
-                    <select v-model="services" multiple>
+                <div class="selectDiv">
+                    <select id="multi-select" v-model="services" multiple>
                         <option value="Eco Design">Eco Design</option>
                         <option value="Outdoor Living">Outdoor Living</option>
                         <option value="Kitchen and Bathroom Design">
@@ -29,17 +31,15 @@
                             Art Procurement and Curation
                         </option>
                     </select>
-                </p>
-
-                <div class="save">
-                    <button @click="enter">Back</button>
-                    <button id="savebutton" type="button" @click="savetofs">
-                        Save
-                    </button>
                 </div>
             </div>
+            <div class="save">
+                <button @click="enter">Back</button>
+                <button id="savebutton" type="button" @click="savetofs">
+                    Save
+                </button>
+            </div>
         </form>
-        <br />
     </div>
 </template>
 
@@ -110,13 +110,19 @@
 </script>
 
 <style scoped>
+    .infoForm {
+        width: 55vw;
+        height: auto;
+        text-align: left;
+        display: inline-block;
+    }
     .save {
-        margin-left: 0rem;
+        margin-top: 1rem;
         text-align: auto;
     }
 
     button {
-        margin-left: 4rem;
+        margin: 0 2em 0 2em;
         background-color: #3aafa9;
         border: 2px solid #3aafa9;
         transition-duration: 0.4s;
@@ -127,11 +133,36 @@
     }
 
     .container {
-        padding-left: 2rem;
+        text-align: center;
+        display: block;
+    }
+
+    input[type="number"] {
+        width: 100%;
+        padding: 15px;
+        display: inline-block;
+        background: #f1f1f1;
+        border-color: #4caf50;
+        border: 2px solid #ccc;
+        border-color: #106241;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 15px;
+        display: inline-block;
+        background: #f1f1f1;
+        border-color: #4caf50;
+        border: 2px solid #ccc;
+        border-color: #106241;
     }
 
     select {
-        margin-left: 4rem;
-        margin-top: 5px;
+        width: 105%;
+        padding: 15px;
+        border-block-color: #106241;
+        border-width: medium;
+        display: grid;
+        position: center;
     }
 </style>
