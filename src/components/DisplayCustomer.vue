@@ -1,6 +1,7 @@
 <template>
     <center>
         <div class="mainContainer">
+            <h2>Your Profile</h2>
             <div class="detailContainer">
                 <h3>Name</h3>
             </div>
@@ -13,7 +14,9 @@
             <div class="userInfo">{{ contact }}</div>
             <div class="detailContainer"><h3>Looking For</h3></div>
             <div class="userInfo">
-                <li v-for="item in services">{{ item }}</li>
+                <ul>
+                    <li v-for="item in services">{{ item }}</li>
+                </ul>
             </div>
             <br /><br />
             <div class="buttonContainer">
@@ -81,16 +84,13 @@
 </script>
 
 <style scoped>
+    h2 {
+        padding-left: 1rem;
+    }
     button {
         background-color: #3aafa9;
         border: 2px solid #3aafa9;
         transition-duration: 0.4s;
-        text-align: left;
-    }
-
-    .buttonContainer {
-        text-align: left;
-        padding-left: 10em;
     }
 
     button:hover {
@@ -102,24 +102,22 @@
     }
 
     .detailContainer {
-        text-align: left;
         padding: 15px;
-        padding-left: 2rem;
     }
 
     .userInfo {
-        padding-bottom: 20px;
-        text-align: left;
+        padding-bottom: 10px;
         background-color: azure;
-        position: relative;
+        text-align: center;
         border-radius: 5px;
         width: 20em;
         padding: 10px;
-        margin-left: -50em;
     }
 
-    ul,
-    li {
+    ul {
+        margin: 0px;
         text-align: left;
+        display: inline-block;
+        padding: 0px;
     }
 </style>

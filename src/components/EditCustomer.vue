@@ -110,6 +110,10 @@
 </script>
 
 <style scoped>
+    body {
+        background-color: #c6eeec;
+    }
+
     .infoForm {
         width: 55vw;
         height: auto;
