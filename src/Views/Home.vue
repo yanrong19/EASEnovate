@@ -31,8 +31,8 @@ export default {
           id: 1,
         },
         {
-          name: "Home2",
-          url: "/",
+          name: "DisplayID",
+          url: "/displayid",
           id: 2,
         },
       ],

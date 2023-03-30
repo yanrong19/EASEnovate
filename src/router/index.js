@@ -5,8 +5,8 @@ import Landing from "../Views/Landing.vue";
 
 import CustomerProfile from "../Views/CustomerProfile.vue";
 import EditProfile from "../Views/EditProfile.vue";
-import DisplayID from '@/views/DisplayID.vue'
-import EditID from '@/views/EditID.vue'
+import DisplayID from "@/views/DisplayID.vue";
+import EditID from "@/views/EditID.vue";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const routes = [
@@ -22,7 +22,7 @@ const routes = [
   },
   {
     path: "/home",
-    name: "home",
+    name: "Home",
     component: Home,
     meta: {
       requiresAuth: true, // Indicates that this route requires authentication
@@ -30,25 +30,26 @@ const routes = [
   },
   {
     path: "/displayid",
-    name: "displayid",
+    name: "DisplayID",
     component: DisplayID,
   },
   {
     path: "/editid",
-    name: "editid",
+    name: "EditID",
     component: EditID,
-  },{
+  },
+  {
     path: "/profile",
-    name: "profile",
+    name: "Profile",
     component: CustomerProfile,
     meta: {
       requiresAuth: true,
     },
   },
-  
+
   {
     path: "/profile/edit",
-    name: "edit",
+    name: "Edit",
     component: EditProfile,
     meta: {
       requiresAuth: true,
