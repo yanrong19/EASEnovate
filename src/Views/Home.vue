@@ -3,7 +3,9 @@
   <div v-if="dataLoaded">
     <div>{{ name }}</div>
     <div>{{ usertype }}</div>
+    <button @click="goCustomer">Profile Page</button>
   </div>
+  
   <div v-else>Loading</div>
 </template>
 
@@ -26,6 +28,9 @@ export default {
       const docSnap = await getDoc(docRef);
       return docSnap;
     },
+    goCustomer() {
+      this.$router.push("profile");
+    }
   },
   beforeCreate() {
     console.log("beforecreate");
