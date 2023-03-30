@@ -2,14 +2,14 @@
   <SideBar :menuList="menu" />
   <!-- <div>Home testing</div> -->
   <div v-if="dataLoaded">
-    <div class = home>
-    <div>
-      <div><TopScreen /></div>
+    <div class="home">
+      <div>
+        <div><TopScreen /></div>
+      </div>
+      <div>
+        <div><ProfileCards /></div>
+      </div>
     </div>
-    <div>
-      <div><ProfileCards /></div>
-    </div>
-  </div>
     <button @click="goCustomer">Profile Page</button>
     <!-- <div>{{ name }}</div>
     <div>{{ usertype }}</div> -->
@@ -26,11 +26,11 @@ import firebaseApp from "../firebase";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { getFirestore } from "@firebase/firestore";
 import TopScreen from "../components/TopScreen.vue";
-import ProfileCards from "../components/ProfileCards.vue"
+import ProfileCards from "../components/ProfileCards.vue";
 import SideBar from "../components/SideBar.vue";
 
 export default {
-  components: { TopScreen, ProfileCards},
+  components: { TopScreen, ProfileCards, TopScreen, SideBar },
   data() {
     return {
       name: "",
@@ -84,13 +84,11 @@ export default {
   unmounted() {
     console.log("unmounted");
   },
-  components: { SideBar },
 };
 </script>
 
 <style scoped>
 .home {
-  background-color: #F1F2F3;
-
+  background-color: #f1f2f3;
 }
 </style>
