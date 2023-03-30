@@ -37,7 +37,7 @@ const routes = [
     path: "/editid",
     name: "editid",
     component: EditID,
-  }
+  },{
     path: "/profile",
     name: "profile",
     component: CustomerProfile,
@@ -45,6 +45,7 @@ const routes = [
       requiresAuth: true,
     },
   },
+  
   {
     path: "/profile/edit",
     name: "edit",
