@@ -1,8 +1,14 @@
 <template>
   <div>Home</div>
   <div v-if="dataLoaded">
-    <div>{{ name }}</div>
-    <div>{{ usertype }}</div>
+    <div class = home>
+    <div>
+      <div><TopScreen /></div>
+    </div>
+    <div>
+      <div><ProfileCards /></div>
+    </div>
+  </div>
     <button @click="goCustomer">Profile Page</button>
   </div>
   
@@ -14,8 +20,11 @@ import { getDoc, doc } from "@firebase/firestore";
 import firebaseApp from "../firebase";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { getFirestore } from "@firebase/firestore";
+import TopScreen from "../components/TopScreen.vue";
+import ProfileCards from "../components/ProfileCards.vue"
 
 export default {
+  components: { TopScreen, ProfileCards},
   data() {
     return {
       name: "",
@@ -59,3 +68,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.home {
+  background-color: #F1F2F3;
+
+}
+</style>
