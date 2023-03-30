@@ -5,7 +5,7 @@
 export default {};
 </script>
 
-<style>
+<style scroped>
 img {
   width: 50%;
   height: auto;

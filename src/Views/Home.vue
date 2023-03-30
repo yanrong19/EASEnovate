@@ -1,5 +1,6 @@
 <template>
-  <div>Home</div>
+  <SideBar :menuList="menu" />
+  <!-- <div>Home testing</div> -->
   <div v-if="dataLoaded">
     <div class = home>
     <div>
@@ -10,9 +11,13 @@
     </div>
   </div>
     <button @click="goCustomer">Profile Page</button>
+    <!-- <div>{{ name }}</div>
+    <div>{{ usertype }}</div> -->
   </div>
-  
+
   <div v-else>Loading</div>
+  <div style="height: 100vh"></div>
+  <div style="height: 100vh"></div>
 </template>
 
 <script>
@@ -22,6 +27,7 @@ import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { getFirestore } from "@firebase/firestore";
 import TopScreen from "../components/TopScreen.vue";
 import ProfileCards from "../components/ProfileCards.vue"
+import SideBar from "../components/SideBar.vue";
 
 export default {
   components: { TopScreen, ProfileCards},
@@ -30,6 +36,18 @@ export default {
       name: "",
       usertype: "",
       dataLoaded: false,
+      menu: [
+        {
+          name: "Home",
+          url: "/",
+          id: 1,
+        },
+        {
+          name: "DisplayID",
+          url: "/displayid",
+          id: 2,
+        },
+      ],
     };
   },
   methods: {
@@ -39,7 +57,7 @@ export default {
     },
     goCustomer() {
       this.$router.push("profile");
-    }
+    },
   },
   beforeCreate() {
     console.log("beforecreate");
@@ -66,6 +84,7 @@ export default {
   unmounted() {
     console.log("unmounted");
   },
+  components: { SideBar },
 };
 </script>
 
