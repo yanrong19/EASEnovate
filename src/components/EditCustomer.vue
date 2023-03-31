@@ -1,4 +1,26 @@
 <template>
+    <div class="d-flex align-center flex-column">
+        <h1>Update your Profile</h1>
+        <v-sheet class="mx-auto" width="50%">
+            <v-form>
+                <v-text-field
+                    v-model="name"
+                    label="Profile Name"
+                ></v-text-field>
+                <v-text-field
+                    v-model="contact"
+                    label="Contact Number"
+                ></v-text-field>
+            </v-form>
+        </v-sheet>
+        <div class="save">
+            <v-btn @click.native="enter">Back</v-btn>
+            <v-btn id="savebutton" type="button" @click.native="savetofs">
+                Save
+            </v-btn>
+        </div>
+    </div>
+    <!--
     <div class="container">
         <h1>Edit your details</h1>
         <form id="myform">
@@ -32,15 +54,10 @@
                         </option>
                     </select>
                 </div>
-            </div>
-            <div class="save">
-                <button @click="enter">Back</button>
-                <button id="savebutton" type="button" @click="savetofs">
-                    Save
-                </button>
-            </div>
+            </div> 
+            
         </form>
-    </div>
+    </div>-->
 </template>
 
 <script>

@@ -1,29 +1,43 @@
 <template>
-    <center>
-        <div class="mainContainer">
-            <h2>Your Profile</h2>
-            <div class="detailContainer">
-                <h3>Name</h3>
-            </div>
-            <div class="userInfo">{{ name }}</div>
-            <!-- <div class="detailContainer"><h3>Type of User</h3></div>
-            <div class="userInfo">{{ usertype }}</div> -->
-            <div class="detailContainer"><h3>Email Address</h3></div>
-            <div class="userInfo">{{ email }}</div>
-            <div class="detailContainer"><h3>Contact Number</h3></div>
-            <div class="userInfo">{{ contact }}</div>
-            <div class="detailContainer"><h3>Looking For</h3></div>
-            <div class="userInfo">
-                <ul>
-                    <li v-for="item in services">{{ item }}</li>
-                </ul>
-            </div>
-            <br /><br />
-            <div class="buttonContainer">
-                <button @click="editDetails">Edit Information</button>
-            </div>
-        </div>
-    </center>
+    <div class="d-flex align-center flex-column">
+        <h1>Your Profile</h1>
+        <v-card width="50%" class="mx-auto">
+            <v-card-actions>
+                <v-spacer />
+                <v-avatar color="info" size="100">
+                    <v-icon icon="mdi-account-circle" size="100"> </v-icon>
+                </v-avatar>
+                <v-spacer />
+            </v-card-actions>
+            <v-card-item>
+                <v-card-title co> Name </v-card-title>
+                <v-card-subtitle> {{ name }} </v-card-subtitle>
+            </v-card-item>
+            <v-card-item>
+                <v-card-title> Email Address </v-card-title>
+                <v-card-subtitle> {{ email }} </v-card-subtitle>
+            </v-card-item>
+            <v-card-item>
+                <v-card-title> Contact Number </v-card-title>
+                <v-card-subtitle> {{ contact }} </v-card-subtitle>
+            </v-card-item>
+            <v-card-item>
+                <v-card-title> Service Preferences </v-card-title>
+                <div id="list">
+                    <v-hover>
+                        <v-list :items="services" variant="outlined"></v-list
+                    ></v-hover>
+                </div>
+            </v-card-item>
+            <v-card-actions>
+                <v-spacer />
+                <v-btn variant="outlined" @click.native="editDetails">
+                    Update Profile
+                </v-btn>
+                <v-spacer />
+            </v-card-actions>
+        </v-card>
+    </div>
 </template>
 
 <script>
@@ -97,27 +111,7 @@
         background-color: white;
     }
 
-    h3 {
-        margin: 0;
-    }
-
     .detailContainer {
         padding: 15px;
-    }
-
-    .userInfo {
-        padding-bottom: 10px;
-        background-color: azure;
-        text-align: center;
-        border-radius: 5px;
-        width: 20em;
-        padding: 10px;
-    }
-
-    ul {
-        margin: 0px;
-        text-align: left;
-        display: inline-block;
-        padding: 0px;
     }
 </style>

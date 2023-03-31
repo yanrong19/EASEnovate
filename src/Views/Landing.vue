@@ -1,5 +1,5 @@
 <template>
-    <button v-on:click="enter">Try me</button>
+    <v-btn @click.native="enter">Try me</v-btn>
 </template>
 
 <script>
