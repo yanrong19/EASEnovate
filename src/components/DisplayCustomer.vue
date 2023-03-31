@@ -33,6 +33,7 @@
                 <v-spacer />
                 <v-btn variant="outlined" @click.native="editDetails">
                     Update Profile
+                    <v-icon end icon="mdi-account-edit"></v-icon>
                 </v-btn>
                 <v-spacer />
             </v-card-actions>
