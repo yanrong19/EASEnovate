@@ -26,13 +26,22 @@
             <v-card-item>
                 <v-card-title> Service Preferences </v-card-title>
                 <div id="list">
-                    <v-hover>
+                    <!-- <v-hover>
                         <v-list
                             :items="services"
                             variant="outlined"
                             hover
                         ></v-list
-                    ></v-hover>
+                    ></v-hover>-->
+                    <v-card-actions>
+                        <v-chip
+                            color="teal"
+                            v-for="item in services"
+                            size="large"
+                        >
+                            {{ item }}
+                        </v-chip>
+                    </v-card-actions>
                 </div>
             </v-card-item>
             <v-card-actions>

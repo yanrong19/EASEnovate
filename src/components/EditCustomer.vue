@@ -11,38 +11,42 @@
                 </v-avatar>
                 <v-spacer />
             </v-card-actions>
-            <v-sheet class="mx-auto">
-                <v-form fast-fail ref="form">
-                    <v-text-field
-                        v-model="name"
-                        label="Profile Name"
-                        :rules="nameRules"
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="contact"
-                        type="number"
-                        label="Contact Number"
-                        :rules="contactRules"
-                    ></v-text-field>
-                    <v-select
-                        v-model="services"
-                        :items="allServices"
-                        label="Select"
-                        multiple
-                        hint="Pick your preferred services"
-                        persistent-hint
-                    ></v-select>
-                    <v-card-actions>
-                        <v-spacer />
-                        <v-btn @click.native="enter">
-                            Back <v-icon end icon="mdi-arrow-left"></v-icon
-                        ></v-btn>
-                        <v-btn @click.native="submit">
-                            Save <v-icon end icon="mdi-account-check"></v-icon
-                        ></v-btn>
-                        <v-spacer /> </v-card-actions
-                ></v-form>
-            </v-sheet>
+            <v-card-item>
+                <v-sheet class="mx-auto">
+                    <v-form fast-fail ref="form">
+                        <v-text-field
+                            v-model="name"
+                            label="Profile Name"
+                            :rules="nameRules"
+                        ></v-text-field>
+                        <v-text-field
+                            v-model="contact"
+                            type="number"
+                            label="Contact Number"
+                            :rules="contactRules"
+                        ></v-text-field>
+                        <v-select
+                            chips
+                            v-model="services"
+                            :items="allServices"
+                            label="Select"
+                            multiple
+                            hint="Pick your preferred services"
+                            persistent-hint
+                        ></v-select>
+                        <v-card-actions>
+                            <v-spacer />
+                            <v-btn @click.native="enter">
+                                Back <v-icon end icon="mdi-arrow-left"></v-icon
+                            ></v-btn>
+                            <v-btn @click.native="submit">
+                                Save
+                                <v-icon end icon="mdi-account-check"></v-icon
+                            ></v-btn>
+                            <v-spacer /> </v-card-actions
+                    ></v-form>
+                </v-sheet>
+            </v-card-item>
         </v-card>
     </div>
 </template>
