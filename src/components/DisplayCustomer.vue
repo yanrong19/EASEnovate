@@ -1,7 +1,9 @@
 <template>
     <div class="d-flex align-center flex-column">
-        <h1>Your Profile</h1>
-        <v-card width="50%" class="mx-auto">
+        <v-card width="70%" class="mx-auto">
+            <v-card-item>
+                <h1>Your Profile</h1>
+            </v-card-item>
             <v-card-actions>
                 <v-spacer />
                 <v-avatar color="info" size="100">
@@ -25,7 +27,11 @@
                 <v-card-title> Service Preferences </v-card-title>
                 <div id="list">
                     <v-hover>
-                        <v-list :items="services" variant="outlined"></v-list
+                        <v-list
+                            :items="services"
+                            variant="outlined"
+                            hover
+                        ></v-list
                     ></v-hover>
                 </div>
             </v-card-item>
@@ -38,6 +44,7 @@
                 <v-spacer />
             </v-card-actions>
         </v-card>
+        <v-btn variant="outlined" @click.native="goReview">Review Page</v-btn>
     </div>
 </template>
 
@@ -65,6 +72,9 @@
             },
             editDetails() {
                 this.$router.push("profile/edit");
+            },
+            goReview() {
+                this.$router.push("/review");
             },
         },
         beforeCreate() {

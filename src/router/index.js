@@ -7,6 +7,7 @@ import CustomerProfile from "../Views/CustomerProfile.vue";
 import EditProfile from "../Views/EditProfile.vue";
 import DisplayID from "@/views/DisplayID.vue";
 import EditID from "@/views/EditID.vue";
+import LeaveReview from "@/views/LeaveReview.vue";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const routes = [
@@ -55,6 +56,15 @@ const routes = [
       requiresAuth: true,
     },
   },
+
+  {
+    path: "/review",
+    name: "Review",
+    component: LeaveReview,
+    meta: {
+      requiresAuth: true,
+    }
+  }
 ];
 
 const router = createRouter({

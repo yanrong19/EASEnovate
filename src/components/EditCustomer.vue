@@ -1,7 +1,9 @@
 <template>
     <div class="d-flex align-center flex-column">
-        <h1>Update your Profile</h1>
-        <v-card width="50%" class="mx-auto">
+        <v-card width="70%" class="mx-auto">
+            <v-card-item>
+                <h1>Update Your Profile</h1>
+            </v-card-item>
             <v-card-actions>
                 <v-spacer />
                 <v-avatar color="info" size="100">
