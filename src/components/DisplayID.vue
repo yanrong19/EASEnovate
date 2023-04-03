@@ -1,4 +1,4 @@
-<template>
+
   <v-container align="center">
     <v-card 
       position="absolute"
