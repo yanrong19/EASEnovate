@@ -39,7 +39,9 @@
                 <v-card-item>
                     <v-card-title> Write a review: </v-card-title>
                 </v-card-item>
-                <v-container> <v-textarea> </v-textarea></v-container>
+                <v-container>
+                    <v-textarea bg-color="grey-lighten-3"> </v-textarea
+                ></v-container>
                 <v-card-actions>
                     <v-spacer />
                     <v-btn @click.native="goProfile">
