@@ -5,8 +5,10 @@ import Landing from "../Views/Landing.vue";
 
 import CustomerProfile from "../Views/CustomerProfile.vue";
 import EditProfile from "../Views/EditProfile.vue";
-import DisplayID from "@/views/DisplayID.vue";
-import EditID from "@/views/EditID.vue";
+
+import DisplayID from '@/views/DisplayID.vue'
+import EditID from '@/views/EditID.vue'
+import JobRequest from '@/views/JobRequest.vue'
 import LeaveReview from "@/views/LeaveReview.vue";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -58,6 +60,15 @@ const routes = [
   },
 
   {
+    path: "/profile/jobrequest",
+    name: "jobrequest",
+    component: JobRequest,
+    meta: {
+      requiresAuth: true,
+  }
+
+
+  {
     path: "/review",
     name: "Review",
     component: LeaveReview,
@@ -89,5 +100,4 @@ const router = createRouter({
 //     next(); // Very important to call next() in this case!
 //   }
 // });
-
 export default router;
