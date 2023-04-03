@@ -7,6 +7,7 @@ import CustomerProfile from "../Views/CustomerProfile.vue";
 import EditProfile from "../Views/EditProfile.vue";
 import DisplayID from '@/views/DisplayID.vue'
 import EditID from '@/views/EditID.vue'
+import JobRequest from '@/views/JobRequest.vue'
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const routes = [
@@ -37,7 +38,8 @@ const routes = [
     path: "/editid",
     name: "editid",
     component: EditID,
-  }
+  },
+  {
     path: "/profile",
     name: "profile",
     component: CustomerProfile,
@@ -53,6 +55,14 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/profile/jobrequest",
+    name: "jobrequest",
+    component: JobRequest,
+    meta: {
+      requiresAuth: true,
+  }
+  }
 ];
 
 const router = createRouter({
@@ -77,5 +87,4 @@ const router = createRouter({
 //     next(); // Very important to call next() in this case!
 //   }
 // });
-
 export default router;
