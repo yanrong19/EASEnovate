@@ -1,8 +1,19 @@
 <template>
-  <div>
-    <form ref="loginForm" @submit.prevent="submitForm">
+  <div class="fullContainer">
+    <v-form ref="loginForm" @submit.prevent="submitForm">
       <div class="container">
-        <h1>Login</h1>
+        <div>
+          <div class="logincontainer">
+            <div>
+              <v-icon size="large" icon="mdi-login"></v-icon>
+            </div>
+
+            <div>
+              <h1>Login</h1>
+            </div>
+          </div>
+        </div>
+
         <label for="email-login"> Email</label>
         <input
           id="email-login"
@@ -20,10 +31,10 @@
           required="true"
         />
       </div>
-      <div class="btn">
-        <button type="submit" class="loginForm">Login</button>
-      </div>
-    </form>
+      <v-row>
+        <v-btn block type="submit" color="primary">Login</v-btn>
+      </v-row>
+    </v-form>
   </div>
 </template>
 
@@ -61,19 +72,23 @@ export default {
 
 <style scoped>
 form {
-  /* border-left: 2px black solid; */
-  width: 30vw;
-
-  /* border-radius: 7%; */
-  height: 60vh;
-  background-color: rgb(211, 222, 220);
+  border: 1px black solid;
+  width: 20vw;
+  height: 50vh;
+  background-color: rgb(216, 223, 221);
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.16);
+  overflow: scroll;
+}
+.logincontainer {
+  display: flex;
+  width: 20vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .container {
   padding: 16px;
-  width: 10vw;
-  /* display: flex; */
-  /* align-items: center; */
+  background-color: rgb(216, 223, 221);
 }
 
 .btn {
@@ -85,11 +100,9 @@ form {
 
 button {
   transition-duration: 0.4s;
-  width: 70px;
 }
 
 button:hover {
-  background-color: #4caf50; /* Green */
   color: white;
 }
 /* Full-width input fields */
