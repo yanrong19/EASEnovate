@@ -63,10 +63,10 @@
         <button type="submit" class="registerForm">Register</button>
       </div> -->
       <br />
-      <br />
-      <v-row>
-        <v-btn block type="submit" color="primary">Register</v-btn>
-      </v-row>
+      <!-- <br /> -->
+      <!-- <v-row> -->
+      <v-btn block type="submit" color="primary">Register</v-btn>
+      <!-- </v-row> -->
     </form>
   </div>
 </template>
@@ -124,7 +124,7 @@ export default {
 <style scoped>
 .registercontainer {
   display: flex;
-  width: 30vw;
+  /* width: 30vw; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -134,16 +134,16 @@ h1 {
 }
 form {
   border: 1px black solid;
-  width: 30vw;
+  width: 400px;
   /* border-radius: 7%; */
-  height: 70vh;
+  height: 570px;
   background-color: rgb(216, 223, 221);
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.16);
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 .container {
   padding: 16px;
-  width: 30vw;
+  width: 400px;
 }
 
 .btn {
