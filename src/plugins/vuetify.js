@@ -5,6 +5,6 @@ import 'vuetify/src/stylus/app.styl'
 Vue.useAttrs(Vuetify, {
     theme: {
         primary: '#7ADDCB',
-        button: '#997ADD',
+        secondary: '#997ADD',
     }
 })
