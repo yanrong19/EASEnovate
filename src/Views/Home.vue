@@ -10,7 +10,13 @@
                 <div><ProfileCards /></div>
             </div>
         </div>
-        <v-btn variant="outlined" @click.native="goCustomer"
+        <v-btn
+            v-if="usertype == 'Customer'"
+            variant="outlined"
+            @click.native="goCustomer"
+            >Profile Page</v-btn
+        >
+        <v-btn v-else variant="outlined" @click.native="goID"
             >Profile Page</v-btn
         >
         <!-- <div>{{ name }}</div>
@@ -59,6 +65,9 @@
             },
             goCustomer() {
                 this.$router.push("profile");
+            },
+            goID() {
+                this.$router.push("displayid");
             },
         },
         beforeCreate() {
