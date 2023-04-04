@@ -1,45 +1,53 @@
 <template>
-    <div class="container">
-        <h1>Edit your details</h1>
-        <form id="myform">
-            <div class="infoForm">
-                <label for="name1">Displayed Name: </label>
-                <input type="text" id="name1" required="" v-model="name" />
-                <br /><br />
-                <label for="contact1">Contact Number: </label>
-                <input
-                    type="number"
-                    id="contact1"
-                    required=""
-                    v-model="contact"
-                />
-                <br />
-                <br />
-                Preferred Services:
-
-                <div class="selectDiv">
-                    <select id="multi-select" v-model="services" multiple>
-                        <option value="Eco Design">Eco Design</option>
-                        <option value="Outdoor Living">Outdoor Living</option>
-                        <option value="Kitchen and Bathroom Design">
-                            Kitchen and Bathroom Design
-                        </option>
-                        <option value="Custom Furniture Design">
-                            Custom Furniture Design
-                        </option>
-                        <option value="Art Procurement and Curation">
-                            Art Procurement and Curation
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="save">
-                <button @click="enter">Back</button>
-                <button id="savebutton" type="button" @click="savetofs">
-                    Save
-                </button>
-            </div>
-        </form>
+    <div class="d-flex align-center flex-column">
+        <v-card width="70%" class="mx-auto">
+            <v-card-item>
+                <h1>Update Your Profile</h1>
+            </v-card-item>
+            <v-card-actions>
+                <v-spacer />
+                <v-avatar color="info" size="100">
+                    <v-icon icon="mdi-account-circle" size="100"> </v-icon>
+                </v-avatar>
+                <v-spacer />
+            </v-card-actions>
+            <v-card-item>
+                <v-sheet class="mx-auto">
+                    <v-form fast-fail ref="form">
+                        <v-text-field
+                            v-model="name"
+                            label="Profile Name"
+                            :rules="nameRules"
+                        ></v-text-field>
+                        <v-text-field
+                            v-model="contact"
+                            type="number"
+                            label="Contact Number"
+                            :rules="contactRules"
+                        ></v-text-field>
+                        <v-select
+                            chips
+                            v-model="services"
+                            :items="allServices"
+                            label="Select"
+                            multiple
+                            hint="Pick your preferred services"
+                            persistent-hint
+                        ></v-select>
+                        <v-card-actions>
+                            <v-spacer />
+                            <v-btn @click.native="enter">
+                                Back <v-icon end icon="mdi-arrow-left"></v-icon
+                            ></v-btn>
+                            <v-btn @click.native="submit">
+                                Save
+                                <v-icon end icon="mdi-account-check"></v-icon
+                            ></v-btn>
+                            <v-spacer /> </v-card-actions
+                    ></v-form>
+                </v-sheet>
+            </v-card-item>
+        </v-card>
     </div>
 </template>
 
@@ -52,12 +60,39 @@
     export default {
         data() {
             return {
+                valid: true,
                 name: "",
                 usertype: "",
                 services: [],
                 email: "",
                 contact: "",
                 dataLoaded: false,
+                nameRules: [
+                    (value) => {
+                        if (value?.length > 3) {
+                            return true;
+                        }
+                        return "Profile Name must be atleast 3 Characters";
+                    },
+                ],
+                contactRules: [
+                    (value) => {
+                        if (value?.length == 8) {
+                            return true;
+                        }
+                        return "Contact Number must be Singaporean Number";
+                    },
+                ],
+                allServices: [
+                    "In-home Consultation",
+                    "E-Design",
+                    "Full-Service",
+                    "Kitchen and Bathroom Design",
+                    "Eco Design",
+                    "Outdoor Living",
+                    "Custom Furniture Design",
+                    "Art Procurement and Curation",
+                ],
             };
         },
         methods: {
@@ -68,6 +103,15 @@
             enter() {
                 //this.$router.go(-1);
                 this.$router.push("/profile");
+            },
+            async submit() {
+                const { valid } = await this.$refs.form.validate();
+                if (valid) {
+                    console.log("validated");
+                    this.savetofs();
+                } else {
+                    console.log("notvalid");
+                }
             },
             async savetofs() {
                 try {
@@ -80,7 +124,7 @@
                         Services: this.services,
                     });
                     alert("Profile Details Saved");
-                    this.$router.go(-1);
+                    this.enter();
                 } catch (error) {
                     console.error("Error Adding document:", error);
                 }
