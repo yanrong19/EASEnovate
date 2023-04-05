@@ -63,10 +63,10 @@
         <button type="submit" class="registerForm">Register</button>
       </div> -->
       <br />
-      <br />
-      <v-row>
-        <v-btn block type="submit" color="primary">Register</v-btn>
-      </v-row>
+      <!-- <br /> -->
+      <!-- <v-row> -->
+      <v-btn block type="submit" color="primary">Register</v-btn>
+      <!-- </v-row> -->
     </form>
   </div>
 </template>
@@ -139,7 +139,7 @@ form {
   height: 570px;
   background-color: rgb(216, 223, 221);
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.16);
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 .container {
   padding: 16px;

@@ -64,6 +64,7 @@
                 name: "",
                 usertype: "",
                 services: [],
+                //requests: [],
                 email: "",
                 contact: "",
                 dataLoaded: false,
@@ -122,6 +123,7 @@
                         email: this.email,
                         usertype: this.usertype,
                         Services: this.services,
+                        //Requests: this.requests,
                     });
                     alert("Profile Details Saved");
                     this.enter();
@@ -146,6 +148,7 @@
                     this.email = data.data().email;
                     this.contact = data.data().contact;
                     this.services = data.data().Services;
+                    //this.requests = data.data().Requests;
                     this.dataLoaded = true;
                 });
             });

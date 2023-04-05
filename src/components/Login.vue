@@ -31,9 +31,9 @@
           required="true"
         />
       </div>
-      <v-row>
-        <v-btn block type="submit" color="primary">Login</v-btn>
-      </v-row>
+      <!-- <v-row> -->
+      <v-btn block type="submit" color="primary">Login</v-btn>
+      <!-- </v-row> -->
     </v-form>
   </div>
 </template>
@@ -77,7 +77,7 @@ form {
   height: 402px;
   background-color: rgb(216, 223, 221);
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.16);
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 .logincontainer {
   display: flex;
@@ -100,6 +100,7 @@ form {
 
 button {
   transition-duration: 0.4s;
+  width: 250px;
 }
 
 button:hover {
