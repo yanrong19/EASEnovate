@@ -18,7 +18,7 @@
             </v-row>
             <v-row>
               <v-col md="5">
-                <v-text-field v-model="id_email" id="id_email" disabled></v-text-field>
+                <v-text-field v-model="id_email" id="id_email" label="Email"></v-text-field>
               </v-col>
               <v-col md="3">
                 <v-text-field v-model="id_phone" id="id_phone" label="Phone"></v-text-field>
@@ -26,22 +26,17 @@
             </v-row>
           </v-card> <br>
             <v-card class="px-3 py-1">
-              <h3>Your Portfolio</h3> <br>
+              <h3>About Yourself</h3> <br>
             <v-row>
               <v-col>
-                <v-textarea 
-                v-model="description" 
-                id="description" 
-                label="Description" 
-                height="20vh" 
-                clearable 
-                no-resize
-                autogrow
-                ></v-textarea>
+                <v-text-field v-model="description" id="description" label="Description" height="20vh"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
-              <v-col md="5">
+              <v-col>
+                <v-text-field v-model="pastProjects" id="pastProjects" label="Past Projects"></v-text-field>
+              </v-col>
+              <v-col>
                 <v-combobox
                 v-model="services" 
                 id="services"
@@ -50,34 +45,12 @@
                 chips
                 ></v-combobox>
               </v-col>
-              <v-col md="7">
+            </v-row>
+            <v-row>
+              <v-col md="8">
                 <v-text-field v-model="website" id="website" label="Website"></v-text-field>
               </v-col>
             </v-row>
-            <h3>Past Projects</h3> <br>
-            <v-row>
-                <v-btn class="mx-4" @click="addProj">Add Past Project</v-btn>
-            </v-row> <br>
-            <div class="previous"
-                  v-for="(pastProj, counter) in pastProjects"
-                  v-bind:key="counter">
-            <v-row>
-                  <v-col md="3">
-                    <v-text-field v-model="pastProj.title" label="Title"></v-text-field>
-                    <v-btn class="mx-4" rounded="xl" @click="deleteProj(counter)">X</v-btn>
-                  </v-col>
-                  <v-col md="9">
-                    <v-textarea 
-                      v-model="pastProj.description"
-                      class="textarea"
-                      label="Description"  
-                      clearable 
-                      no-resize
-                      autogrow
-                    ></v-textarea>
-                  </v-col>
-            </v-row>
-          </div>
           </v-card> <br>
             <v-btn id="uploadbutton" color="green" rounded="xl" elevation="4" height="5vh" tonal v-on:click="uploadChange">Upload</v-btn>
         </v-form>
@@ -88,7 +61,7 @@
   <script>
   import firebaseApp from '../firebase.js';
   import {getFirestore} from "firebase/firestore";
-  import {getDoc, doc, updateDoc} from "firebase/firestore";
+  import {doc,setDoc} from "firebase/firestore";
   import {getAuth, onAuthStateChanged} from "firebase/auth"
     export default {
         data(){
@@ -99,10 +72,7 @@
             id_email:'',
             id_phone:'',
             description:'',
-            pastProjects:[{
-              title:'',
-              description:''
-            }],
+            pastProjects:'',
             services:'',
             website:'',
           }
@@ -114,25 +84,10 @@
               if (user) {
                   this.user = user;
                   this.useremail = user.email;
-                  this.display(this.useremail);
               }
           })
         },
         methods: {
-          async display(useremail) { //how to get ID reference when clicked into profile
-            const db = getFirestore(firebaseApp);
-            const docRef = doc(db,"Users",String(useremail)) //change
-            let credentials = await getDoc(docRef);
-            let cred = credentials.data();
-            this.id_name = cred.IDname;
-            this.id_email = cred.Email;
-            this.id_phone = cred.Phone;
-            //this.services = cred.Services;
-            this.description = cred.Desc;
-            this.pastProjects = cred.PastProjects;
-            this.website = cred.Website;
-            this.services = cred.Services;
-          },
           uploadPhoto(){
             let photo = this.$refs.file;
             photo.click();
@@ -141,6 +96,7 @@
           async uploadChange(){
             const db = getFirestore(firebaseApp);
             let id_name = this.id_name;
+            let email = this.id_email;
             let phone = this.id_phone;
             let desc = this.description;
             console.log(desc)
@@ -148,21 +104,12 @@
             let services = this.services;
             let website = this.website;
             
-            const docRef = await updateDoc(doc(db,"Users", this.useremail),{
-              IDname:id_name, Phone:phone, Desc:desc, PastProjects:pastProjs, Services:services, Website:website
+            const docRef = await setDoc(doc(db,"ID_Credentials", this.useremail),{
+              IDname:id_name, Email:email, Phone:phone, Desc:desc, PastProjects:pastProjs, Services:services, Website:website
             });
             document.getElementById("credForm").reset();
-            this.$router.push("/displayid");
+            this.$router.push("/home");
           },
-          addProj(){
-            this.pastProjects.push({
-              title:'',
-              description: ''
-            })
-          },
-          deleteProj(counter){
-            this.pastProjects.splice(counter,1);
-          }
         }
   }
   </script>
