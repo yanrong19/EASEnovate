@@ -127,6 +127,7 @@
     h2 {
         padding-left: 1rem;
     }
+
     button {
         background-color: #3aafa9;
         border: 2px solid #3aafa9;
@@ -136,7 +137,6 @@
     button:hover {
         background-color: white;
     }
-
     .detailContainer {
         padding: 15px;
     }
