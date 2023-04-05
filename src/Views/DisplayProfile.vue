@@ -1,8 +1,8 @@
 <template>
-<div v-if="usertype=='Customer'"> <DisplayCustomer /></div>
- <div v-else-if="usertype=='Interior Designer'"> <DisplayID /> </div>
+    <div><SideBar2 /></div>
+    <div v-if="usertype == 'Customer'"><DisplayCustomer /></div>
+    <div v-else-if="usertype == 'Interior Designer'"><DisplayID /></div>
 </template>
-
 
 <script>
     import { getDoc, doc } from "@firebase/firestore";
@@ -11,11 +11,10 @@
     import { getFirestore } from "@firebase/firestore";
     import DisplayCustomer from "../components/DisplayCustomer.vue";
     import DisplayID from "../components/DisplayID.vue";
-
+    import SideBar2 from "../components/SideBar2.vue";
 
     export default {
-        
-        components: { DisplayCustomer, DisplayID },
+        components: { SideBar2, DisplayCustomer, DisplayID },
         created: function () {
             document.body.style.backgroundColor = "#c6eeec";
         },
