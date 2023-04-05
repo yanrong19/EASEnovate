@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header">
+    <!-- <div class="header">
       <div class="top">
         <img src="../assets/onlyLogo.png" alt="Logo" />
         <h2>EASENOVATE</h2>
@@ -13,12 +13,26 @@
     </div>
     <div class="image">
       <img src="../assets/homePageImg.png" alt="Full-width image" />
-    </div>
+    </div> -->
+    <SideBar2 />
+    <v-app>
+      
+      <v-app-bar color="secondary" class="flex-grow-0" app dark>
+      <v-app-bar-title>EASENOVATE</v-app-bar-title>
+    </v-app-bar>
+    <!-- <v-navigation-drawer app clipped flat dark expand-on-hover> -->
+      <!-- <v-divider></v-divider> -->
+      
+    <!-- </v-navigation-drawer> -->
+  </v-app>
   </div>
 </template>
 
 <script>
-export default {};
+import SideBar2 from "../components/SideBar2.vue";
+export default {
+  components : {SideBar2}
+};
 </script>
 
 <style>

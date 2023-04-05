@@ -1,8 +1,8 @@
 <template>
   <!-- <SideBar :menuList="menu" /> -->
-  <SideBar2 />
+  <!-- <SideBar2 /> -->
   <!-- <div>Home testing</div> -->
-  <!-- <div v-if="dataLoaded">
+  <div v-if="dataLoaded">
     <div class="home">
       <div>
         <div><TopScreen /></div>
@@ -10,12 +10,10 @@
       <div>
         <div><ProfileCards /></div>
       </div>
-
     </div>
-    <v-btn variant="outlined" @click.native="goCustomer">Profile Page</v-btn>
   </div>
 
-  <div v-else>Loading</div> -->
+  <div v-else>Loading</div>
   <!-- <div style="height: 100vh"></div>
   <div style="height: 100vh"></div> -->
 </template>
