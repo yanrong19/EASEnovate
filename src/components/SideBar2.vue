@@ -1,7 +1,7 @@
 <template>
     <v-card style="z-index: 99">
         <v-layout>
-            <v-navigation-drawer expand-on-hover rail>
+            <v-navigation-drawer expand-on-hover rail app>
                 <v-list>
                     <v-list-item
                         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
@@ -22,8 +22,8 @@
                 <v-list density="default" nav>
                     <v-list-item
                         prepend-icon="mdi-account"
-                        title="Account"
-                        value="account"
+                        title="Profile"
+                        value="profile"
                         href="/profile"
                     ></v-list-item>
                     <v-list-item

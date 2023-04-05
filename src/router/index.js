@@ -31,25 +31,7 @@ const routes = [
     meta: {
       requiresAuth: true, // Indicates that this route requires authentication
     },
-  },/*
-  {
-    path: "/displayid",
-    name: "DisplayID",
-    component: DisplayID,
   },
-  {
-    path: "/editid",
-    name: "EditID",
-    component: EditID,
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: CustomerProfile,
-    meta: {
-      requiresAuth: true,
-    },
-  },*/
   {
     path: "/profile",
     name: "DisplayProfile",
@@ -68,14 +50,6 @@ const routes = [
     },
   },
 
-  {
-    path: "/profile/jobrequest",
-    name: "jobrequest",
-    component: JobRequest,
-    meta: {
-      requiresAuth: true,
-    },
-  },
   {
     path: "/jobrequest",
     name: "JobRequest",
@@ -117,4 +91,33 @@ const router = createRouter({
 //     next(); // Very important to call next() in this case!
 //   }
 // });
+
+/*
+  {
+    path: "/displayid",
+    name: "DisplayID",
+    component: DisplayID,
+  },
+  {
+    path: "/editid",
+    name: "EditID",
+    component: EditID,
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: CustomerProfile,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  
+  {
+    path: "/profile/jobrequest",
+    name: "jobrequest",
+    component: JobRequest,
+    meta: {
+      requiresAuth: true,
+    },
+  },*/
 export default router;
