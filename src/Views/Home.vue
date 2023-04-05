@@ -10,6 +10,7 @@
       <div>
         <div><ProfileCards /></div>
       </div>
+
     </div>
     <v-btn variant="outlined" @click.native="goCustomer">Profile Page</v-btn>
   </div>
