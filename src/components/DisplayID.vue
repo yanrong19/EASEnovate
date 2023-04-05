@@ -14,31 +14,35 @@
         <v-card-title class="text-h4" align="left">{{ IDname }}</v-card-title>
         <v-card-subtitle class="text-h6" align="left">Interior Designer</v-card-subtitle>
       </v-card>
-      <v-card style="top:-5vh; left:0vw" max-width="48vw">
-        <v-card-text class="text-h6" align="left">Rating {{ ratings }}</v-card-text>
-        <v-card-text class="text-h6" align="left">Price $$</v-card-text>
+      <v-card style="top: -4vh; left: 0vw" max-width="48vw">
+        <v-card-text class="text-h6" align="left">Rating</v-card-text>
+        <v-card-text class="text-h6" align="left">Price</v-card-text>
       </v-card>
     </v-card>
-      <v-card 
-        position="absolute"
-        elevation="5"
-        style="top:38vh; left:10vw; right:40vw;">
-        <v-card height="40vh">
-          <div class="pastProjects">
-        <div class="scroll_container">
-          <div class="pp">
-            <img src="/assets/room1.jpg">
-          </div>
-          <div class="pp">
-            <img src="/assets/room2.jpg">
-          </div>
-          <div class="pp">
-            <img src="/assets/room3.jpg">
-          </div>
-          <div class="pp">
-            <img src="/assets/room4.jpg">
+    <v-card
+      height="100vh"
+      position="absolute"
+      elevation="5"
+      style="top: 38vh; left: 10vw; right: 40vw"
+    >
+      <v-card height="40vh">
+        <div class="pastProjects">
+          <div class="scroll_container">
+            <div class="pp">
+              <img src="/assets/room1.jpg" />
+            </div>
+            <div class="pp">
+              <img src="/assets/room2.jpg" />
+            </div>
+            <div class="pp">
+              <img src="/assets/room3.jpg" />
+            </div>
+            <div class="pp">
+              <img src="/assets/room4.jpg" />
+            </div>
           </div>
         </div>
+
         </div>
         </v-card> <br>
         <v-card-title class="text-h4" align="left">About Me</v-card-title>
@@ -65,6 +69,7 @@
         </v-card-text>
         <v-card-text class="text-h5" align="left">Website</v-card-text>
         <v-card-text class="text-h6" align="left"><a :href="'//' + website">{{website}}</a></v-card-text>
+
       </v-card>
       <v-hover v-slot="{ isHovering, props }">
       <v-card 
@@ -136,10 +141,10 @@
 </template>
 
 <script>
-import firebaseApp from '../firebase.js';
-import {getFirestore} from "firebase/firestore";
-import {getDocs, getDoc, doc, setDoc, updateDoc, collection, getCountFromServer} from "firebase/firestore";
-import {getAuth, onAuthStateChanged} from "firebase/auth"
+import firebaseApp from "../firebase.js";
+import { getFirestore } from "firebase/firestore";
+import { getDoc, doc, setDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -162,66 +167,39 @@ export default {
         services: ['Painting', 'Tiling', 'Furniture Layout', 'Hardware', 'Lighting Design'],
         idservices:"",
         details:"",
+    };
+  },
+  mounted() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.user = user;
+        this.useremail = user.email;
+        console.log(this.useremail);
+        this.display(this.useremail);
+
       }
     },
-    mounted(){
-      const auth = getAuth();
-      const user = auth.currentUser
-      onAuthStateChanged(auth, (user) => {
-          if (user) {
-              this.user = user;
-              this.useremail = user.email;
-              this.display(this.useremail);
-          }
-      })
-    },
-    methods:{
-      async display(useremail) { //how to get ID reference when clicked into profile
-        const db = getFirestore(firebaseApp);
-        const docRef = doc(db,"Users",String(useremail)) //change
-        let credentials = await getDoc(docRef);
-        let cred = credentials.data();
-        this.IDname = cred.IDname;
-        this.IDemail = cred.Email;
-        this.IDphone = cred.Phone;
-        //this.services = cred.Services;
-        this.desc = cred.Desc;
-        this.pastProjects = cred.PastProjects;
-        this.website = cred.Website;
-        this.ratings = cred.Ratings;
-        this.reviews = cred.Reviews;
-        this.services = cred.Services;
-        this.show = new Array(this.pastProjects.length).fill(false)
-      },
-      required(value) {
-        if (value.length == 0) {
-          return 'Required.';
-        }
-      },
-      async submitRequest() {
-        let jr_col = collection(db, "Job Requests")
-        const counts = await getCountFromServer(jr_col);
-        let jrid = counts.data().count + 1;
-        console.log(jrid)
-        await setDoc(doc(db,"Job Requests", jrid.toString()),{
-          ID:jrid, DesignerEmail:this.IDemail , CustomerEmail:this.useremail, CustomerName:this.user.displayName, 
-          Services: this.idservices, Details:this.details, Status:"Pending", Rating: null, Review: null,
-        });
-        const docRef2 = doc(db,"Users",String(this.useremail)) //customer
-        const docRef3 = doc(db,"Users",String(this.useremail)) //ID (change)
-        this.jobReq.push(jrid);
-        const data2 = {
-          JobReq: this.jobReq
-        }
-        const data3 = {
-          JobReq: this.jobReq
-        }
-        await updateDoc(docRef2, data2)
-        await updateDoc(docRef3, data3)
-        this.engageProj = false;
+    required(value) {
+      if (value.length == 0) {
+        return "Required.";
       }
-    }
-}
+    },
+    async submitRequest() {
+      const docRef = await setDoc(
+        doc(db, String(this.useremail).concat("_JR"), String(this.useremail)),
+        {
+          CustomerName: this.user.displayName,
+          Service: this.idservices,
+          Details: this.details,
+          Status: "Pending",
+        }
+      );
+      this.engageProj = false;
+    },
+  },
+};
 </script>
 
 <style scoped>
