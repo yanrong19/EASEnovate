@@ -76,6 +76,14 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/jobrequest",
+    name: "JobRequest",
+    component: JobRequest,
+    meta: {
+      requiresAuth: true,
+    },
+  },
 
   {
     path: "/review",

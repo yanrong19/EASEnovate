@@ -186,6 +186,18 @@
                         </v-col>
                     </v-row>
                 </v-card-actions>
+
+                <v-card-actions>
+                    <v-spacer />
+                    <v-btn
+                        variant="outlined"
+                        class="secondary"
+                        @click.native="goEdit"
+                    >
+                        Edit Portfolio
+                    </v-btn>
+                    <v-spacer />
+                </v-card-actions>
             </v-card>
         </v-hover>
     </v-container>
@@ -244,6 +256,13 @@
                     this.display(this.useremail);
                 }
             });
+            console.log("mounted");
+        },
+        updated() {
+            console.log("updated");
+            console.log(this.useremail);
+            console.log(this.IDemail);
+            console.log(this.website);
         },
         methods: {
             async display(useremail) {
@@ -297,6 +316,9 @@
                 await updateDoc(docRef2, data2);
                 await updateDoc(docRef3, data3);
                 this.engageProj = false;
+            },
+            goEdit() {
+                this.$router.push("/profile/edit");
             },
         },
     };

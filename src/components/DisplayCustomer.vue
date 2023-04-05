@@ -54,9 +54,6 @@
             </v-card-actions>
         </v-card>
         <v-btn variant="outlined" @click.native="goReview">Review Page</v-btn>
-        <v-btn variant="outlined" @click.native="goRequests"
-            >Requests Page</v-btn
-        >
     </div>
 </template>
 
