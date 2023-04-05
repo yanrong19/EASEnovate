@@ -31,7 +31,7 @@ const routes = [
     meta: {
       requiresAuth: true, // Indicates that this route requires authentication
     },
-  },/*
+  },
   {
     path: "/displayid",
     name: "DisplayID",
@@ -42,6 +42,7 @@ const routes = [
     name: "EditID",
     component: EditID,
   },
+  /*
   {
     path: "/profile",
     name: "Profile",
@@ -69,7 +70,7 @@ const routes = [
   },
 
   {
-    path: "/profile/jobrequest",
+    path: "/jobrequest",
     name: "jobrequest",
     component: JobRequest,
     meta: {
