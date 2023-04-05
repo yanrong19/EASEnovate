@@ -2,11 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import Start from "../Views/Start.vue";
 import Home from "../Views/Home.vue";
 import Landing from "../Views/Landing.vue";
-
 import CustomerProfile from "../Views/CustomerProfile.vue";
 import EditProfile from "../Views/EditProfile.vue";
 import DisplayProfile from "../views/DisplayProfile.vue";
-
 import DisplayID from "@/views/DisplayID.vue";
 import EditID from "@/views/EditID.vue";
 import JobRequest from "@/views/JobRequest.vue";
