@@ -1,4 +1,4 @@
-
+<template>
   <v-container align="center">
     <v-card 
       position="absolute"
@@ -14,13 +14,12 @@
         <v-card-title class="text-h4" align="left">{{ IDname }}</v-card-title>
         <v-card-subtitle class="text-h6" align="left">Interior Designer</v-card-subtitle>
       </v-card>
-      <v-card style="top:-4vh; left:0vw" max-width="48vw">
-        <v-card-text class="text-h6" align="left">Rating</v-card-text>
-        <v-card-text class="text-h6" align="left">Price</v-card-text>
+      <v-card style="top:-5vh; left:0vw" max-width="48vw">
+        <v-card-text class="text-h6" align="left">Rating {{ ratings }}</v-card-text>
+        <v-card-text class="text-h6" align="left">Price $$</v-card-text>
       </v-card>
     </v-card>
       <v-card 
-        height="100vh" 
         position="absolute"
         elevation="5"
         style="top:38vh; left:10vw; right:40vw;">
@@ -41,13 +40,31 @@
           </div>
         </div>
         </div>
-        </v-card>
+        </v-card> <br>
         <v-card-title class="text-h4" align="left">About Me</v-card-title>
-        <v-card-text class="text-h6" align="left">{{ desc }}</v-card-text>
+        <v-card-text class="text-h6" align="left">{{ desc }}</v-card-text> <br>
         <v-card-text class="text-h5" align="left">Past Projects</v-card-text>
-        <v-card-text class="text-h6" align="left">{{pastProjects}}</v-card-text>
+        <v-card-text class="text-h6" align="left">
+          <v-card v-for="(row, index) in pastProjects" :key="index">
+            <v-card-text class="text-h6" align="left"><strong>{{ row.title }}</strong></v-card-text>
+            <v-btn
+              :icon="show[index] ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+              @click="show[index] = !show[index]"
+              size="s"
+              class="ma-3"
+            ></v-btn>
+            <v-expand-transition>
+              <div v-show="show[index]">
+              <v-divider></v-divider>
+              <v-card-text>
+               {{ row.description }}
+              </v-card-text>
+        </div>
+      </v-expand-transition>
+          </v-card>
+        </v-card-text>
         <v-card-text class="text-h5" align="left">Website</v-card-text>
-        <v-card-text class="text-h6" align="left"><a :href="website">{{website}}</a></v-card-text>
+        <v-card-text class="text-h6" align="left"><a :href="'//' + website">{{website}}</a></v-card-text>
       </v-card>
       <v-hover v-slot="{ isHovering, props }">
       <v-card 
@@ -121,7 +138,7 @@
 <script>
 import firebaseApp from '../firebase.js';
 import {getFirestore} from "firebase/firestore";
-import {getDoc, doc, setDoc} from "firebase/firestore";
+import {getDocs, getDoc, doc, setDoc, updateDoc, collection, getCountFromServer} from "firebase/firestore";
 import {getAuth, onAuthStateChanged} from "firebase/auth"
 const db = getFirestore(firebaseApp);
 
@@ -135,13 +152,16 @@ export default {
         IDphone:'',
         desc:'',
         expertise:'',
-        pastProjects: '',
+        pastProjects: [],
         website:'',
-        show: false,
+        ratings:[],
+        reviews:[],
+        jobReq:[], //customer
+        show: [],
         engageProj: false,
         services: ['Painting', 'Tiling', 'Furniture Layout', 'Hardware', 'Lighting Design'],
         idservices:"",
-        details:""
+        details:"",
       }
     },
     mounted(){
@@ -151,23 +171,27 @@ export default {
           if (user) {
               this.user = user;
               this.useremail = user.email;
-              console.log(this.useremail);
               this.display(this.useremail);
           }
       })
     },
     methods:{
-      async display(useremail) {
+      async display(useremail) { //how to get ID reference when clicked into profile
         const db = getFirestore(firebaseApp);
-        const docRef = doc(db,"ID_Credentials",String(useremail))
+        const docRef = doc(db,"Users",String(useremail)) //change
         let credentials = await getDoc(docRef);
         let cred = credentials.data();
         this.IDname = cred.IDname;
         this.IDemail = cred.Email;
         this.IDphone = cred.Phone;
+        //this.services = cred.Services;
         this.desc = cred.Desc;
         this.pastProjects = cred.PastProjects;
         this.website = cred.Website;
+        this.ratings = cred.Ratings;
+        this.reviews = cred.Reviews;
+        this.services = cred.Services;
+        this.show = new Array(this.pastProjects.length).fill(false)
       },
       required(value) {
         if (value.length == 0) {
@@ -175,9 +199,25 @@ export default {
         }
       },
       async submitRequest() {
-        const docRef = await setDoc(doc(db,String(this.useremail).concat("_JR"), String(this.useremail)),{
-          CustomerName:this.user.displayName, Service:this.idservices, Details:this.details, Status:"Pending"
+        let jr_col = collection(db, "Job Requests")
+        const counts = await getCountFromServer(jr_col);
+        let jrid = counts.data().count + 1;
+        console.log(jrid)
+        await setDoc(doc(db,"Job Requests", jrid.toString()),{
+          ID:jrid, DesignerEmail:this.IDemail , CustomerEmail:this.useremail, CustomerName:this.user.displayName, 
+          Services: this.idservices, Details:this.details, Status:"Pending", Rating: null, Review: null,
         });
+        const docRef2 = doc(db,"Users",String(this.useremail)) //customer
+        const docRef3 = doc(db,"Users",String(this.useremail)) //ID (change)
+        this.jobReq.push(jrid);
+        const data2 = {
+          JobReq: this.jobReq
+        }
+        const data3 = {
+          JobReq: this.jobReq
+        }
+        await updateDoc(docRef2, data2)
+        await updateDoc(docRef3, data3)
         this.engageProj = false;
       }
     }
