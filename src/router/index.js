@@ -60,15 +60,13 @@ const routes = [
   },
 
   {
-    path: "/jobrequest",
+    path: "/profile/jobrequest",
     name: "jobrequest",
     component: JobRequest,
     meta: {
       requiresAuth: true,
-
-  }
-},
-
+    },
+  },
 
   {
     path: "/review",
