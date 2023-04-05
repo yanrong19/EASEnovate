@@ -88,7 +88,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 3vw;
+    padding-left: 6vw;
     width: 80vw;
     align-self: center;
     padding-bottom: 4vh;

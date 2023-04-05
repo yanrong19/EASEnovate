@@ -4,15 +4,14 @@
   <!-- <div>Home testing</div> -->
   <div v-if="dataLoaded">
     <div class="home">
-      <div>
-        <div><TopScreen /></div>
-      </div>
-      <div>
-        <div><ProfileCards /></div>
-      </div>
+      <v-app> 
+        <TopScreen />
+        <div class="profile">
+          <ProfileCards />
+        </div>
+      </v-app>
     </div>
   </div>
-
   <div v-else>Loading</div>
   <!-- <div style="height: 100vh"></div>
   <div style="height: 100vh"></div> -->
@@ -89,5 +88,8 @@ export default {
 <style scoped>
 .home {
   background-color: #f1f2f3;
+}
+.profile {
+  padding-top: 7vw;
 }
 </style>

@@ -14,24 +14,59 @@
     <div class="image">
       <img src="../assets/homePageImg.png" alt="Full-width image" />
     </div> -->
-    <SideBar2 />
-    <v-app>
-      
-      <v-app-bar color="secondary" class="flex-grow-0" app dark>
+
+    <v-app-bar color="secondary" class="flex-grow-0" app dark>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title>EASENOVATE</v-app-bar-title>
     </v-app-bar>
-    <!-- <v-navigation-drawer app clipped flat dark expand-on-hover> -->
-      <!-- <v-divider></v-divider> -->
-      
-    <!-- </v-navigation-drawer> -->
-  </v-app>
+    <v-navigation-drawer app v-model="drawer">
+        <v-list dense nav>
+          <v-list-item
+            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+            title="Sandra Adams"
+            subtitle="sandra_a88@gmailcom"
+          ></v-list-item>
+        </v-list>
+
+        <v-divider></v-divider>
+
+        <v-list density="compact" nav>
+          <v-list-item
+            prepend-icon="mdi-account"
+            title="Account"
+            value="account"
+            href="/profile"
+          ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-home"
+            title="Home"
+            value="home"
+            href="/home"
+          ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-wrench"
+            title="Job"
+            value="job"
+          ></v-list-item>
+
+          <v-divider></v-divider>
+          <v-list-item
+            prepend-icon="mdi-logout"
+            title="Logout"
+            value="logout"
+          ></v-list-item>
+        </v-list>
+      </v-navigation-drawer> 
   </div>
 </template>
 
 <script>
 import SideBar2 from "../components/SideBar2.vue";
 export default {
-  components : {SideBar2}
+  components : {SideBar2},
+  data: () => ({
+    drawer: false,
+  }),
 };
 </script>
 
