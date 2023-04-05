@@ -24,7 +24,7 @@
             prepend-icon="mdi-account"
             title="Account"
             value="account"
-            href="/profile"
+            href="/displayprofile"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-home"
