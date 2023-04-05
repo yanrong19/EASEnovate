@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card style = "z-index: 99;">
     <v-layout>
       <v-navigation-drawer expand-on-hover rail>
         <v-list>

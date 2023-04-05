@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div id = "company">
+    <div class = "company">
         <div v-for="profile in filteredProfiles">
             <CompanyProfile :profile="profile"></CompanyProfile>
         </div>
@@ -91,6 +91,7 @@ export default {
     padding-left: 3vw;
     width: 80vw;
     align-self: center;
+    padding-bottom: 4vh;
 }
 .search__container {
     flex: 1;
@@ -183,5 +184,11 @@ export default {
   
   .filter-dropdown a:hover, .sort-dropdown a:hover {
     background-color: #ddd;
+  }
+  .company{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 3vw;
+    padding-right: 2vw;
   }
   </style>
