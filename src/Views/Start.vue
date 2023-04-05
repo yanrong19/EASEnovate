@@ -1,60 +1,78 @@
 <template>
-  <div class="mainContainer">
-    <!-- Insert our own icon -->
-    <div class="logo">
-      <!-- <h2>EASENOVATE</h2> -->
-      <div><IconCommunity /></div>
+    <div class="allContainer">
+        <div
+            style="
+                 {
+                    align-items: center;
+                    justify-content: center;
+                }
+            "
+        >
+            <header>Easenovate</header>
+            <p>Rennovating with Ease</p>
+        </div>
+
+        <div class="mainContainer">
+            <div class="container">
+                <div class="login">
+                    <Login />
+                    <!-- <Login2 /> -->
+                </div>
+            </div>
+            <div class="container">
+                <div class="form">
+                    <Form />
+                </div>
+            </div>
+        </div>
+        <br />
+        <div>2023 All Rights Reserved</div>
     </div>
-    <div class="container">
-      <div class="form">
-        <Form />
-      </div>
-      <div class="login">
-        <Login />
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
-import IconCommunity from "../components/icons/IconCommunity.vue";
-import Form from "../components/Form.vue";
-import Login from "../components/Login.vue";
-export default {
-  components: { Form, Login, IconCommunity },
-};
+    import IconCommunity from "../components/icons/IconCommunity.vue";
+    import Form from "../components/Form.vue";
+    import Login from "../components/Login.vue";
+    export default {
+        components: { Form, Login, IconCommunity },
+    };
 </script>
 
 <style scoped>
-.mainContainer {
-  width: 100vw;
-  height: 100vh;
-  background-color: #3aafa9;
-  /* display: flex; */
-  /* align-items: center;
-  justify-content: center; */
-  position: relative;
-}
-.container {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translate(0, -50%);
-  margin-right: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* width: 40vw; */
-  border-style: solid;
-  border-width: 1px;
-  padding: 2px;
-  background-color: rgb(239, 243, 242);
-}
-.logo {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translate(0, -50%);
-  margin-left: 100px;
-}
+    header {
+        font-style: italic;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 60px;
+        text-shadow: 2px 2px #7addcb;
+    }
+
+    p {
+        font-style: italic;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .allContainer {
+        width: 100vw;
+        height: 100vh;
+        background-color: #f6f6f6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .mainContainer {
+        background-color: #f6f6f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translate(0, -50%);
+        margin-left: 100px;
+    }
 </style>

@@ -6,9 +6,9 @@ import Landing from "../Views/Landing.vue";
 import CustomerProfile from "../Views/CustomerProfile.vue";
 import EditProfile from "../Views/EditProfile.vue";
 
-import DisplayID from '@/views/DisplayID.vue'
-import EditID from '@/views/EditID.vue'
-import JobRequest from '@/views/JobRequest.vue'
+import DisplayID from "@/views/DisplayID.vue";
+import EditID from "@/views/EditID.vue";
+import JobRequest from "@/views/JobRequest.vue";
 import LeaveReview from "@/views/LeaveReview.vue";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -65,6 +65,7 @@ const routes = [
     component: JobRequest,
     meta: {
       requiresAuth: true,
+
   }
 },
 
@@ -75,8 +76,8 @@ const routes = [
     component: LeaveReview,
     meta: {
       requiresAuth: true,
-    }
-  }
+    },
+  },
 ];
 
 const router = createRouter({

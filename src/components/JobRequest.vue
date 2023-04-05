@@ -1,4 +1,5 @@
 <template>
+
   <v-container align="center">
   <h1 id="jobRequest">Job Requests</h1><br><br>
   <v-table>
@@ -86,9 +87,13 @@ async mounted() {
   });
 }
 }
+
 </script>
 
 <style scoped>
+    tr:nth-child(even) {
+        background-color: #e3edee;
+    }
 
 tr:nth-child(even) {
 background-color: #e3edee;
@@ -104,3 +109,4 @@ th {
   background-color: rgb(114, 163, 247);
 }
 </style>
+

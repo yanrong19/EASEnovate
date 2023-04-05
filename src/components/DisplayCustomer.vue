@@ -54,6 +54,9 @@
             </v-card-actions>
         </v-card>
         <v-btn variant="outlined" @click.native="goReview">Review Page</v-btn>
+        <v-btn variant="outlined" @click.native="goRequests"
+            >Requests Page</v-btn
+        >
     </div>
 </template>
 
@@ -84,6 +87,9 @@
             },
             goReview() {
                 this.$router.push("/review");
+            },
+            goRequests() {
+                this.$router.push("/profile/jobrequest");
             },
         },
         beforeCreate() {
@@ -121,6 +127,7 @@
     h2 {
         padding-left: 1rem;
     }
+
     button {
         background-color: #3aafa9;
         border: 2px solid #3aafa9;
@@ -130,7 +137,6 @@
     button:hover {
         background-color: white;
     }
-
     .detailContainer {
         padding: 15px;
     }

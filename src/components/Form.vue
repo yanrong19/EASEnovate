@@ -2,7 +2,18 @@
   <div>
     <form ref="registerForm" @submit.prevent="submitForm">
       <div class="container">
-        <h1>Register</h1>
+        <div>
+          <div class="registercontainer">
+            <div>
+              <v-icon size="large" icon="mdi-account-edit"></v-icon>
+            </div>
+
+            <div>
+              <h1>Register</h1>
+            </div>
+          </div>
+        </div>
+
         <label for="name"> Name</label>
         <input
           id="name"
@@ -48,9 +59,14 @@
           <label for="Customer">Customer</label>
         </div>
       </div>
-      <div class="btn">
+      <!-- <div class="btn">
         <button type="submit" class="registerForm">Register</button>
-      </div>
+      </div> -->
+      <br />
+      <!-- <br /> -->
+      <!-- <v-row> -->
+      <v-btn block type="submit" color="primary">Register</v-btn>
+      <!-- </v-row> -->
     </form>
   </div>
 </template>
@@ -106,20 +122,28 @@ export default {
 </script>
 
 <style scoped>
+.registercontainer {
+  display: flex;
+  /* width: 30vw; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 h1 {
   color: rgb(34, 115, 88);
 }
 form {
-  border-right: 2px black solid;
-  width: 30vw;
+  border: 1px black solid;
+  width: 400px;
   /* border-radius: 7%; */
-  height: 60vh;
-  background-color: rgb(211, 222, 220);
+  height: 570px;
+  background-color: rgb(216, 223, 221);
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.16);
+  /* overflow: scroll; */
 }
 .container {
   padding: 16px;
-  width: 20vw;
+  width: 400px;
 }
 
 .btn {
@@ -131,11 +155,14 @@ form {
 
 button {
   transition-duration: 0.4s;
-  width: 70px;
+  /* width: 70px;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  background-color: rgb(131, 131, 220); */
 }
 
 button:hover {
-  background-color: #4caf50; /* Green */
   color: white;
 }
 /* Full-width input fields */
