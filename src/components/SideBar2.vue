@@ -19,7 +19,7 @@
           subtitle="..."
         ></v-list-item> -->
 
-                <v-list density="compact" nav>
+                <v-list density="default" nav>
                     <v-list-item
                         prepend-icon="mdi-account"
                         title="Account"
@@ -34,8 +34,8 @@
                     ></v-list-item>
                     <v-list-item
                         prepend-icon="mdi-wrench"
-                        title="Job"
-                        value="job"
+                        title="Jobs"
+                        value="jobs"
                         href="/jobrequest"
                     ></v-list-item>
 

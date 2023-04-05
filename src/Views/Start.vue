@@ -9,7 +9,7 @@
             "
         >
             <header>Easenovate</header>
-            <p>Rennovating with Ease</p>
+            <p>Renovating with Ease</p>
         </div>
 
         <div class="mainContainer">
@@ -36,6 +36,12 @@
     import Login from "../components/Login.vue";
     export default {
         components: { Form, Login, IconCommunity },
+        created: function () {
+            document.body.style.backgroundColor = "#c6eeec";
+        },
+        destroyed: function () {
+            document.body.style.backgroundColor = null;
+        },
     };
 </script>
 
