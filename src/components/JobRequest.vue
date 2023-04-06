@@ -4,20 +4,28 @@
   <v-table>
     <thead>
       <tr>
-          <th>Index</th>
-          <th>Job Request ID</th>
-          <th>Customer</th>
-          <th>Services</th>
-          <th>Details</th>
-          <th>Status</th>
-          <th>Action</th>
+          <th width="1%">Index</th>
+          <th width="11%">Job Request ID</th>
+          <th width="10%" v-if="usertype=='Interior Designer'">Customer</th>
+          <th width="10%" v-if="usertype=='Customer'">Designer</th>
+          <th width="20%">Services</th>
+          <th width="30%">Details</th>
+          <th width="5%">Status</th>
+          <th width="25%">Action</th>
       </tr>
 
       <tr v-for="(row, index) in tableRows" :key="row.customerName">
           <td>{{ index + 1 }}</td>
           <td>{{ row.jrid }}</td>
-          <td>{{ row.customerName }}</td>
-          <td>{{ row.service }}</td>
+          <td v-if="usertype=='Interior Designer'">
+            {{ row.customerName }}
+            <v-tooltip activator="parent" location="top"><h3>{{row.customerEmail}}</h3></v-tooltip>
+          </td>
+          <td v-if="usertype=='Customer'">
+            {{ row.designerName }}
+            <v-tooltip activator="parent" location="top"><h3>{{row.designerEmail}}</h3></v-tooltip>
+          </td>
+          <td><v-chip class="ma-1" color="primary" v-for="serv in row.services" :key="serv"> {{ serv }}</v-chip></td>
           <td>{{ row.details }}</td>
           <td>{{ row.status }}</td>
           <td>
@@ -35,31 +43,43 @@
 import firebaseApp from "../firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, getDoc } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
 export default {
 data() {
   return {
-    useremail: "",
-    tableRows: []
+    useremail: '',
+    usertype:'',
+    uid:'',
+    tableRows: [],
   };
 },
 methods: {
   display: async function (useremail) {
+      const docRef = doc(db,"users",String(this.uid))
+      let credentials = await getDoc(docRef);
+      let cred = credentials.data();
+      this.usertype = cred.usertype;
       let allDocuments = await getDocs(collection(db, "Job Requests"));
       allDocuments.forEach((docs) => {
         let documentData = docs.data();
-        if (documentData.DesignerEmail == useremail) {
+        if (documentData.DesignerEmail == useremail || documentData.CustomerEmail == useremail) {
           let row = []
           let jrid = documentData.ID
           let customerName = documentData.CustomerName;
+          let customerEmail = documentData.CustomerEmail;
+          let designerName = documentData.DesignerName;
+          let designerEmail = documentData.DesignerEmail;
           let service = documentData.Services;
           let details = documentData.Details;
           let status = documentData.Status;
           row.jrid = jrid;
           row.customerName = customerName;
-          row.service = service;
+          row.customerEmail = customerEmail;
+          row.designerName = designerName;
+          row.designerEmail = designerEmail;
+          row.services = service;
           row.details = details;
           row.status = status;
           this.tableRows.push(row);
@@ -81,6 +101,7 @@ async mounted() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       this.useremail = user.email;
+      this.uid = user.uid;
     }
     this.display(this.useremail);
   });

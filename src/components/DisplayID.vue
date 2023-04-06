@@ -110,13 +110,14 @@
                                       :rules="[required]"
                                       ></v-combobox>
                                   </v-col>                       
-                                  <v-col cols="12" md="10">
-                                    <v-text-field
+                                  <v-col md="12">
+                                    <v-textarea 
                                       v-model="details"
-                                      label="Details"
-                                      required
-                                      color="primary"
-                                    ></v-text-field>
+                                      label="Description"  
+                                      clearable 
+                                      no-resize
+                                      autogrow
+                                    ></v-textarea>
                                   </v-col>
                                 </v-row>
                               </v-container>
@@ -150,6 +151,7 @@
           user: false,
           useremail: '',
           uid:'',
+          cusName:'',
           IDname: '',
           IDemail:'',
           IDphone:'',
@@ -159,7 +161,7 @@
           website:'',
           ratings:'',
           reviews:[],
-          jobReq:[], //customer
+          jobReq:[],
           show: [],
           engageProj: false,
           services: ['Painting', 'Tiling', 'Furniture Layout', 'Hardware', 'Lighting Design'],
@@ -180,10 +182,10 @@
         })
       },
       methods:{
-        async display(useremail) { //how to get ID reference when clicked into profile
+        async display(useremail) {
           const db = getFirestore(firebaseApp);
           try{
-            const docRef = doc(db,"portfolio",String(useremail))
+            const docRef = doc(db,"portfolio",String(useremail)) //check if portfolio already created
             let credentials = await getDoc(docRef);
             let cred = credentials.data();
             this.IDname = cred.name;
@@ -195,12 +197,12 @@
             this.reviews = cred.reviews;
             this.services = cred.services;
             this.show = new Array(this.pastProjects.length).fill(false)
-          } catch {
-            const docRef2 = doc(db,"users",String(this.uid))
-            let credentials2 = await getDoc(docRef2);
-            let cred2 = credentials2.data();
-            this.IDname = cred2.name;
-            this.IDemail = cred2.email;
+          } catch { //portfolio not created, can only display limited information
+            const docRef = doc(db,"users",String(this.uid))
+            let credentials = await getDoc(docRef);
+            let cred = credentials.data();
+            this.IDname = cred.name;
+            this.IDemail = cred.email;
           }
         },
         required(value) {
@@ -208,26 +210,19 @@
             return 'Required.';
           }
         },
-        async submitRequest() {
-          let jr_col = collection(db, "Job Requests")
+        async submitRequest() { //only customers can submit request
+          const docRef = doc(db,"users",String(this.uid))
+          let customerDoc = await getDoc(docRef);
+          let customerData = customerDoc.data();
+          this.cusName = customerData.name;
+          let jr_col = collection(db, "Job Requests") //count number of job requests
           const counts = await getCountFromServer(jr_col);
-          let jrid = counts.data().count + 1;
+          let jrid = counts.data().count + 123153;
           console.log(jrid)
           await setDoc(doc(db,"Job Requests", jrid.toString()),{
-            ID:jrid, DesignerEmail:this.IDemail , CustomerEmail:this.useremail, CustomerName:this.user.displayName, 
+            ID:jrid, DesignerEmail:this.IDemail , DesignerName: this.IDname, CustomerEmail:this.useremail, CustomerName:this.cusName, 
             Services: this.idservices, Details:this.details, Status:"Pending", Rating: null, Review: null,
           });
-          const docRef2 = doc(db,"Users",String(this.useremail)) //customer
-          const docRef3 = doc(db,"Users",String(this.useremail)) //ID (change)
-          this.jobReq.push(jrid);
-          const data2 = {
-            JobReq: this.jobReq
-          }
-          const data3 = {
-            JobReq: this.jobReq
-          }
-          await updateDoc(docRef2, data2)
-          await updateDoc(docRef3, data3)
           this.engageProj = false;
         }
       }
