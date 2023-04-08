@@ -1,5 +1,8 @@
 <template>
     <div><SideBar2 /></div>
+    <!-- View Conditionally renders customer or interior designer components
+    for editing customer profile or interior designer portfolio.
+    Determines whether user type data from mounting is customer or interior designer -->
     <div v-if="usertype == 'Customer'"><EditCustomer /></div>
     <div v-else-if="usertype == 'Interior Designer'"><EditID /></div>
 </template>
@@ -31,6 +34,8 @@
             };
         },
         methods: {
+            // Takes a documentSnapshot of Firebase document of user to be used to populate
+            // data view
             async getUserData(docRef) {
                 const docSnap = await getDoc(docRef);
                 return docSnap;
@@ -46,6 +51,8 @@
             },
         },
         beforeMount() {
+            // Before Mounting, website retrieves user authentication data from Firestore firebase
+            // to populate the user data for data prop. Used to conditionally render ID or customer view
             const auth = getAuth();
             // auth state listener to know if authentication changes and so that uid wont be undefined
             onAuthStateChanged(auth, (user) => {
