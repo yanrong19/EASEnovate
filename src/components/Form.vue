@@ -1,5 +1,8 @@
 <template>
     <div>
+        <!-- Registration form for new users
+        Allows for input of profile name, unique email address, password
+        and type of user -->
         <form ref="registerForm" @submit.prevent="submitForm">
             <div class="container">
                 <div>
@@ -71,9 +74,10 @@
             <v-btn block type="submit" color="primary">Register</v-btn>
             <!-- </v-row> -->
         </form>
+        <!-- Snackbar to display alert for registration outcome, be it
+        successful or error message to inform user -->
         <v-snackbar v-model="snackbar">
             {{ snackbarText }}
-
             <template v-slot:actions>
                 <v-btn color="pink" variant="text" @click="snackbar = false">
                     Close
@@ -107,6 +111,9 @@
         },
         methods: {
             submitForm() {
+                // Submits the contents of registration form to register a new user
+                // Creates a new firebase document inside the users collection
+                // Generates a unique uid for firebase document using in built firebase/auth API
                 const db = getFirestore(firebaseApp);
                 const auth = getAuth();
                 console.log(this.email);
@@ -114,6 +121,12 @@
                 console.log(this.usertype);
                 console.log("form submitted");
 
+                // Attempts to create a new user using email and password
+                // Checks whether account successfully registered
+                // If successful,
+                //      Updates the snackbar text and displays account successfully registered
+                // Else,
+                //      Updates the snackbar text and displays reason for failed registration
                 createUserWithEmailAndPassword(auth, this.email, this.password)
                     .then((userCredential) => {
                         const userDoc = doc(db, "users", auth.currentUser.uid);
@@ -133,6 +146,7 @@
                         var errorCode = error.code;
                         console.log(errorCode);
                         this.snackbar = true;
+                        // Updates snackbarText depending on auth error code
                         if (errorCode == "auth/weak-password") {
                             this.snackbarText =
                                 "Password has to be longer than 6 characters";
