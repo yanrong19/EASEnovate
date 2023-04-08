@@ -9,7 +9,7 @@
             "
         >
             <header>Easenovate</header>
-            <p>Rennovating with Ease</p>
+            <p>Renovating with Ease</p>
         </div>
 
         <div class="mainContainer">
@@ -67,6 +67,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .container {
+        margin-right: 4%;
+        margin-left: 4%;
     }
     .logo {
         position: absolute;
