@@ -17,6 +17,8 @@
                     <th width="25%">Action</th>
                 </tr>
 
+                <!-- Table renders different views and buttons for Customers and Interior Designers
+                Table renders all job requests that the user is involved in, be it customer or ID -->
                 <tr v-for="(row, index) in tableRows" :key="row.customerName">
                     <td>{{ index + 1 }}</td>
                     <td>{{ row.jrid }}</td>
@@ -45,6 +47,10 @@
                     <td>{{ row.details }}</td>
                     <td>{{ row.status }}</td>
 
+                    <!-- Conditionally renders different buttons for Customer depending on status of request
+                    Accepted: -Finish button to complete a job request -> Completed, Abort button to rescind request -> Aborted
+                    Completed: - Review Button to leave a review, routed to another page -> Reviewed
+                    Reviewed: - View Review button to view existing review of job -->
                     <td v-if="usertype == 'Customer'">
                         <v-btn
                             v-if="row.status == 'Accepted'"
@@ -74,6 +80,10 @@
                             >View Review</v-btn
                         >
                     </td>
+
+                    <!-- Conditionally renders different buttons for Interior Designer depending on status of request
+                    Pending: -Accept button to accept a job request -> Accepted, Decline button to decline request -> Declined
+                    Accepted: - Abort button to rescind request -> Aborted -->
                     <td v-if="usertype == 'Interior Designer'">
                         <v-btn
                             v-if="row.status == 'Pending'"
@@ -128,6 +138,9 @@
             };
         },
         methods: {
+            // Function to display all the job requests pertaining to the user
+            // Iterates through the Job Requests firebase collection to check for customer or id email
+            // corresponding to the user. If true, displays in the table
             display: async function (useremail) {
                 const docRef = doc(db, "users", String(this.uid));
                 let credentials = await getDoc(docRef);
@@ -164,6 +177,8 @@
                     }
                 });
             },
+
+            //Updates the job request document with the most current status
             action: async function (useremail, jrid, msg) {
                 const db = getFirestore(firebaseApp);
                 await updateDoc(doc(db, "Job Requests", jrid.toString()), {
@@ -172,6 +187,8 @@
                 this.tableRows = [];
                 this.display(useremail);
             },
+
+            // Passes the requestID prop to route to Leave Review component
             shareProfile(jrowID) {
                 console.log(jrowID);
                 this.$router.push({
