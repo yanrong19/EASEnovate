@@ -4,19 +4,63 @@
         <div class="search__container">
             <input class="search__input" type="text" placeholder="Search" v-model = "search">
         </div>
-        <div class="filter-container">
+        <!-- <div class="filter-container">
             <button class="filter-btn" @click="toggleFilterDropdown">Filter <i class="fa fa-caret-down"></i></button>
-            <div class="filter-dropdown" v-show="showFilterDropdown">
-                <!-- dropdown content here -->
-            </div>
-        </div>
-        <div class="sort-container">
+            <div class="filter-dropdown" v-show="showFilterDropdown"> -->
+                <div class="text-center">
+                    <v-menu
+                      open-on-hover
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                color="primary"
+                                v-bind="props"
+                            >
+                            Filter
+                            </v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-item
+                            v-for="(item, index) in items"
+                            :key="index"
+                            >
+                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
+            <!-- </div>
+        </div> -->
+        <!-- <div class="sort-container">
             <button class="sort-btn" @click="toggleSortDropdown">Sort <i class="fa fa-caret-down"></i></button>
-            <div class="sort-dropdown" v-show="showSortDropdown">
-                <!-- dropdown content here -->
+            <div class="sort-dropdown" v-show="showSortDropdown"> -->
+                <div class="text-center">
+                    <v-menu
+                      open-on-hover
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                color="primary"
+                                v-bind="props"
+                            >
+                            Sort
+                            </v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-item
+                            v-for="(item, index) in items"
+                            :key="index"
+                            >
+                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
             </div>
-        </div>
-    </div>
+        <!-- </div>
+    </div> -->
     <div class = "company">
         <div v-for="profile in filteredProfiles">
             <CompanyProfile :profile="profile"></CompanyProfile>
@@ -28,10 +72,16 @@
 <script>
 import CompanyProfile from '../components/CompanyProfile.vue';
 import firebaseApp from "../firebase.js";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, query } from "firebase/firestore";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
+
+const portfolio = collection(db, "portfolio");
+const querySnapshot = await getDocs(portfolio);
+const q = querySnapshot.forEach((doc) => {
+    console.log(doc.rating, ">=","4.0")
+})
                 
 export default {
     name: "ProfileCards",
@@ -40,7 +90,7 @@ export default {
         filteredProfiles() {
             return this.profiles.filter((profile) => {
                 return (
-                    profile.companyName
+                    profile.name
                            .toLowerCase()
                            .indexOf(this.search.toLowerCase()) != -1
                         );
@@ -53,13 +103,16 @@ export default {
             search: '',
             showFilterDropdown: false,
             showSortDropdown: false,
-            profiles : []
+            profiles : [],
+            items: [
+                {title: "Rating"},
+            ]
         }
     },
 
     methods: {
         async fetchProfiles() {
-            let profilesSnapShot = await getDocs(collection(db, "profiles"));
+            let profilesSnapShot = await getDocs(collection(db, "portfolio"));
             let profiles = [];
             profilesSnapShot.forEach((profile) => {
                     let profileData = profile.data();
@@ -88,7 +141,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 3vw;
+    padding-left: 6vw;
     width: 80vw;
     align-self: center;
     padding-bottom: 4vh;

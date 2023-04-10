@@ -6,6 +6,7 @@ import EditProfile from "../Views/EditProfile.vue";
 import DisplayProfile from "../views/DisplayProfile.vue";
 import JobRequest from "@/views/JobRequest.vue";
 import LeaveReview from "@/views/LeaveReview.vue";
+import DisplayID from "@/views/DisplayID.vue";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const routes = [
@@ -26,6 +27,12 @@ const routes = [
     meta: {
       requiresAuth: true, // Indicates that this route requires authentication
     },
+  },
+  {
+    path: "/displayid/:profile",
+    name: "DisplayID",
+    component: DisplayID,
+    props:true
   },
   {
     path: "/profile",
