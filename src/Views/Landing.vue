@@ -13,7 +13,7 @@
             possible. Thank you Easenovate"
         </h2>
         <h3>Thomas, Easenovate Homeowner</h3>
-        <div id="container4">
+        <div id="container4" class="text-center">
             <v-btn @click.native="enter" color="primary">Login</v-btn>
         </div>
     </body>
@@ -42,6 +42,7 @@
     #container4 {
         justify-content: center;
         align-items: center;
+        text-align: center;
     }
     h2 {
         color: rgba(7, 114, 94, 0.22);
