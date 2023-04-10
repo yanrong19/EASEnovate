@@ -3,7 +3,7 @@
         <v-card
             position="absolute"
             elevation="10"
-            style="top: 10vh; left: 10vw; right: 40vw; bottom: 64vh"
+            style="top: 5vh; left: 10vw; right: 40vw; bottom: 64vh"
         >
             <v-avatar
                 style="top: 2vh; left: -22vw; right: 40vw; bottom: 65vh"
@@ -30,7 +30,17 @@
                 <v-card-text class="text-h6" align="left"
                     >Rating {{ ratings }}</v-card-text
                 >
-                <v-card-text class="text-h6" align="left">Price $$</v-card-text>
+                <v-card-text class="text-h6" align="left">
+                    Services:
+                    <v-chip
+                        class="ma-2"
+                        color="secondary"
+                        v-for="serv in services"
+                        :key="serv"
+                    >
+                        {{ serv }}</v-chip
+                    >
+                </v-card-text>
             </v-card>
         </v-card>
         <v-card
@@ -56,17 +66,20 @@
                     </div>
                 </div>
             </v-card>
-            <br />
-            <v-card-title class="text-h4" align="left">About Me</v-card-title>
-            <v-card-text class="text-h6" align="left">{{ desc }}</v-card-text>
+            <v-card-title class="text-h4 my-3" align="left"
+                ><strong>About Me</strong></v-card-title
+            >
+            <v-card-text class="text-h6 mx-3" align="left">{{
+                desc
+            }}</v-card-text>
             <br />
             <v-card-text class="text-h5" align="left"
-                >Past Projects</v-card-text
+                ><strong>Past Projects</strong></v-card-text
             >
             <v-card-text class="text-h6" align="left">
                 <v-card v-for="(row, index) in pastProjects" :key="index">
                     <v-card-text class="text-h6" align="left"
-                        ><strong>{{ row.title }}</strong></v-card-text
+                        ><h4>{{ row.title }}</h4></v-card-text
                     >
                     <v-btn
                         :icon="
@@ -86,7 +99,9 @@
                     </v-expand-transition>
                 </v-card>
             </v-card-text>
-            <v-card-text class="text-h5" align="left">Website</v-card-text>
+            <v-card-text class="text-h5" align="left"
+                ><strong>Website</strong></v-card-text
+            >
             <v-card-text class="text-h6" align="left"
                 ><a :href="'//' + website">{{ website }}</a></v-card-text
             >
@@ -97,7 +112,7 @@
                 rounded="xl"
                 v-bind="props"
                 :elevation="isHovering ? 15 : 6"
-                style="top: 10vh; left: 60vw; right: 5vw"
+                style="top: 5vh; left: 60vw; right: 5vw"
             >
                 <v-card-title class="text-h4">{{ IDname }}</v-card-title>
                 <v-card-subtitle>Interior Designer</v-card-subtitle>
@@ -154,13 +169,14 @@
                                                         :rules="[required]"
                                                     ></v-combobox>
                                                 </v-col>
-                                                <v-col cols="12" md="10">
-                                                    <v-text-field
+                                                <v-col md="12">
+                                                    <v-textarea
                                                         v-model="details"
-                                                        label="Details"
-                                                        required
-                                                        color="primary"
-                                                    ></v-text-field>
+                                                        label="Description"
+                                                        clearable
+                                                        no-resize
+                                                        autogrow
+                                                    ></v-textarea>
                                                 </v-col>
                                             </v-row>
                                         </v-container>
@@ -185,6 +201,13 @@
                             </v-dialog>
                         </v-col>
                     </v-row>
+                </v-card-actions>
+                <v-card-actions>
+                    <v-spacer />
+                    <v-btn color="primary" block @click="goEdit"
+                        >Edit Portfolio</v-btn
+                    >
+                    <v-spacer />
                 </v-card-actions>
             </v-card>
         </v-hover>
@@ -211,6 +234,8 @@
             return {
                 user: false,
                 useremail: "",
+                uid: "",
+                cusName: "",
                 IDname: "",
                 IDemail: "",
                 IDphone: "",
@@ -218,9 +243,9 @@
                 expertise: "",
                 pastProjects: [],
                 website: "",
-                ratings: [],
+                ratings: "",
                 reviews: [],
-                jobReq: [], //customer
+                jobReq: [],
                 show: [],
                 engageProj: false,
                 services: [
@@ -241,61 +266,66 @@
                 if (user) {
                     this.user = user;
                     this.useremail = user.email;
+                    this.uid = user.uid;
                     this.display(this.useremail);
                 }
             });
         },
         methods: {
             async display(useremail) {
-                //how to get ID reference when clicked into profile
                 const db = getFirestore(firebaseApp);
-                const docRef = doc(db, "Users", String(useremail)); //change
-                let credentials = await getDoc(docRef);
-                let cred = credentials.data();
-                this.IDname = cred.IDname;
-                this.IDemail = cred.Email;
-                this.IDphone = cred.Phone;
-                //this.services = cred.Services;
-                this.desc = cred.Desc;
-                this.pastProjects = cred.PastProjects;
-                this.website = cred.Website;
-                this.ratings = cred.Ratings;
-                this.reviews = cred.Reviews;
-                this.services = cred.Services;
-                this.show = new Array(this.pastProjects.length).fill(false);
+                try {
+                    const docRef = doc(db, "portfolio", String(useremail)); //check if portfolio already created
+                    let credentials = await getDoc(docRef);
+                    let cred = credentials.data();
+                    this.IDname = cred.name;
+                    this.IDemail = cred.email;
+                    this.IDphone = cred.phone;
+                    this.desc = cred.description;
+                    this.pastProjects = cred.PastProjects;
+                    this.website = cred.website;
+                    this.reviews = cred.reviews;
+                    this.services = cred.services;
+                    this.show = new Array(this.pastProjects.length).fill(false);
+                } catch {
+                    //portfolio not created, can only display limited information
+                    const docRef = doc(db, "users", String(this.uid));
+                    let credentials = await getDoc(docRef);
+                    let cred = credentials.data();
+                    this.IDname = cred.name;
+                    this.IDemail = cred.email;
+                }
             },
             required(value) {
                 if (value.length == 0) {
                     return "Required.";
                 }
             },
+            goEdit() {
+                this.$router.push("/profile/edit");
+            },
             async submitRequest() {
-                let jr_col = collection(db, "Job Requests");
+                //only customers can submit request
+                const docRef = doc(db, "users", String(this.uid));
+                let customerDoc = await getDoc(docRef);
+                let customerData = customerDoc.data();
+                this.cusName = customerData.name;
+                let jr_col = collection(db, "Job Requests"); //count number of job requests
                 const counts = await getCountFromServer(jr_col);
-                let jrid = counts.data().count + 1;
+                let jrid = counts.data().count + 123153;
                 console.log(jrid);
                 await setDoc(doc(db, "Job Requests", jrid.toString()), {
                     ID: jrid,
                     DesignerEmail: this.IDemail,
+                    DesignerName: this.IDname,
                     CustomerEmail: this.useremail,
-                    CustomerName: this.user.displayName,
+                    CustomerName: this.cusName,
                     Services: this.idservices,
                     Details: this.details,
                     Status: "Pending",
                     Rating: null,
                     Review: null,
                 });
-                const docRef2 = doc(db, "Users", String(this.useremail)); //customer
-                const docRef3 = doc(db, "Users", String(this.useremail)); //ID (change)
-                this.jobReq.push(jrid);
-                const data2 = {
-                    JobReq: this.jobReq,
-                };
-                const data3 = {
-                    JobReq: this.jobReq,
-                };
-                await updateDoc(docRef2, data2);
-                await updateDoc(docRef3, data3);
                 this.engageProj = false;
             },
         },

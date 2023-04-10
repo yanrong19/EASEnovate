@@ -1,5 +1,8 @@
 <template>
     <div class="d-flex align-center flex-column">
+        <!-- Cardview to edit customer profile information
+        Form only allows the customer to edit profile name, contact number
+        and preferred services -->
         <v-card width="70%" class="mx-auto">
             <v-card-item>
                 <h1>Update Your Profile</h1>
@@ -14,17 +17,20 @@
             <v-card-item>
                 <v-sheet class="mx-auto">
                     <v-form fast-fail ref="form">
+                        <!-- Textfield has to be filled with minimum 3 characters to be a valid name -->
                         <v-text-field
                             v-model="name"
                             label="Profile Name"
                             :rules="nameRules"
                         ></v-text-field>
+                        <!-- Textfield has to have input of 8 digits as we require a local Singaporean number -->
                         <v-text-field
                             v-model="contact"
                             type="number"
                             label="Contact Number"
                             :rules="contactRules"
                         ></v-text-field>
+                        <!-- Multiselect for customers to indicate their current preferred services -->
                         <v-select
                             chips
                             v-model="services"
@@ -36,9 +42,12 @@
                         ></v-select>
                         <v-card-actions>
                             <v-spacer />
+                            <!-- Button to go back to view profile view without modifying firebase collection -->
                             <v-btn @click.native="enter">
                                 Back <v-icon end icon="mdi-arrow-left"></v-icon
                             ></v-btn>
+                            <!-- Button to submit the form and update the firebase collection with 
+                                new customer profile data -->
                             <v-btn @click.native="submit">
                                 Save
                                 <v-icon end icon="mdi-account-check"></v-icon
@@ -68,6 +77,7 @@
                 email: "",
                 contact: "",
                 dataLoaded: false,
+                // Inbuilt rules for form submission for profile name and contact number
                 nameRules: [
                     (value) => {
                         if (value?.length > 3) {
@@ -102,10 +112,12 @@
                 return docSnap;
             },
             enter() {
-                //this.$router.go(-1);
                 this.$router.push("/profile");
             },
             async submit() {
+                // Function checks whether the form inputs are invalid
+                // If valid, calls the savetofs() function which updates
+                // the firebase collection
                 const { valid } = await this.$refs.form.validate();
                 if (valid) {
                     console.log("validated");
@@ -115,6 +127,8 @@
                 }
             },
             async savetofs() {
+                // Function that attempts to update the firebase documents
+                // with the new customer information
                 try {
                     const db = getFirestore(firebaseApp);
                     const docRef = await setDoc(doc(db, "users", this.user), {
@@ -133,6 +147,8 @@
             },
         },
         beforeMount() {
+            // Before Mounting, website retrieves user authentication data from Firestore firebase
+            // to populate the user data for data prop. Used to update the documents
             const auth = getAuth();
             // auth state listener to know if authentication changes and so that uid wont be undefined
             onAuthStateChanged(auth, (user) => {

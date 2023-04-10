@@ -1,5 +1,8 @@
 <template>
     <div class="d-flex align-center flex-column">
+        <!-- Card View displaying customer profile information
+        Uses data from firebase collections to display customer name,
+        customer email address, contact number and desired services -->
         <v-card width="70%" class="mx-auto">
             <v-card-item>
                 <h1>Your Profile</h1>
@@ -26,13 +29,6 @@
             <v-card-item>
                 <v-card-title> Service Preferences </v-card-title>
                 <div id="list">
-                    <!-- <v-hover>
-                        <v-list
-                            :items="services"
-                            variant="outlined"
-                            hover
-                        ></v-list
-                    ></v-hover>-->
                     <v-card-actions>
                         <v-chip
                             color="teal"
@@ -45,6 +41,7 @@
                 </div>
             </v-card-item>
             <v-card-actions>
+                <!-- Option to edit customer profile details and be routed to editprofile view -->
                 <v-spacer />
                 <v-btn variant="outlined" @click.native="editDetails">
                     Update Profile
@@ -54,9 +51,6 @@
             </v-card-actions>
         </v-card>
         <v-btn variant="outlined" @click.native="goReview">Review Page</v-btn>
-        <v-btn variant="outlined" @click.native="goRequests"
-            >Requests Page</v-btn
-        >
     </div>
 </template>
 
@@ -99,6 +93,8 @@
             console.log("created");
         },
         beforeMount() {
+            // Before Mounting, website retrieves user authentication data from Firestore firebase
+            // to populate the user data for data prop. Used to render the data for profile
             const auth = getAuth();
             // auth state listener to know if authentication changes and so that uid wont be undefined
             onAuthStateChanged(auth, (user) => {
