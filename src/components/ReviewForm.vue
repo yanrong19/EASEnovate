@@ -1,5 +1,7 @@
 <template>
     <div class="d-flex align-center flex-column">
+        <!-- Review form that accepts prop job request ID from parent Leave Review Component 
+        requestID is used to access firebase document to populate the job details-->
         <v-card width="70%">
             <v-card-item>
                 <h1>Leave a Review</h1>
@@ -50,6 +52,8 @@
                     <v-spacer />
                 </v-card-actions>
 
+                <!-- Conditionally renders form for customer to fill in review if no review has been submitted or
+                Displays the previously submitted review on the job by the customer -->
                 <v-card-item>
                     <v-card-title v-if="this.status == 'Completed'">
                         Write a review
@@ -74,6 +78,9 @@
                         </p>
                     </v-sheet>
                 </v-container>
+
+                <!-- Conditionally renders button to submit the review if no review submitted or
+                go back to the job request page if a review was submitted previously -->
                 <v-card-actions>
                     <v-spacer />
                     <v-btn
@@ -127,6 +134,7 @@
                 this.$router.push("/jobrequest");
             },
 
+            // Function used to submit the contents of the form and update the firebase job document
             async updateReview() {
                 await updateDoc(doc(db, "Job Requests", this.requestID), {
                     Rating: this.rating,
@@ -136,6 +144,8 @@
                 this.goRequest();
             },
 
+            //Function used to populate the data of the component for display using the requestID by
+            // Fetching requests from Firebase
             async getJob() {
                 const db = getFirestore(firebaseApp);
                 const docRef = doc(db, "Job Requests", this.requestID);
