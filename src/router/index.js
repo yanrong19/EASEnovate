@@ -31,6 +31,25 @@ const routes = [
     },
   },
   {
+    path: "/displayid",
+    name: "DisplayID",
+    component: DisplayID,
+  },
+  {
+    path: "/editid",
+    name: "EditID",
+    component: EditID,
+  },
+  /*
+  {
+    path: "/profile",
+    name: "Profile",
+    component: CustomerProfile,
+    meta: {
+      requiresAuth: true,
+    },
+  },*/
+  {
     path: "/profile",
     name: "DisplayProfile",
     component: DisplayProfile,
@@ -50,7 +69,7 @@ const routes = [
 
   {
     path: "/jobrequest",
-    name: "JobRequest",
+    name: "jobrequest",
     component: JobRequest,
     meta: {
       requiresAuth: true,
