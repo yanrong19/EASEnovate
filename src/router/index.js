@@ -32,9 +32,10 @@ const routes = [
     },
   },
   {
-    path: "/displayid",
+    path: "/displayid/:profile",
     name: "DisplayID",
     component: DisplayID,
+    props:true
   },
   {
     path: "/editid",

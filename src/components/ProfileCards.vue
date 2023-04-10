@@ -40,7 +40,7 @@ export default {
         filteredProfiles() {
             return this.profiles.filter((profile) => {
                 return (
-                    profile.companyName
+                    profile.name
                            .toLowerCase()
                            .indexOf(this.search.toLowerCase()) != -1
                         );
@@ -59,7 +59,7 @@ export default {
 
     methods: {
         async fetchProfiles() {
-            let profilesSnapShot = await getDocs(collection(db, "profiles"));
+            let profilesSnapShot = await getDocs(collection(db, "portfolio"));
             let profiles = [];
             profilesSnapShot.forEach((profile) => {
                     let profileData = profile.data();
