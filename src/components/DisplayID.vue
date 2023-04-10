@@ -1,5 +1,6 @@
 <template>
     <v-container align="center">
+        
         <v-card
             position="absolute"
             elevation="10"
@@ -101,6 +102,7 @@
             >
                 <v-card-title class="text-h4">{{ IDname }}</v-card-title>
                 <v-card-subtitle>Interior Designer</v-card-subtitle>
+                <p>{{ profile }}</p>
                 <v-card-actions>
                     <v-row>
                         <v-col class="d-flex justify-start">
@@ -207,6 +209,7 @@
     const db = getFirestore(firebaseApp);
 
     export default {
+        props:["profile"],
         data() {
             return {
                 user: false,

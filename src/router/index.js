@@ -31,12 +31,13 @@ const routes = [
     meta: {
       requiresAuth: true, // Indicates that this route requires authentication
     },
-  },/*
+  },
   {
-    path: "/displayid",
+    path: "/displayid/:profile",
     name: "DisplayID",
     component: DisplayID,
-  },
+    props:true
+  },/*s
   {
     path: "/editid",
     name: "EditID",

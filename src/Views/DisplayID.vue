@@ -7,6 +7,14 @@
             SideBar,
             DisplayID,
         },
+        data() {
+            return {
+                profile: []
+            }
+        },
+        mounted() {
+            this.profile = this.$route.params.profile
+        }
     };
 </script>
 <template>
@@ -24,7 +32,7 @@
             <div style="height: 100vh"></div>
         </div>
         <div class="displayID">
-            <DisplayID />
+            <DisplayID :profile = "profile"/>
         </div>
     </div>
 </template>

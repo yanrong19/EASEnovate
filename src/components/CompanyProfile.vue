@@ -17,21 +17,21 @@
         src="https://images-platform.99static.com//9w6j6Mz0QaUGaODZEd0S3Z7WkpY=/407x200:907x700/fit-in/500x500/99designs-contests-attachments/70/70543/attachment_70543787"
         cover
       >
-        <v-card-title>{{ profile.companyName }}</v-card-title>
+        <v-card-title>{{ profile.name }}</v-card-title>
       </v-img>
   
       <v-card-subtitle class="pt-4">
-        {{ profile.id }}
+        {{ profile.email }}
       </v-card-subtitle>
   
       <v-card-text>
-        <div>{{ profile.body }}</div>
+        <div>{{ profile.description }}</div>
   
-        <div>Whitsunday Island, Whitsunday Islands</div>
+        <div>{{ profile.services }}</div>
       </v-card-text>
   
       <v-card-actions>
-        <v-btn color="rgba(65, 117, 107, 1)">
+        <v-btn @click = shareProfile(profile) color="rgba(65, 117, 107, 1)">
           View More
         </v-btn>
       </v-card-actions>
@@ -41,7 +41,12 @@
 
 <script>
 export default {
-    props:["profile"]
+    props:["profile"],
+    methods: {
+      shareProfile(companyProfile){
+        this.$router.push({name: "DisplayID", params: {profile: JSON.stringify(companyProfile)}})
+      }
+    }
 }
 </script>
 
