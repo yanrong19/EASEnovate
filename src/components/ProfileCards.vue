@@ -7,13 +7,57 @@
         <div class="filter-container">
             <button class="filter-btn" @click="toggleFilterDropdown">Filter <i class="fa fa-caret-down"></i></button>
             <div class="filter-dropdown" v-show="showFilterDropdown">
-                <!-- dropdown content here -->
+                <div class="text-center">
+                    <v-menu
+                      open-on-hover
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                color="primary"
+                                v-bind="props"
+                            >
+                            Dropdown
+                            </v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-item
+                            v-for="(item, index) in items"
+                            :key="index"
+                            >
+                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
             </div>
         </div>
         <div class="sort-container">
             <button class="sort-btn" @click="toggleSortDropdown">Sort <i class="fa fa-caret-down"></i></button>
             <div class="sort-dropdown" v-show="showSortDropdown">
-                <!-- dropdown content here -->
+                <div class="text-center">
+                    <v-menu
+                      open-on-hover
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                color="primary"
+                                v-bind="props"
+                            >
+                            Dropdown
+                            </v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-item
+                            v-for="(item, index) in items"
+                            :key="index"
+                            >
+                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
             </div>
         </div>
     </div>
@@ -53,7 +97,11 @@ export default {
             search: '',
             showFilterDropdown: false,
             showSortDropdown: false,
-            profiles : []
+            profiles : [],
+            items: [
+                {title: "Rating"},
+                {title: "Price"}
+            ]
         }
     },
 
