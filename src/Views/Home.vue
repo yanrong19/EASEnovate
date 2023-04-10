@@ -1,33 +1,19 @@
 <template>
-    <!-- <SideBar :menuList="menu" /> -->
-    <!-- <SideBar2 /> -->
-    <!-- <div>Home testing</div> -->
-    <div v-if="dataLoaded">
-        <div class="home">
-            <!--<div>
-        <div><TopScreen /></div>
-      </div>
-      <div>
-        <div><ProfileCards /></div>
-      </div>
-    </div>-->
-
-            <!-- <v-app> -->
-            <v-layout>
-                <v-app-bar color="secondary" class="flex-grow-0" app dark>
-                    <v-app-bar-title>EASENOVATE</v-app-bar-title>
-                </v-app-bar>
-            </v-layout>
-            <TopScreen />
-            <ProfileCards />
-            <!-- </v-app> -->
-
-            <!-- <ProfileCards /> -->
+  <!-- <SideBar :menuList="menu" /> -->
+  <!-- <SideBar2 /> -->
+  <!-- <div>Home testing</div> -->
+  <div v-if="dataLoaded">
+    <div class="home">
+      <v-app> 
+        <TopScreen />
+        <div class="profile">
+          <ProfileCards />
         </div>
+      </v-app>
     </div>
-
-    <div v-else>Loading</div>
-    <!-- <div style="height: 100vh"></div>
+  </div>
+  <div v-else>Loading</div>
+  <!-- <div style="height: 100vh"></div>
   <div style="height: 100vh"></div> -->
 </template>
 
@@ -100,7 +86,10 @@
 </script>
 
 <style scoped>
-    .home {
-        background-color: #f1f2f3;
-    }
+.home {
+  background-color: #f1f2f3;
+}
+.profile {
+  padding-top: 7vw;
+}
 </style>
