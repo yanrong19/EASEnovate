@@ -210,6 +210,9 @@
             return 'Required.';
           }
         },
+        goEdit() {
+                this.$router.push("/profile/edit");
+        },
         async submitRequest() { //only customers can submit request
           const docRef = doc(db,"users",String(this.uid))
           let customerDoc = await getDoc(docRef);
