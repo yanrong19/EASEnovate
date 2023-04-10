@@ -14,6 +14,8 @@
                 dataLoaded: false,
             };
         },
+
+        // Instantiates component data with prop data
         async mounted() {
             this.requestID = this.$route.params.requestID;
             console.log(this.requestID, "View");
@@ -22,6 +24,8 @@
     };
 </script>
 <template>
+    <!-- Passes the Request ID prop to child Review Form to render the 
+        review form for specific job request -->
     <div class="mainContainer" v-if="dataLoaded">
         <ReviewForm :requestID="requestID" />
     </div>
