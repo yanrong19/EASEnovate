@@ -327,7 +327,7 @@
                     try {
                         this.rating = totalRating / this.jobReq.length
                     } catch {
-                        this.rating = 0.5
+                        this.rating = 0
                     }
                 } catch {
                     //portfolio not created, can only display limited information
