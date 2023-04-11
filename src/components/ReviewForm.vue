@@ -137,11 +137,13 @@
 
             // Function used to submit the contents of the form and update the firebase job document
             async updateReview() {
+                // Updates the job request document with the new input of reviews and ratings
                 await updateDoc(doc(db, "Job Requests", this.requestID), {
                     Rating: this.rating,
                     Review: this.review,
                     Status: "Reviewed",
                 });
+                // Updates the ID portfolio to add a new pointer to a completed review of a job request
                 const docRef = doc(db, "portfolio", this.idEmail);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
