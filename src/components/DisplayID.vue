@@ -1,6 +1,5 @@
 <template>
     <v-container align="center">
-        
         <v-card
             position="absolute"
             elevation="10"
@@ -28,10 +27,10 @@
                 >
             </v-card>
             <v-card style="top: -5vh; left: 0vw" max-width="48vw">
-                <v-card-text class="text-h6" align="left"
-                    >Rating {{ ratings }}</v-card-text
-                >
                 <v-card-text class="text-h6" align="left">
+                    <v-rating v-model="rating" color="orange" readonly align="left"></v-rating> 
+                    <span style="font-size: 16px; position: absolute; top: 4vh; left:15.5vw">({{jobReq.length}})</span>
+                    <v-card-text class="text-h6" align="left">
                     Services:
                     <v-chip
                         class="ma-2"
@@ -41,13 +40,14 @@
                     >
                         {{ serv }}</v-chip
                     >
+                    </v-card-text>
                 </v-card-text>
             </v-card>
         </v-card>
         <v-card
             position="absolute"
             elevation="5"
-            style="top: 38vh; left: 10vw; right: 40vw"
+            style="top: 38vh; left: 10vw; right: 40vw;"
         >
             <v-card height="40vh">
                 <div class="pastProjects">
@@ -75,6 +75,12 @@
             }}</v-card-text>
             <br />
             <v-card-text class="text-h5" align="left"
+                ><h4>Website</h4></v-card-text
+            >
+            <v-card-text class="text-h6" align="left"
+                ><a :href="'//' + website">{{ website }}</a></v-card-text
+            >
+            <v-card-text class="text-h5" align="left"
                 ><strong>Past Projects</strong></v-card-text
             >
             <v-card-text class="text-h6" align="left">
@@ -100,13 +106,20 @@
                     </v-expand-transition>
                 </v-card>
             </v-card-text>
-            <v-card-text class="text-h5" align="left"
-                ><strong>Website</strong></v-card-text
-            >
-            <v-card-text class="text-h6" align="left"
-                ><a :href="'//' + website">{{ website }}</a></v-card-text
-            >
-        </v-card>
+            <v-card elevation="5" class="mb-5">
+            <h2 align="left" class="ma-3">Reviews</h2>
+            <div class="checkreviews">
+                    <div v-for="rev in reviews" :key="rev">
+                        <v-card  width="46.6vw" height="29.5vh" align="left" class="my-2">
+                            <v-card-title><h3>{{rev.CusName}}</h3></v-card-title>
+                            <v-rating v-model="rev.Rating" color="orange" readonly></v-rating>
+                            <v-card-text><i><span style="font-size: 18px">{{ rev.Review }}</span></i></v-card-text>
+                        </v-card>
+                    </div>
+                </div>
+            </v-card>
+        </v-card> <br>
+
         <v-hover v-slot="{ isHovering, props }">
             <v-card
                 position="fixed"
@@ -117,7 +130,6 @@
             >
                 <v-card-title class="text-h4">{{ IDname }}</v-card-title>
                 <v-card-subtitle>Interior Designer</v-card-subtitle>
-                <p>{{ profile }}</p>
                 <v-card-actions>
                     <v-row>
                         <v-col class="d-flex justify-start">
@@ -246,8 +258,8 @@
                 expertise: "",
                 pastProjects: [],
                 website: "",
-                ratings: "",
-                reviews: [],
+                rating: "",
+                reviews:[],
                 jobReq: [],
                 show: [],
                 engageProj: false,
@@ -262,17 +274,24 @@
                 details: "",
             };
         },
-        mounted() {
+        mounted() {      
             const auth = getAuth();
             const user = auth.currentUser;
             onAuthStateChanged(auth, (user) => {
                 if (user) {
+                  if (this.profile !== undefined) {
+
+                    this.useremail = JSON.parse(this.profile).email;
+                    console.log(this.useremail);
+                    this.display(this.useremail);
+                  } else {
                     this.user = user;
                     this.useremail = user.email;
                     this.uid = user.uid;
                     this.display(this.useremail);
+                  }
                 }
-            });
+            })
         },
         methods: {
             async display(useremail) {
@@ -287,9 +306,29 @@
                     this.desc = cred.description;
                     this.pastProjects = cred.PastProjects;
                     this.website = cred.website;
-                    this.reviews = cred.reviews;
+                    this.jobReq = cred.requests;
                     this.services = cred.services;
                     this.show = new Array(this.pastProjects.length).fill(false);
+
+                    let totalRating = 0
+                    for (let i = 0; i < this.jobReq.length; i++) {
+                        let arr = [];
+                        const docRef2 = doc(db, "Job Requests", this.jobReq[i]);
+                        let jrs = await getDoc(docRef2);
+                        let jr = jrs.data();
+                        arr.Review = jr.Review;
+                        arr.CusName = jr.CustomerName;
+                        arr.Rating = jr.Rating;
+                        totalRating += jr.Rating;
+                        console.log(arr);
+                        this.reviews.push(arr);
+                    }
+                    console.log(totalRating)
+                    try {
+                        this.rating = totalRating / this.jobReq.length
+                    } catch {
+                        this.rating = 0.5
+                    }
                 } catch {
                     //portfolio not created, can only display limited information
                     const docRef = doc(db, "users", String(this.uid));
@@ -350,6 +389,15 @@
         max-width: 100vw;
         overflow-x: scroll;
         overflow-y: hidden;
+        white-space: nowrap;
+        background-color: rgb(168, 198, 224);
+    }
+
+    .checkreviews {
+        height: 100%;
+        max-height: 31.5vh;
+        overflow-x: hidden;
+        overflow-y: scroll;
         white-space: nowrap;
         background-color: rgb(168, 198, 224);
     }

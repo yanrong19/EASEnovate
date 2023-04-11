@@ -27,7 +27,15 @@
       <v-card-text>
         <div>{{ profile.description }}</div>
   
-        <div>{{ profile.services }}</div>
+        <div><v-chip
+              class="ma-1 mt-4"
+              color="secondary"
+              v-for="serv in profile.services"
+              :key="serv"
+            >
+              {{ serv }}
+            </v-chip>
+        </div>
       </v-card-text>
   
       <v-card-actions>
