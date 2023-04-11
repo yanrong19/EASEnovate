@@ -126,11 +126,12 @@
                 rating: 3,
                 review: "",
                 status: "",
+                jobs: [],
                 dataLoaded: false,
             };
         },
         methods: {
-            goRequest() {
+            async goRequest() {
                 this.$router.push("/jobrequest");
             },
 
@@ -141,6 +142,16 @@
                     Review: this.review,
                     Status: "Reviewed",
                 });
+                const docRef = doc(db, "portfolio", this.idEmail);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    this.jobs = docSnap.data().requests;
+                    this.jobs.push(this.jobID);
+                }
+                await updateDoc(doc(db, "portfolio", this.idEmail), {
+                    requests: this.jobs,
+                });
+
                 this.goRequest();
             },
 
