@@ -61,9 +61,14 @@
             </div>
         <!-- </div>
     </div> -->
-    <div class = "company">
-        <div v-for="profile in filteredProfiles">
-            <CompanyProfile :profile="profile"></CompanyProfile>
+    <div v-if = "filteredProfiles.length == 0">
+        <p class = "text-center"> No Result Found...</p>
+    </div>
+    <div v-else>
+        <div class = "company">
+            <div v-for="profile in filteredProfiles">
+                <CompanyProfile :profile="profile"></CompanyProfile>
+            </div>
         </div>
     </div>
 </div>
