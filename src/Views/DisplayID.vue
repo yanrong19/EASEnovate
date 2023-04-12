@@ -1,26 +1,26 @@
 <script>
     import DisplayID from "../components/DisplayID.vue";
-    import SideBar from "../components/SideBar.vue";
+    import SideBar2 from "../components/SideBar2.vue";
 
     export default {
         components: {
-            SideBar,
+            SideBar2,
             DisplayID,
         },
         data() {
             return {
-                profile: []
-            }
+                profile: [],
+            };
         },
         mounted() {
-            this.profile = this.$route.params.profile
-        }
+            this.profile = this.$route.params.profile;
+        },
     };
 </script>
 <template>
     <div class="mainContainer">
         <div class="sideBar">
-            <SideBar :menuList="menu" />
+            <SideBar2 />
             <!-- <div>Home testing</div> -->
             <div v-if="dataLoaded">
                 <!-- <div>{{ name }}</div>
@@ -32,7 +32,7 @@
             <div style="height: 100vh"></div>
         </div>
         <div class="displayID">
-            <DisplayID :profile = "profile"/>
+            <DisplayID :profile="profile" />
         </div>
     </div>
 </template>

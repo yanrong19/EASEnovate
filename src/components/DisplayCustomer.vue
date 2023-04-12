@@ -50,7 +50,6 @@
                 <v-spacer />
             </v-card-actions>
         </v-card>
-        <v-btn variant="outlined" @click.native="goReview">Review Page</v-btn>
     </div>
 </template>
 
