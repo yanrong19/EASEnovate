@@ -1,63 +1,69 @@
 <template>
-    <div class="d-flex align-center flex-column">
-        <!-- Cardview to edit customer profile information
+    <v-container>
+        <div class="d-flex align-center flex-column">
+            <!-- Cardview to edit customer profile information
         Form only allows the customer to edit profile name, contact number
         and preferred services -->
-        <v-card width="80%" class="mx-auto">
-            <v-card-item>
-                <h1>Update Your Profile</h1>
-            </v-card-item>
-            <v-card-actions>
-                <v-spacer />
-                <v-avatar color="info" size="100">
-                    <v-icon icon="mdi-account-circle" size="100"> </v-icon>
-                </v-avatar>
-                <v-spacer />
-            </v-card-actions>
-            <v-card-item>
-                <v-sheet class="mx-auto">
-                    <v-form fast-fail ref="form">
-                        <!-- Textfield has to be filled with minimum 3 characters to be a valid name -->
-                        <v-text-field
-                            v-model="name"
-                            label="Profile Name"
-                            :rules="nameRules"
-                        ></v-text-field>
-                        <!-- Textfield has to have input of 8 digits as we require a local Singaporean number -->
-                        <v-text-field
-                            v-model="contact"
-                            type="number"
-                            label="Contact Number"
-                            :rules="contactRules"
-                        ></v-text-field>
-                        <!-- Multiselect for customers to indicate their current preferred services -->
-                        <v-select
-                            chips
-                            v-model="services"
-                            :items="allServices"
-                            label="Select"
-                            multiple
-                            hint="Pick your preferred services"
-                            persistent-hint
-                        ></v-select>
-                        <v-card-actions>
-                            <v-spacer />
-                            <!-- Button to go back to view profile view without modifying firebase collection -->
-                            <v-btn @click.native="enter">
-                                Back <v-icon end icon="mdi-arrow-left"></v-icon
-                            ></v-btn>
-                            <!-- Button to submit the form and update the firebase collection with 
+            <v-card width="80%" class="mx-auto">
+                <v-card-item>
+                    <h1 align="center">Update Your Profile</h1>
+                </v-card-item>
+                <v-card-actions>
+                    <v-spacer />
+                    <v-avatar color="info" size="100">
+                        <v-icon icon="mdi-account-circle" size="100"> </v-icon>
+                    </v-avatar>
+                    <v-spacer />
+                </v-card-actions>
+                <v-card-item>
+                    <v-sheet class="mx-auto">
+                        <v-form fast-fail ref="form">
+                            <!-- Textfield has to be filled with minimum 3 characters to be a valid name -->
+                            <v-text-field
+                                v-model="name"
+                                label="Profile Name"
+                                :rules="nameRules"
+                            ></v-text-field>
+                            <!-- Textfield has to have input of 8 digits as we require a local Singaporean number -->
+                            <v-text-field
+                                v-model="contact"
+                                type="number"
+                                label="Contact Number"
+                                :rules="contactRules"
+                            ></v-text-field>
+                            <!-- Multiselect for customers to indicate their current preferred services -->
+                            <v-select
+                                chips
+                                v-model="services"
+                                :items="allServices"
+                                label="Select"
+                                multiple
+                                hint="Pick your preferred services"
+                                persistent-hint
+                            ></v-select>
+                            <v-card-actions>
+                                <v-spacer />
+                                <!-- Button to go back to view profile view without modifying firebase collection -->
+                                <v-btn @click.native="enter">
+                                    Back
+                                    <v-icon end icon="mdi-arrow-left"></v-icon
+                                ></v-btn>
+                                <!-- Button to submit the form and update the firebase collection with 
                                 new customer profile data -->
-                            <v-btn @click.native="submit">
-                                Save
-                                <v-icon end icon="mdi-account-check"></v-icon
-                            ></v-btn>
-                            <v-spacer /> </v-card-actions
-                    ></v-form>
-                </v-sheet>
-            </v-card-item>
-        </v-card>
-    </div>
+                                <v-btn @click.native="submit">
+                                    Save
+                                    <v-icon
+                                        end
+                                        icon="mdi-account-check"
+                                    ></v-icon
+                                ></v-btn>
+                                <v-spacer /> </v-card-actions
+                        ></v-form>
+                    </v-sheet>
+                </v-card-item>
+            </v-card>
+        </div>
+    </v-container>
 </template>
 
 <script>

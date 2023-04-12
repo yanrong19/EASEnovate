@@ -1,7 +1,7 @@
 <template>
     <v-container align="center">
         <div class="createUpdate" v-if="user">
-            <h1>CREATE/UPDATE YOUR PORTFOLIO</h1>
+            <!-- <h1>CREATE/UPDATE YOUR PORTFOLIO</h1>
             <br />
             <div
                 position="absolute"
@@ -9,43 +9,55 @@
             >
                 <CloudImage :path="link" />
             </div>
-            <br /><br />
+            <br /><br /> -->
             <v-form id="credForm">
                 <v-card class="px-3 py-1" width="80%">
-                    <h3>Personal Details</h3>
-                    <br />
-                    <v-row>
-                        <v-col md="12">
-                            <v-text-field
-                                v-model="id_name"
-                                id="id_name"
-                                label="Name"
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col md="5">
-                            <v-text-field
-                                v-model="id_email"
-                                id="id_email"
-                                disabled
-                            ></v-text-field>
-                        </v-col>
-                        <v-col md="3">
-                            <v-text-field
-                                v-model="id_phone"
-                                id="id_phone"
-                                label="Phone"
-                            ></v-text-field>
-                        </v-col>
-                        <v-col md="4">
-                            <v-file-input
-                                type="file"
-                                ref="myfile"
-                                label="Profile Photo"
-                            ></v-file-input>
-                        </v-col>
-                    </v-row>
+                    <v-card-item>
+                        <h1>Update Your Portfolio</h1>
+                        <br />
+                        <div
+                            position="absolute"
+                            class="pa-1 bg-secondary rounded-circle d-inline-block"
+                        >
+                            <CloudImage :path="link" />
+                        </div>
+                    </v-card-item>
+                    <v-card-item>
+                        <h3>Personal Details</h3>
+                        <br />
+                        <v-row>
+                            <v-col md="12">
+                                <v-text-field
+                                    v-model="id_name"
+                                    id="id_name"
+                                    label="Name"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col md="5">
+                                <v-text-field
+                                    v-model="id_email"
+                                    id="id_email"
+                                    disabled
+                                ></v-text-field>
+                            </v-col>
+                            <v-col md="3">
+                                <v-text-field
+                                    v-model="id_phone"
+                                    id="id_phone"
+                                    label="Phone"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col md="4">
+                                <v-file-input
+                                    type="file"
+                                    ref="myfile"
+                                    label="Profile Photo"
+                                ></v-file-input>
+                            </v-col>
+                        </v-row>
+                    </v-card-item>
                 </v-card>
                 <br />
                 <v-card class="px-3 py-1" width="80%">
@@ -246,6 +258,7 @@
                 });
                 document.getElementById("credForm").reset();
                 this.$router.push("/profile");
+                console.log("UPLOADING CHANGE");
             },
             addProj() {
                 this.pastProjects.push({
