@@ -9,10 +9,11 @@
                 style="top: 2vh; left: -22vw; right: 40vw; bottom: 65vh"
                 size="x-large"
             >
-                <v-img
+                <!-- <v-img
                     src="https://cdn.vuetifyjs.com/images/john.jpg"
                     alt="John"
-                ></v-img>
+                ></v-img> -->
+                <CloudImage2 :profile="profile"/>
             </v-avatar>
             <v-card
                 style="top: -6vh; left: 1vw"
@@ -51,20 +52,7 @@
         >
             <v-card height="40vh">
                 <div class="pastProjects">
-                    <div class="scroll_container">
-                        <div class="pp">
-                            <img src="/assets/room1.jpg" />
-                        </div>
-                        <div class="pp">
-                            <img src="/assets/room2.jpg" />
-                        </div>
-                        <div class="pp">
-                            <img src="/assets/room3.jpg" />
-                        </div>
-                        <div class="pp">
-                            <img src="/assets/room4.jpg" />
-                        </div>
-                    </div>
+                    <ProjImage :path="link2"/>
                 </div>
             </v-card>
             <v-card-title class="text-h4 my-3" align="left"
@@ -218,7 +206,7 @@
                 </v-card-actions>
                 <v-card-actions>
                     <v-spacer />
-                    <v-btn color="primary" block @click="goEdit"
+                    <v-btn color="primary" block @click="goEdit" v-if="useremail==IDemail"
                         >Edit Portfolio</v-btn
                     >
                     <v-spacer />
@@ -240,6 +228,8 @@
         collection,
         getCountFromServer,
     } from "firebase/firestore";
+    import CloudImage2 from "./CloudImage2.vue";
+    import ProjImage from "./ProjImage.vue";
     import { getAuth, onAuthStateChanged } from "firebase/auth";
     const db = getFirestore(firebaseApp);
 
@@ -250,6 +240,8 @@
                 user: false,
                 useremail: "",
                 uid: "",
+                link:"",
+                link2:"",
                 cusName: "",
                 IDname: "",
                 IDemail: "",
@@ -274,7 +266,7 @@
                 details: "",
             };
         },
-        mounted() {      
+        beforeMount() {      
             const auth = getAuth();
             const user = auth.currentUser;
             onAuthStateChanged(auth, (user) => {
@@ -289,9 +281,14 @@
                     this.useremail = user.email;
                     this.uid = user.uid;
                     this.display(this.useremail);
+                    console.log(this.link)
+                    
                   }
                 }
             })
+        },
+        components:{
+            CloudImage2, ProjImage
         },
         methods: {
             async display(useremail) {
@@ -309,6 +306,7 @@
                     this.jobReq = cred.requests;
                     this.services = cred.services;
                     this.show = new Array(this.pastProjects.length).fill(false);
+                    console.log(this.jobReq)
 
                     let totalRating = 0
                     for (let i = 0; i < this.jobReq.length; i++) {

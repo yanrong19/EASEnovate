@@ -1,11 +1,17 @@
 <script>
     import DisplayID from "../components/DisplayID.vue";
     import SideBar2 from "../components/SideBar2.vue";
+    import CloudImage from "../components/CloudImage.vue";
+    import CloudImage2 from "../components/CloudImage2.vue";
+    import ProjImage from "../components/ProjImage.vue";
 
     export default {
         components: {
             SideBar2,
             DisplayID,
+            CloudImage,
+            CloudImage2,
+            ProjImage
         },
         data() {
             return {

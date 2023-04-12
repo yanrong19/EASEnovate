@@ -1,25 +1,36 @@
 <template>
-  <img style="height: 10%; width:10%; border-radius:50%" :src="url" alt="" />
+  <img style="height: 8%; width:15%; border-radius:40% ;" :src="url" alt="" />
 </template>
 
 <script>
 import { storage } from "../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
-
+import {getAuth, onAuthStateChanged} from "firebase/auth"
 export default {
-  props: {
-    path: String,
-  },
+  props:["profile"],
   data: () => {
     return {
-      url: "https://via.placeholder.com/50x50",
+      user:false,
+      email:"",
+      url: "https://via.placeholder.com/500x500",
+      link:""
+
     };
   },
   async mounted() {
-    console.log(this.path);
-    await getDownloadURL(ref(storage, this.path)).then(
-      (download_url) => (this.url = download_url)
-    );
+      const auth = getAuth();
+      const user = auth.currentUser;
+      onAuthStateChanged(auth, async (user) =>  {
+          if (user) {
+              console.log(this.profile)
+              this.email = JSON.parse(this.profile).email;
+              this.link = String(`folder/${this.email}.png`);
+              await getDownloadURL(ref(storage, this.link)).then(
+                  (download_url) => (this.url = download_url)
+              );
+          }
+      });
+
   },
 };
 </script>

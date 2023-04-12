@@ -2,7 +2,7 @@
   <v-container align="center">
       <div class="createUpdate" v-if="user">
         <h1>CREATE/UPDATE YOUR PORTFOLIO</h1> <br>
-          <CloudImage :path="link"/>
+          <CloudImage :path="link" v-model="pic"/>
         <v-form id="credForm">
           <v-card class="px-3 py-1">
             <h3>Personal Details</h3><br>
@@ -52,6 +52,8 @@
                 <v-text-field v-model="website" id="website" label="Website"></v-text-field>
               </v-col>
             </v-row>
+              Featured Project
+              <v-file-input type="file" ref="myfile2" label="Featured Project Photo"></v-file-input>
             <h3>Past Projects</h3> <br>
             <v-row>
                 <v-btn class="mx-4" @click="addProj">Add Past Project</v-btn>
@@ -90,13 +92,15 @@
   import {getFirestore} from "firebase/firestore";
   import {getDoc, doc, updateDoc, setDoc} from "firebase/firestore";
   import {getAuth, onAuthStateChanged} from "firebase/auth"
-import CloudImage from "./CloudImage.vue";
+  import CloudImage from "./CloudImage.vue";
     export default {
     data() {
         return {
             user: false,
             uid: "",
+            email:"",
             link: "",
+            link2:"",
             id_name: "",
             id_email: "",
             id_phone: "",
@@ -107,10 +111,7 @@ import CloudImage from "./CloudImage.vue";
                 }],
             services: "",
             website: "",
-            reviews: [{
-                    description: "",
-                    ratings: ""
-                }]
+            requests:[],
         };
     },
     beforeMount() {
@@ -120,9 +121,11 @@ import CloudImage from "./CloudImage.vue";
             if (user) {
                 this.user = user;
                 this.uid = user.uid;
+                this.email = user.email;
                 console.log(this.uid);
                 this.display(this.uid);
-                this.link = String(`folder/${this.uid}.png`);
+                this.link = String(`folder/${this.email}.png`);
+                this.link2 = String(`folder/${this.email}_project.png`);
             }
         });
     },
@@ -143,7 +146,7 @@ import CloudImage from "./CloudImage.vue";
                 this.website = cred2.website;
                 this.id_phone = cred2.phone;
                 this.services = cred2.services;
-                this.reviews = cred2.reviews;
+                this.requests = cred2.requests;
             }
             catch {
                 this.reviews = [{
@@ -155,10 +158,19 @@ import CloudImage from "./CloudImage.vue";
         upload: function () {
             console.log(this.link);
             const storageRef = ref(storage, this.link);
-            console.log();
-            uploadBytes(storageRef, this.$refs.myfile.files[0]).then((snapshot) => {
+            const storageRef2 = ref(storage, this.link2);
+            let pic = this.$refs.myfile.files[0];
+            if (pic !== undefined) {
+              uploadBytes(storageRef, this.$refs.myfile.files[0]).then((snapshot) => {
                 console.log("uploaded");
-            });
+              });
+            }
+            let pic2 = this.$refs.myfile2.files[0];
+            if (pic2 !== undefined) {
+              uploadBytes(storageRef2, this.$refs.myfile2.files[0]).then((snapshot) => {
+                console.log("uploaded");
+              });
+          }
         },
         async uploadChange() {
             const db = getFirestore(firebaseApp);
@@ -169,7 +181,7 @@ import CloudImage from "./CloudImage.vue";
             let pastProjs = this.pastProjects;
             let services = this.services;
             let website = this.website;
-            let reviews = this.reviews;
+            let requests = this.requests;
             this.upload();
             await updateDoc(doc(db, "users", String(this.uid)), {
                 name: id_name
@@ -182,7 +194,7 @@ import CloudImage from "./CloudImage.vue";
                 PastProjects: pastProjs,
                 services: services,
                 website: website,
-                reviews: reviews
+                requests: requests
             });
             document.getElementById("credForm").reset();
             this.$router.push("/profile");
