@@ -3,7 +3,7 @@
         <!-- Cardview to edit customer profile information
         Form only allows the customer to edit profile name, contact number
         and preferred services -->
-        <v-card width="70%" class="mx-auto">
+        <v-card width="80%" class="mx-auto">
             <v-card-item>
                 <h1>Update Your Profile</h1>
             </v-card-item>
