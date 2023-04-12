@@ -3,7 +3,7 @@
         <!-- Card View displaying customer profile information
         Uses data from firebase collections to display customer name,
         customer email address, contact number and desired services -->
-        <v-card width="70%" class="mx-auto">
+        <v-card width="80%" class="mx-auto">
             <v-card-item>
                 <h1>Your Profile</h1>
             </v-card-item>

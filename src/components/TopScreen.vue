@@ -35,8 +35,8 @@
             <v-list density="compact" nav>
                 <v-list-item
                     prepend-icon="mdi-account"
-                    title="Account"
-                    value="account"
+                    title="Profile"
+                    value="profile"
                     href="/profile"
                 ></v-list-item>
                 <v-list-item
