@@ -78,13 +78,21 @@
                     </v-row>
                     <v-row>
                         <v-col md="5">
-                            <v-combobox
+                            <!-- <v-combobox
                                 v-model="services"
                                 id="services"
                                 label="Services"
                                 multiple
                                 chips
-                            ></v-combobox>
+                            ></v-combobox> --><v-select
+                                chips
+                                v-model="services"
+                                :items="allServices"
+                                label="Select"
+                                multiple
+                                hint="Pick your provided services"
+                                persistent-hint
+                            ></v-select>
                         </v-col>
                         <v-col md="7">
                             <v-text-field
@@ -179,6 +187,16 @@
                         description: "",
                         ratings: "",
                     },
+                ],
+                allServices: [
+                    "In-home Consultation",
+                    "E-Design",
+                    "Full-Service",
+                    "Kitchen and Bathroom Design",
+                    "Eco Design",
+                    "Outdoor Living",
+                    "Custom Furniture Design",
+                    "Art Procurement and Curation",
                 ],
             };
         },
