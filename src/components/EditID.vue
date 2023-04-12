@@ -2,9 +2,7 @@
   <v-container align="center">
       <div class="createUpdate" v-if="user">
         <h1>CREATE/UPDATE YOUR PORTFOLIO</h1> <br>
-        <div position="absolute" class="pa-1 bg-secondary rounded-circle d-inline-block">
           <CloudImage :path="link"/>
-        </div><br><br>
         <v-form id="credForm">
           <v-card class="px-3 py-1">
             <h3>Personal Details</h3><br>

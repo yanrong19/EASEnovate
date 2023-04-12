@@ -4,7 +4,7 @@
             <v-navigation-drawer expand-on-hover rail app>
                 <v-list>
                     <v-list-item
-                        prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+                        prepend-avatar="https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png"
                         :title="name"
                         :subtitle="email"
                     ></v-list-item>

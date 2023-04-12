@@ -1,5 +1,5 @@
 <template>
-  <img style="height: 20vh" :src="url" alt="" />
+  <img style="height: 10%; width:10%; border-radius:50%" :src="url" alt="" />
 </template>
 
 <script>
