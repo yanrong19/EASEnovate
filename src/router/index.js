@@ -51,7 +51,6 @@ const routes = [
       requiresAuth: true,
     },
   },
-
   {
     path: "/jobrequest",
     name: "jobrequest",
@@ -59,6 +58,15 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
+  },
+  {
+    path: "/review/:requestID",
+    name: "LeaveReview",
+    component: LeaveReview,
+    meta: {
+      requiresAuth:true,
+    },
+    props:true
   },
 
   {

@@ -15,59 +15,119 @@
       <img src="../assets/homePageImg.png" alt="Full-width image" />
     </div> -->
 
-    <v-app-bar color="secondary" class="flex-grow-0" app dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title>EASENOVATE</v-app-bar-title>
-    </v-app-bar>
-    <v-navigation-drawer app v-model="drawer">
-        <v-list dense nav>
-          <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-            title="Sandra Adams"
-            subtitle="sandra_a88@gmailcom"
-          ></v-list-item>
-        </v-list>
+        <v-app-bar color="secondary" class="flex-grow-0" app dark>
+            <v-app-bar-nav-icon
+                @click.stop="drawer = !drawer"
+            ></v-app-bar-nav-icon>
+            <v-app-bar-title>EASENOVATE</v-app-bar-title>
+        </v-app-bar>
+        <v-navigation-drawer app v-model="drawer">
+            <v-list dense nav>
+                <v-list-item
+                    prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+                    :title="name"
+                    :subtitle="email"
+                ></v-list-item>
+            </v-list>
 
-        <v-divider></v-divider>
+            <v-divider></v-divider>
 
-        <v-list density="compact" nav>
-          <v-list-item
-            prepend-icon="mdi-account"
-            title="Account"
-            value="account"
-            href="/profile"
-          ></v-list-item>
-          <v-list-item
-            prepend-icon="mdi-home"
-            title="Home"
-            value="home"
-            href="/home"
-          ></v-list-item>
-          <v-list-item
-            prepend-icon="mdi-wrench"
-            title="Job"
-            value="job"
-          ></v-list-item>
+            <v-list density="compact" nav>
+                <v-list-item
+                    prepend-icon="mdi-account"
+                    title="Account"
+                    value="account"
+                    href="/profile"
+                ></v-list-item>
+                <v-list-item
+                    prepend-icon="mdi-home"
+                    title="Home"
+                    value="home"
+                    href="/home"
+                ></v-list-item>
+                <v-list-item
+                    prepend-icon="mdi-wrench"
+                    title="Jobs"
+                    value="jobs"
+                    href="/jobrequest"
+                ></v-list-item>
 
-          <v-divider></v-divider>
-          <v-list-item
-            prepend-icon="mdi-logout"
-            title="Logout"
-            value="logout"
-          ></v-list-item>
-        </v-list>
-      </v-navigation-drawer> 
-  </div>
+                <v-divider></v-divider>
+                <v-list-item
+                    prepend-icon="mdi-logout"
+                    title="Logout"
+                    value="logout"
+                    href="/"
+                ></v-list-item>
+            </v-list>
+        </v-navigation-drawer>
+    </div>
 </template>
 
 <script>
-import SideBar2 from "../components/SideBar2.vue";
-export default {
-  components : {SideBar2},
-  data: () => ({
-    drawer: false,
-  }),
-};
+    import SideBar2 from "../components/SideBar2.vue";
+    import { getDoc, doc } from "@firebase/firestore";
+    import firebaseApp from "../firebase";
+    import { getAuth, onAuthStateChanged } from "@firebase/auth";
+    import { getFirestore } from "@firebase/firestore";
+
+    export default {
+        components: { SideBar2 },
+        data() {
+            return {
+                name: "",
+                usertype: "",
+                services: [],
+                email: "",
+                contact: "",
+                dataLoaded: false,
+                drawer: false,
+            };
+        },
+        methods: {
+            async getUserData(docRef) {
+                const docSnap = await getDoc(docRef);
+                return docSnap;
+            },
+            editDetails() {
+                this.$router.push("profile/edit");
+            },
+            goReview() {
+                this.$router.push("/review");
+            },
+            goRequests() {
+                this.$router.push("/profile/jobrequest");
+            },
+        },
+        beforeCreate() {
+            console.log("beforecreate");
+        },
+        created() {
+            console.log("created");
+        },
+        beforeMount() {
+            const auth = getAuth();
+            // auth state listener to know if authentication changes and so that uid wont be undefined
+            onAuthStateChanged(auth, (user) => {
+                const uid = user.uid;
+                const db = getFirestore(firebaseApp);
+                const docRef = doc(db, "users", uid);
+                const docSnap = this.getUserData(docRef);
+                docSnap.then((data) => {
+                    console.log(data.data());
+                    this.name = data.data().name;
+                    this.usertype = data.data().usertype;
+                    this.email = data.data().email;
+                    this.contact = data.data().contact;
+                    this.services = data.data().Services;
+                    this.dataLoaded = true;
+                });
+            });
+        },
+        unmounted() {
+            console.log("unmounted");
+        },
+    };
 </script>
 
 <style>
