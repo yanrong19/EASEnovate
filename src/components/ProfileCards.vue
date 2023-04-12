@@ -48,25 +48,23 @@
                             </v-btn>
                         </template>
 
-                        <v-list>
-                            <v-list-item
-                            v-for="(item, index) in items"
-                            :key="index"
-                            >
-                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                        <v-list>  
+                            <v-list-item>
+                                <v-btn @click= ascend()>Ascending</v-btn>
+                            </v-list-item>
+                            <v-list-item>
+                                <v-btn @click= descend()>Descending</v-btn>
                             </v-list-item>
                         </v-list>
                     </v-menu>
                 </div>
             </div>
-        <!-- </div>
-    </div> -->
-    <div v-if = "filteredProfiles.length == 0">
+    <div v-if = "this.profiles.length == 0">
         <p class = "text-center"> No Result Found...</p>
     </div>
     <div v-else>
         <div class = "company">
-            <div v-for="profile in filteredProfiles">
+            <div v-for="profile in this.profiles">
                 <CompanyProfile :profile="profile"></CompanyProfile>
             </div>
         </div>
@@ -93,14 +91,34 @@ export default {
     components: {CompanyProfile},
     computed : {
         filteredProfiles() {
-            return this.profiles.filter((profile) => {
+            this.profiles = this.profiles.filter((profile) => {
                 return (
                     profile.name
                            .toLowerCase()
                            .indexOf(this.search.toLowerCase()) != -1
                         );
                     });
-                }
+                },
+        ascend() {
+            function compare(a, b) {
+                if (a.rating < b.rating)
+                    return -1;
+                if (a.rating > b.rating)
+                    return 1;
+                return 0;
+    }
+            this.profiles = this.profiles.sort(compare)
+        },
+        descend() {
+            function compare(a, b) {
+                if (a.rating > b.rating)
+                    return -1;
+                if (a.rating < b.rating)
+                    return 1;
+                return 0;
+    }
+            this.profiles = this.profiles.sort(compare)
+        },       
     },
     
     data() {
