@@ -142,12 +142,11 @@
                     </div>
                 </v-card>
                 <br />
+                <!-- color="primary" -->
                 <v-btn
                     id="uploadbutton"
-                    color="primary"
                     elevation="4"
                     height="5vh"
-                    tonal
                     v-on:click="uploadChange"
                     >Upload</v-btn
                 >
@@ -300,5 +299,17 @@
         margin-bottom: 10px;
         display: inline-block;
         text-align: center;
+    }
+
+    button {
+        background-color: #6b3fc8;
+        border: 2px solid #6b3fc8;
+        color: white;
+        transition-duration: 0.4s;
+    }
+
+    button:hover {
+        background-color: white;
+        color: black;
     }
 </style>

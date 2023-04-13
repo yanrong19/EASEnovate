@@ -195,14 +195,15 @@
     }
 
     button {
-        margin: 0 2em 0 2em;
-        background-color: #3aafa9;
-        border: 2px solid #3aafa9;
+        background-color: #6b3fc8;
+        border: 2px solid #6b3fc8;
+        color: white;
         transition-duration: 0.4s;
     }
 
     button:hover {
         background-color: white;
+        color: black;
     }
 
     .container {
