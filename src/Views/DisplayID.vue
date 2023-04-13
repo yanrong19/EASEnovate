@@ -2,25 +2,41 @@
     import DisplayID from "../components/DisplayID.vue";
     import SideBar2 from "../components/SideBar2.vue";
 
-    export default {
-        components: {
-            SideBar2,
-            DisplayID,
-        },
-        created: function () {
-            document.body.style.backgroundColor = "#c6eeec";
-        },
-        destroyed: function () {
-            document.body.style.backgroundColor = null;
-        },
-        data() {
-            return {
-                profile: [],
-            };
-        },
-        mounted() {
-            this.profile = this.$route.params.profile;
-        },
+        export default {
+            components: {
+                SideBar2,
+                DisplayID,
+            },
+            created: function () {
+                document.body.style.backgroundColor = "#c6eeec";
+            },
+            destroyed: function () {
+                document.body.style.backgroundColor = null;
+            },
+            data() {
+                return {
+                    profile: [],
+                    dataLoaded: true,
+                }
+              };
+
+      beforeMount() {
+        console.log("before mount in display id view");
+      },
+      mounted() {
+        console.log("mounted in display id view trying twice");
+        console.log(this.$route);
+        this.profile = this.$route.params.profile;
+        console.log(this.profile);
+        console.log("in display ID view");
+      },
+
+      //   methods: {
+      //     links: function () {
+      //       console.log("in links ");
+      //       console.log(this.$route); // should work
+      //     },
+      //   },
     };
 </script>
 <template>

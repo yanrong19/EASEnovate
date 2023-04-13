@@ -17,9 +17,18 @@ export default {
   },
   async mounted() {
     console.log(this.path);
-    await getDownloadURL(ref(storage, this.path)).then(
-      (download_url) => (this.url = download_url)
-    );
+    console.log("mounted for cloud image");
+  },
+  watch: {
+    path: async function (newVal, oldVal) {
+      // watch it
+      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+      console.log("in watch for cloud image");
+      console.log("this is for " + newVal);
+      await getDownloadURL(ref(storage, newVal)).then(
+        (download_url) => (this.url = download_url)
+      );
+    },
   },
 };
 </script>
