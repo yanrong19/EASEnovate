@@ -190,13 +190,13 @@
                                 elevation="4"
                                 height="6vh"
                                 tonal
-                                v-if="this.useremail == this.currentEmail"
+                                v-if="this.IDemail == this.currentEmail"
                                 >Edit Your Portfolio</v-btn
                             >
                             <v-dialog
                                 v-model="engageProj"
                                 width="70vw"
-                                v-if="this.useremail != this.currentEmail"
+                                v-if="this.IDemail != this.currentEmail"
                             >
                                 <template v-slot:activator="{ props }">
                                     <v-btn
@@ -272,304 +272,186 @@
     import firebaseApp from "../firebase.js";
     import { getFirestore } from "firebase/firestore";
     import {
-      getDocs,
-      getDoc,
-      doc,
-      setDoc,
-      updateDoc,
-      collection,
-      getCountFromServer,
+        getDocs,
+        getDoc,
+        doc,
+        setDoc,
+        updateDoc,
+        collection,
+        getCountFromServer,
     } from "firebase/firestore";
     import { getAuth, onAuthStateChanged } from "firebase/auth";
     import CloudImage from "./CloudImage.vue";
     const db = getFirestore(firebaseApp);
 
-        export default {
-            props: ["profile"],
-            data() {
-                return {
-                    user: false,
-                    currentEmail: "",
-                    useremail: "",
-                    uid: "",
-                    cusName: "",
-                    IDname: "",
-                    IDemail: "",
-                    IDphone: "",
-                    desc: "",
-                    expertise: "",
-                    pastProjects: [],
-                    website: "",
-                    rating: "",
-                    reviews: [],
-                    jobReq: [],
-                    show: [],
-                    engageProj: false,
-                    services: [
-                        "Painting",
-                        "Tiling",
-                        "Furniture Layout",
-                        "Hardware",
-                        "Lighting Design",
-                    ],
-                    idservices: "",
-                    details: "",
-                };
-            },
-            mounted() {
-                const auth = getAuth();
-                const user = auth.currentUser;
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        this.currentEmail = user.email;
-                        if (this.profile !== undefined) {
-                            this.useremail = JSON.parse(this.profile).email;
-                            console.log(this.useremail);
-                            this.display(this.useremail);
-                        } else {
-                            this.user = user;
-                            this.useremail = user.email;
-                            this.uid = user.uid;
-                            this.display(this.useremail);
-                        }
-                    }
-                });
-            },
-            methods: {
-                async display(useremail) {
-                    const db = getFirestore(firebaseApp);
-                    try {
-                        const docRef = doc(db, "portfolio", String(useremail)); //check if portfolio already created
-                        let credentials = await getDoc(docRef);
-                        let cred = credentials.data();
-                        this.IDname = cred.name;
-                        this.IDemail = cred.email;
-                        this.IDphone = cred.phone;
-                        this.desc = cred.description;
-                        this.pastProjects = cred.PastProjects;
-                        this.website = cred.website;
-                        this.jobReq = cred.requests;
-                        this.services = cred.services;
-                        this.show = new Array(this.pastProjects.length).fill(false);
-
-                        let totalRating = 0;
-                        for (let i = 0; i < this.jobReq.length; i++) {
-                            let arr = [];
-                            const docRef2 = doc(db, "Job Requests", this.jobReq[i]);
-                            let jrs = await getDoc(docRef2);
-                            let jr = jrs.data();
-                            arr.Review = jr.Review;
-                            arr.CusName = jr.CustomerName;
-                            arr.Rating = jr.Rating;
-                            totalRating += jr.Rating;
-                            console.log(arr);
-                            this.reviews.push(arr);
-                        }
-                        console.log(totalRating);
-                        try {
-                            this.rating = totalRating / this.jobReq.length;
-                        } catch {
-                            this.rating = 0;
-                        }
-                    } catch {
-                        //portfolio not created, can only display limited information
-                        const docRef = doc(db, "users", String(this.uid));
-                        let credentials = await getDoc(docRef);
-                        let cred = credentials.data();
-                        this.IDname = cred.name;
-                        this.IDemail = cred.email;
-                    }
-                },
-                required(value) {
-                    if (value.length == 0) {
-                        return "Required.";
-                    }
-                },
-                goEdit() {
-                    this.$router.push("/profile/edit");
-                },
-                async submitRequest() {
-                    //only customers can submit request
-                    const docRef = doc(db, "users", String(this.uid));
-                    let customerDoc = await getDoc(docRef);
-                    let customerData = customerDoc.data();
-                    this.cusName = customerData.name;
-                    let jr_col = collection(db, "Job Requests"); //count number of job requests
-                    const counts = await getCountFromServer(jr_col);
-                    let jrid = counts.data().count + 123153;
-                    console.log(jrid);
-                    await setDoc(doc(db, "Job Requests", jrid.toString()), {
-                        ID: jrid,
-                        DesignerEmail: this.IDemail,
-                        DesignerName: this.IDname,
-                        CustomerEmail: this.useremail,
-                        CustomerName: this.cusName,
-                        Services: this.idservices,
-                        Details: this.details,
-                        Status: "Pending",
-                        Rating: null,
-                        Review: null,
-                    });
-                    this.engageProj = false;
-                },
-            },
-        };
     export default {
-      props: ["profile"],
-      data() {
-        return {
-          idemailforpic: "",
-          idemailforprojpic: "",
-          user: false,
-          useremail: "",
-          uid: "",
-          cusName: "",
-          IDname: "",
-          IDemail: "",
-          IDphone: "",
-          desc: "",
-          expertise: "",
-          pastProjects: [],
-          website: "",
-          rating: "",
-          reviews: [],
-          jobReq: [],
-          show: [],
-          engageProj: false,
-          services: [
-            "Painting",
-            "Tiling",
-            "Furniture Layout",
-            "Hardware",
-            "Lighting Design",
-          ],
-          idservices: "",
-          details: "",
-        };
-      },
-      mounted() {
-        console.log("mounted in in display id component");
-        const auth = getAuth();
-        const user = auth.currentUser;
-        console.log(this.profile);
-        // this.useremail = JSON.parse(this.profile).email;
-        console.log(this.useremail);
-        if (this.useremail !== undefined) {
-          this.display(this.useremail);
-          console.log("not undefined in mounted");
-        }
-        // onAuthStateChanged(auth, (user) => {
-        //   if (user) {
-        //     if (this.profile !== undefined) {
-        //     } else {
-        //       this.user = user;
-        //       this.useremail = user.email;
-        //       this.uid = user.uid;
-        //       this.display(this.useremail);
-        //     }
-        //   }
-        // });
-      },
-      watch: {
-        profile: function (newVal, oldVal) {
-          // watch it
-          console.log("watcher for display id comp");
-          console.log("Prop changed: ", newVal, " | was: ", oldVal);
-          this.useremail = JSON.parse(this.profile).email;
-          console.log(this.useremail);
-          console.log("in watcher ");
-          this.display(this.useremail);
+        props: ["profile"],
+        data() {
+            return {
+                idemailforpic: "",
+                idemailforprojpic: "",
+                currentEmail: "",
+                user: false,
+                useremail: "",
+                uid: "",
+                cusName: "",
+                IDname: "",
+                IDemail: "",
+                IDphone: "",
+                desc: "",
+                expertise: "",
+                pastProjects: [],
+                website: "",
+                rating: "",
+                reviews: [],
+                jobReq: [],
+                show: [],
+                engageProj: false,
+                services: [
+                    "In-home Consultation",
+                    "E-Design",
+                    "Full-Service",
+                    "Kitchen and Bathroom Design",
+                    "Eco Design",
+                    "Outdoor Living",
+                    "Custom Furniture Design",
+                    "Art Procurement and Curation",
+                ],
+                idservices: "",
+                details: "",
+            };
         },
-      },
-      methods: {
-        async display(useremail) {
-          const db = getFirestore(firebaseApp);
-          try {
-            const docRef = doc(db, "portfolio", String(useremail)); //check if portfolio already created
-            let credentials = await getDoc(docRef);
-            let cred = credentials.data();
-            console.log(cred);
-            console.log("in display");
-            this.IDname = cred.name;
-            this.IDemail = cred.email;
-            this.IDphone = cred.phone;
-            this.desc = cred.description;
-            this.pastProjects = cred.PastProjects;
-            this.website = cred.website;
-            this.jobReq = cred.requests;
-            console.log("finding job req " + this.jobReq);
-            this.services = cred.services;
-            this.show = new Array(this.pastProjects.length).fill(false);
-            this.idemailforpic = String(`folder/${this.IDemail}.png`);
-            this.idemailforprojpic = String(`folder/${this.IDemail}_project.png`);
-            console.log(this.idemailforprojpic);
-            console.log(this.idemailforpic);
-            let totalRating = 0;
-            for (let i = 0; i < this.jobReq.length; i++) {
-              let arr = [];
-              const docRef2 = doc(db, "Job Requests", this.jobReq[i]);
-              let jrs = await getDoc(docRef2);
-              let jr = jrs.data();
-              arr.Review = jr.Review;
-              arr.CusName = jr.CustomerName;
-              arr.Rating = jr.Rating;
-              totalRating += jr.Rating;
-              console.log(arr);
-              this.reviews.push(arr);
+        mounted() {
+            console.log("mounted in in display id component");
+            const auth = getAuth();
+            const user = auth.currentUser;
+            console.log();
+            console.log(this.profile);
+            // this.useremail = JSON.parse(this.profile).email;
+            console.log(this.useremail);
+            if (this.useremail !== undefined) {
+                this.display(this.useremail);
+                console.log("not undefined in mounted");
             }
-            console.log(totalRating);
-            try {
-              this.rating = totalRating / this.jobReq.length;
-            } catch {
-              this.rating = 0;
-            }
-          } catch {
-            // portfolio not created, can only display limited information
-            console.log("in catch");
-            console.log(this.IDemail);
-            this.jobReq = [];
-            const docRef = doc(db, "users", String(this.IDemail));
-            let credentials = await getDoc(docRef);
-            let cred = credentials.data();
-            console.log(cred);
-            this.IDname = cred.name;
-            this.IDemail = cred.email;
-          }
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    this.currentEmail = user.email;
+                }
+            });
+            // onAuthStateChanged(auth, (user) => {
+            //   if (user) {
+            //     if (this.profile !== undefined) {
+            //     } else {
+            //       this.user = user;
+            //       this.useremail = user.email;
+            //       this.uid = user.uid;
+            //       this.display(this.useremail);
+            //     }
+            //   }
+            // });
         },
-        required(value) {
-          if (value.length == 0) {
-            return "Required.";
-          }
+        watch: {
+            profile: function (newVal, oldVal) {
+                // watch it
+                console.log("watcher for display id comp");
+                console.log("Prop changed: ", newVal, " | was: ", oldVal);
+                this.useremail = JSON.parse(this.profile).email;
+                console.log(this.useremail);
+                console.log("in watcher ");
+                this.display(this.useremail);
+            },
         },
-        goEdit() {
-          this.$router.push("/profile/edit");
+        methods: {
+            async display(useremail) {
+                const db = getFirestore(firebaseApp);
+                try {
+                    const docRef = doc(db, "portfolio", String(useremail)); //check if portfolio already created
+                    let credentials = await getDoc(docRef);
+                    let cred = credentials.data();
+                    console.log(cred);
+                    console.log("in display");
+                    this.IDname = cred.name;
+                    this.IDemail = cred.email;
+                    this.IDphone = cred.phone;
+                    this.desc = cred.description;
+                    this.pastProjects = cred.PastProjects;
+                    this.website = cred.website;
+                    this.jobReq = cred.requests;
+                    console.log("finding job req " + this.jobReq);
+                    this.services = cred.services;
+                    this.show = new Array(this.pastProjects.length).fill(false);
+                    this.idemailforpic = String(`folder/${this.IDemail}.png`);
+                    this.idemailforprojpic = String(
+                        `folder/${this.IDemail}_project.png`
+                    );
+                    console.log(this.idemailforprojpic);
+                    console.log(this.idemailforpic);
+                    let totalRating = 0;
+                    for (let i = 0; i < this.jobReq.length; i++) {
+                        let arr = [];
+                        const docRef2 = doc(db, "Job Requests", this.jobReq[i]);
+                        let jrs = await getDoc(docRef2);
+                        let jr = jrs.data();
+                        arr.Review = jr.Review;
+                        arr.CusName = jr.CustomerName;
+                        arr.Rating = jr.Rating;
+                        totalRating += jr.Rating;
+                        console.log(arr);
+                        this.reviews.push(arr);
+                    }
+                    console.log(totalRating);
+                    try {
+                        this.rating = totalRating / this.jobReq.length;
+                    } catch {
+                        this.rating = 0;
+                    }
+                } catch {
+                    // portfolio not created, can only display limited information
+                    console.log("in catch");
+                    console.log(this.IDemail);
+                    this.jobReq = [];
+                    const docRef = doc(db, "users", String(this.IDemail));
+                    let credentials = await getDoc(docRef);
+                    let cred = credentials.data();
+                    console.log(cred);
+                    this.IDname = cred.name;
+                    this.IDemail = cred.email;
+                }
+            },
+            required(value) {
+                if (value.length == 0) {
+                    return "Required.";
+                }
+            },
+            goEdit() {
+                this.$router.push("/profile/edit");
+            },
+            async submitRequest() {
+                //only customers can submit request
+                const docRef = doc(db, "users", String(this.uid));
+                let customerDoc = await getDoc(docRef);
+                let customerData = customerDoc.data();
+                this.cusName = customerData.name;
+                let jr_col = collection(db, "Job Requests"); //count number of job requests
+                const counts = await getCountFromServer(jr_col);
+                let jrid = counts.data().count + 123153;
+                console.log(jrid);
+                await setDoc(doc(db, "Job Requests", jrid.toString()), {
+                    ID: jrid,
+                    DesignerEmail: this.IDemail,
+                    DesignerName: this.IDname,
+                    CustomerEmail: this.useremail,
+                    CustomerName: this.cusName,
+                    Services: this.idservices,
+                    Details: this.details,
+                    Status: "Pending",
+                    Rating: null,
+                    Review: null,
+                });
+                this.engageProj = false;
+            },
         },
-        async submitRequest() {
-          //only customers can submit request
-          const docRef = doc(db, "users", String(this.uid));
-          let customerDoc = await getDoc(docRef);
-          let customerData = customerDoc.data();
-          this.cusName = customerData.name;
-          let jr_col = collection(db, "Job Requests"); //count number of job requests
-          const counts = await getCountFromServer(jr_col);
-          let jrid = counts.data().count + 123153;
-          console.log(jrid);
-          await setDoc(doc(db, "Job Requests", jrid.toString()), {
-            ID: jrid,
-            DesignerEmail: this.IDemail,
-            DesignerName: this.IDname,
-            CustomerEmail: this.useremail,
-            CustomerName: this.cusName,
-            Services: this.idservices,
-            Details: this.details,
-            Status: "Pending",
-            Rating: null,
-            Review: null,
-          });
-          this.engageProj = false;
-        },
-      },
-      components: { CloudImage },
+        components: { CloudImage },
     };
 </script>
 
