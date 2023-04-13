@@ -30,9 +30,9 @@ const routes = [
   },
   {
     path: "/displayid/:profile",
-    name: "DisplayID",
+    name: "DisplayIDView",
     component: DisplayID,
-    props:true
+    props: true,
   },
   {
     path: "/profile",
@@ -64,9 +64,9 @@ const routes = [
     name: "LeaveReview",
     component: LeaveReview,
     meta: {
-      requiresAuth:true,
+      requiresAuth: true,
     },
-    props:true
+    props: true,
   },
 
   {
@@ -131,7 +131,7 @@ const router = createRouter({
     },
   },*/
 
-  /*
+/*
   {
     path: "/displayid",
     name: "DisplayID",
