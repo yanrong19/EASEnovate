@@ -44,10 +44,12 @@
                 <v-card-actions>
                     <!-- Option to edit customer profile details and be routed to editprofile view -->
                     <v-spacer />
-                    <v-btn variant="outlined" @click.native="editDetails">
-                        Update Profile
-                        <v-icon end icon="mdi-account-edit"></v-icon>
-                    </v-btn>
+                    <v-hover>
+                        <v-btn @click.native="editDetails">
+                            Update Profile
+                            <v-icon end icon="mdi-account-edit"></v-icon>
+                        </v-btn>
+                    </v-hover>
                     <v-spacer />
                 </v-card-actions>
             </v-card>
@@ -126,13 +128,15 @@
     }
 
     button {
-        background-color: #3aafa9;
-        border: 2px solid #3aafa9;
+        background-color: #6b3fc8;
+        border: 2px solid #6b3fc8;
+        color: white;
         transition-duration: 0.4s;
     }
 
     button:hover {
         background-color: white;
+        color: black;
     }
     .detailContainer {
         padding: 15px;
