@@ -28,18 +28,31 @@
             </v-card>
             <v-card style="top: -5vh; left: 0vw" max-width="48vw">
                 <v-card-text class="text-h6" align="left">
-                    <v-rating v-model="rating" color="orange" readonly align="left"></v-rating> 
-                    <span style="font-size: 16px; position: absolute; top: 4vh; left:15.5vw">({{jobReq.length}})</span>
+                    <v-rating
+                        v-model="rating"
+                        color="orange"
+                        readonly
+                        align="left"
+                    ></v-rating>
+                    <span
+                        style="
+                            font-size: 16px;
+                            position: absolute;
+                            top: 4vh;
+                            left: 15.5vw;
+                        "
+                        >({{ jobReq.length }})</span
+                    >
                     <v-card-text class="text-h6" align="left">
-                    Services:
-                    <v-chip
-                        class="ma-2"
-                        color="secondary"
-                        v-for="serv in services"
-                        :key="serv"
-                    >
-                        {{ serv }}</v-chip
-                    >
+                        Services:
+                        <v-chip
+                            class="ma-2"
+                            color="secondary"
+                            v-for="serv in services"
+                            :key="serv"
+                        >
+                            {{ serv }}</v-chip
+                        >
                     </v-card-text>
                 </v-card-text>
             </v-card>
@@ -47,7 +60,7 @@
         <v-card
             position="absolute"
             elevation="5"
-            style="top: 38vh; left: 10vw; right: 40vw;"
+            style="top: 38vh; left: 10vw; right: 40vw"
         >
             <v-card height="40vh">
                 <div class="pastProjects">
@@ -107,18 +120,36 @@
                 </v-card>
             </v-card-text>
             <v-card elevation="5" class="mb-5">
-            <h2 align="left" class="ma-3">Reviews</h2>
-            <div class="checkreviews">
+                <h2 align="left" class="ma-3">Reviews</h2>
+                <div class="checkreviews">
                     <div v-for="rev in reviews" :key="rev">
-                        <v-card  width="46.6vw" height="29.5vh" align="left" class="my-2">
-                            <v-card-title><h3>{{rev.CusName}}</h3></v-card-title>
-                            <v-rating v-model="rev.Rating" color="orange" readonly></v-rating>
-                            <v-card-text><i><span style="font-size: 18px">{{ rev.Review }}</span></i></v-card-text>
+                        <v-card
+                            width="46.6vw"
+                            height="29.5vh"
+                            align="left"
+                            class="my-2"
+                        >
+                            <v-card-title
+                                ><h3>{{ rev.CusName }}</h3></v-card-title
+                            >
+                            <v-rating
+                                v-model="rev.Rating"
+                                color="orange"
+                                readonly
+                            ></v-rating>
+                            <v-card-text
+                                ><i
+                                    ><span style="font-size: 18px">{{
+                                        rev.Review
+                                    }}</span></i
+                                ></v-card-text
+                            >
                         </v-card>
                     </div>
                 </div>
             </v-card>
-        </v-card> <br>
+        </v-card>
+        <br />
 
         <v-hover v-slot="{ isHovering, props }">
             <v-card
@@ -150,7 +181,21 @@
                             </v-expansion-panels>
                         </v-col>
                         <v-col class="d-flex justify-end">
-                            <v-dialog v-model="engageProj" width="70vw">
+                            <v-btn
+                                class="engage"
+                                @click="goEdit"
+                                rounded="xl"
+                                elevation="4"
+                                height="6vh"
+                                tonal
+                                v-if="this.useremail == this.currentEmail"
+                                >Edit Your Portfolio</v-btn
+                            >
+                            <v-dialog
+                                v-model="engageProj"
+                                width="70vw"
+                                v-if="this.useremail != this.currentEmail"
+                            >
                                 <template v-slot:activator="{ props }">
                                     <v-btn
                                         v-bind="props"
@@ -216,13 +261,6 @@
                         </v-col>
                     </v-row>
                 </v-card-actions>
-                <v-card-actions>
-                    <v-spacer />
-                    <v-btn color="primary" block @click="goEdit"
-                        >Edit Portfolio</v-btn
-                    >
-                    <v-spacer />
-                </v-card-actions>
             </v-card>
         </v-hover>
     </v-container>
@@ -244,10 +282,11 @@
     const db = getFirestore(firebaseApp);
 
     export default {
-        props:["profile"],
+        props: ["profile"],
         data() {
             return {
                 user: false,
+                currentEmail: "",
                 useremail: "",
                 uid: "",
                 cusName: "",
@@ -259,7 +298,7 @@
                 pastProjects: [],
                 website: "",
                 rating: "",
-                reviews:[],
+                reviews: [],
                 jobReq: [],
                 show: [],
                 engageProj: false,
@@ -274,24 +313,24 @@
                 details: "",
             };
         },
-        mounted() {      
+        mounted() {
             const auth = getAuth();
             const user = auth.currentUser;
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                  if (this.profile !== undefined) {
-
-                    this.useremail = JSON.parse(this.profile).email;
-                    console.log(this.useremail);
-                    this.display(this.useremail);
-                  } else {
-                    this.user = user;
-                    this.useremail = user.email;
-                    this.uid = user.uid;
-                    this.display(this.useremail);
-                  }
+                    this.currentEmail = user.email;
+                    if (this.profile !== undefined) {
+                        this.useremail = JSON.parse(this.profile).email;
+                        console.log(this.useremail);
+                        this.display(this.useremail);
+                    } else {
+                        this.user = user;
+                        this.useremail = user.email;
+                        this.uid = user.uid;
+                        this.display(this.useremail);
+                    }
                 }
-            })
+            });
         },
         methods: {
             async display(useremail) {
@@ -310,7 +349,7 @@
                     this.services = cred.services;
                     this.show = new Array(this.pastProjects.length).fill(false);
 
-                    let totalRating = 0
+                    let totalRating = 0;
                     for (let i = 0; i < this.jobReq.length; i++) {
                         let arr = [];
                         const docRef2 = doc(db, "Job Requests", this.jobReq[i]);
@@ -323,11 +362,11 @@
                         console.log(arr);
                         this.reviews.push(arr);
                     }
-                    console.log(totalRating)
+                    console.log(totalRating);
                     try {
-                        this.rating = totalRating / this.jobReq.length
+                        this.rating = totalRating / this.jobReq.length;
                     } catch {
-                        this.rating = 0
+                        this.rating = 0;
                     }
                 } catch {
                     //portfolio not created, can only display limited information

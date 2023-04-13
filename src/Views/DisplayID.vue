@@ -7,6 +7,12 @@
             SideBar2,
             DisplayID,
         },
+        created: function () {
+            document.body.style.backgroundColor = "#c6eeec";
+        },
+        destroyed: function () {
+            document.body.style.backgroundColor = null;
+        },
         data() {
             return {
                 profile: [],
