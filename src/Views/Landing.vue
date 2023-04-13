@@ -26,6 +26,12 @@
                 this.$router.push({ name: "Start" });
             },
         },
+        created: function () {
+            document.body.style.backgroundColor = "#c6eeec";
+        },
+        destroyed: function () {
+            document.body.style.backgroundColor = null;
+        },
     };
 </script>
 
