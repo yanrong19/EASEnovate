@@ -3,10 +3,10 @@ import Start from "../Views/Start.vue";
 import Home from "../Views/Home.vue";
 import Landing from "../Views/Landing.vue";
 import EditProfile from "../Views/EditProfile.vue";
-import DisplayProfile from "../views/DisplayProfile.vue";
-import JobRequest from "@/views/JobRequest.vue";
-import LeaveReview from "@/views/LeaveReview.vue";
-import DisplayID from "@/views/DisplayID.vue";
+import DisplayProfile from "../Views/DisplayProfile.vue";
+import JobRequest from "../Views/JobRequest.vue";
+import LeaveReview from "../Views/LeaveReview.vue";
+import DisplayID from "../Views/DisplayID.vue";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const routes = [
