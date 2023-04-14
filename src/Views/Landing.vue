@@ -4,7 +4,7 @@
         <hr />
 
         <div id="container3">
-            <img src="src/assets/landingpage.png" />
+            <img src="/src/assets/landingpage.png" />
         </div>
 
         <h2>
