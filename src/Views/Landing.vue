@@ -1,4 +1,6 @@
 <template>
+    <!-- Landing Page for our Easenovate Application. Contains our website tagline and slogan
+    as well as a button to be routed to the user authentication page for access to our website -->
     <body>
         <h1>Quality Renovations for lasting homes</h1>
         <hr />

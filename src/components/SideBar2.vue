@@ -1,4 +1,6 @@
 <template>
+    <!-- SideBar for users to navigate to various pages in the application such as Profile, Home, Jobs and Logout
+    Profile is conditionally rendered based on user type -->
     <v-card style="z-index: 99">
         <v-layout>
             <v-navigation-drawer expand-on-hover rail app>
@@ -9,16 +11,7 @@
                         :subtitle="email"
                     ></v-list-item>
                 </v-list>
-
                 <v-divider></v-divider>
-                <!-- 
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :title="item.title"
-          subtitle="..."
-        ></v-list-item> -->
-
                 <v-list density="default" nav>
                     <v-list-item
                         prepend-icon="mdi-account"
@@ -97,11 +90,6 @@
             },
             async shareProfile() {
                 if (this.usertype == "Interior Designer") {
-                    // const db = getFirestore(firebaseApp);
-                    // const docRef = doc(db, "portfolio", this.email);
-                    // let credentials = await getDoc(docRef);
-                    // let cred = credentials.data();
-                    // console.log(cred);
                     this.$router.push({ name: "DisplayID2" });
                 } else {
                     this.$router.push({ name: "DisplayProfile" });

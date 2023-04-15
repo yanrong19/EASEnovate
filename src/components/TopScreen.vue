@@ -1,20 +1,7 @@
 <template>
     <div>
-        <!-- <div class="header">
-      <div class="top">
-        <img src="../assets/onlyLogo.png" alt="Logo" />
-        <h2>EASENOVATE</h2>
-      </div>
-      <button class="nav-toggle">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-    </div>
-    <div class="image">
-      <img src="../assets/homePageImg.png" alt="Full-width image" />
-    </div> -->
-
+        <!-- Component to render both sidebars and top navbars for home page
+        Sidebar is basically SideBar2 and allows for navigation to profile, home, jobs page and logout -->
         <v-app-bar color="secondary" class="flex-grow-0" app dark>
             <v-app-bar-nav-icon
                 @click.stop="drawer = !drawer"
@@ -110,11 +97,6 @@
             },
             async shareProfile() {
                 if (this.usertype == "Interior Designer") {
-                    // const db = getFirestore(firebaseApp);
-                    // const docRef = doc(db, "portfolio", this.email);
-                    // let credentials = await getDoc(docRef);
-                    // let cred = credentials.data();
-                    // console.log(cred);
                     this.$router.push({ name: "DisplayID2" });
                 } else {
                     this.$router.push({ name: "DisplayProfile" });

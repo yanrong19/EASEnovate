@@ -1,7 +1,6 @@
 <template>
-    <!-- <SideBar :menuList="menu" /> -->
-    <!-- <SideBar2 /> -->
-    <!-- <div>Home testing</div> -->
+    <!--Home page of application that holds TopScreen and ProfileCards, shows a list of card views
+    of all the interior designers in our database -->
     <div>Loading</div>
     <div v-if="dataLoaded">
         <div class="home">
@@ -13,9 +12,6 @@
             </v-app>
         </div>
     </div>
-    <div v-else>Loading</div>
-    <!-- <div style="height: 100vh"></div>
-  <div style="height: 100vh"></div> -->
 </template>
 
 <script>
@@ -25,28 +21,15 @@
     import { getFirestore } from "@firebase/firestore";
     import TopScreen from "../components/TopScreen.vue";
     import ProfileCards from "../components/ProfileCards.vue";
-    import SideBar from "../components/SideBar.vue";
     import SideBar2 from "../components/SideBar2.vue";
 
     export default {
-        components: { TopScreen, ProfileCards, TopScreen, SideBar, SideBar2 },
+        components: { TopScreen, ProfileCards, TopScreen, SideBar2 },
         data() {
             return {
                 name: "",
                 usertype: "",
                 dataLoaded: false,
-                menu: [
-                    {
-                        name: "Home",
-                        url: "/",
-                        id: 1,
-                    },
-                    {
-                        name: "DisplayID",
-                        url: "/displayid",
-                        id: 2,
-                    },
-                ],
             };
         },
         methods: {
@@ -65,6 +48,7 @@
             console.log("created");
         },
         beforeMount() {
+            // Function to instantiate the UserID to populate the views
             console.log("before mount");
             const auth = getAuth();
             // auth state listener to know if authentication changes and so that uid wont be undefined

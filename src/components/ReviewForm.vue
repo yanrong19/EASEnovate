@@ -80,8 +80,8 @@
                         <v-spacer />
                     </v-card-actions>
 
-                    <!-- Conditionally renders form for customer to fill in review if no review has been submitted or
-                Displays the previously submitted review on the job by the customer -->
+                    <!-- Conditionally renders form for customer to fill in review if no review 
+                has been submitted or Displays the previously submitted review on the job by the customer -->
                     <v-card-item>
                         <v-card-title v-if="this.status == 'Completed'">
                             Write a review
