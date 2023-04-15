@@ -14,40 +14,27 @@
             document.body.style.backgroundColor = null;
         },
         data() {
-            return {
-            };
+            return {};
         },
 
         beforeMount() {
             console.log("before mount in display id view");
         },
-        mounted() {
-        },
-
-        //   methods: {
-        //     links: function () {
-        //       console.log("in links ");
-        //       console.log(this.$route); // should work
-        //     },
-        //   },
+        mounted() {},
     };
 </script>
 <template>
     <div class="mainContainer">
         <div class="sideBar">
             <SideBar2 />
-            <!-- <div>Home testing</div> -->
-            <div v-if="dataLoaded">
-                <!-- <div>{{ name }}</div>
-    <div>{{ usertype }}</div> -->
-            </div>
+            <div v-if="dataLoaded"></div>
 
             <div v-else>Loading</div>
             <div style="height: 100vh"></div>
             <div style="height: 100vh"></div>
         </div>
         <div class="displayID">
-            <DisplayID2/>
+            <DisplayID2 />
         </div>
     </div>
 </template>
