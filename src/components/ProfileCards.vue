@@ -12,42 +12,63 @@
       <!-- <div class="filter-container">
             <button class="filter-btn" @click="toggleFilterDropdown">Filter <i class="fa fa-caret-down"></i></button>
             <div class="filter-dropdown" v-show="showFilterDropdown"> -->
-      <div class="text-center">
-        <v-menu open-on-hover>
-          <template v-slot:activator="{ props }">
-            <v-btn color="primary" v-bind="props"> Filter </v-btn>
-          </template>
 
-          <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
-      <!-- </div>
+                <div class="text-center">
+                    <v-menu
+                      open-on-hover
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-select
+                                v-model="favorites"
+                                :items="item"
+                                label="Filter by Services"
+                                multiple
+                                style="width: 400px;"
+                            ></v-select>
+                        </template>
+
+                        <v-list>
+                            <v-list-item
+                            v-for="(item, index) in item"
+                            :key="index"
+                            >
+                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
+            <!-- </div>
+
         </div> -->
       <!-- <div class="sort-container">
             <button class="sort-btn" @click="toggleSortDropdown">Sort <i class="fa fa-caret-down"></i></button>
             <div class="sort-dropdown" v-show="showSortDropdown"> -->
-      <div class="text-center">
-        <v-menu open-on-hover>
-          <template v-slot:activator="{ props }">
-            <v-btn color="primary" v-bind="props"> Sort </v-btn>
-          </template>
+                <div class="text-center">
+                    <v-menu
+                      open-on-hover
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                color="secondary"
+                                v-bind="props"
+                            >
+                            Sort
+                            </v-btn>
+                        </template>
 
-          <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
-    </div>
-    <!-- </div>
-    </div> -->
-    <div v-if="filteredProfiles.length == 0">
-      <p class="text-center">No Result Found...</p>
+                        <v-list>  
+                            <v-list-item>
+                                <v-btn @click= ascend()>Ascending</v-btn>
+                            </v-list-item>
+                            <v-list-item>
+                                <v-btn @click= descend()>Descending</v-btn>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
+            </div>
+    <div v-if = "this.profiles.length == 0">
+        <p class = "text-center"> No Result Found...</p>
     </div>
     <div v-else>
       <div class="company">
@@ -74,15 +95,83 @@ const q = querySnapshot.forEach((doc) => {
 });
 
 export default {
-  name: "ProfileCards",
-  components: { CompanyProfile },
-  computed: {
-    filteredProfiles() {
-      return this.profiles.filter((profile) => {
-        return (
-          profile.name.toLowerCase().indexOf(this.search.toLowerCase()) != -1
-        );
-      });
+    name: "ProfileCards",
+    components: {CompanyProfile},
+    computed : {
+        filteredProfiles() {
+             let updated = this.profiles.filter((profile) => {
+                console.log(profile)
+                return (
+                    (profile.name
+                           .toLowerCase()
+                           .indexOf(this.search.toLowerCase()) != -1)
+                        );
+                    });
+                    let updated2 = []
+                    updated.forEach((profile) => {
+                        let hasService = false;
+                        if (this.favorites.length === 0) {
+                            hasService = true
+                        }
+                        else {
+                            this.favorites.forEach((service) => {
+                                if (profile.services.includes(service)) {
+                                hasService = true;
+                                }
+                            })
+                        }
+                        if (hasService) {
+                           updated2.push(profile)
+                        }
+                    })
+                    return updated2
+            
+                }, 
+        ascend() {
+            function compare(a, b) {
+                if (a.rating < b.rating)
+                    return -1;
+                if (a.rating > b.rating)
+                    return 1;
+                return 0;
+    }
+            this.profiles = this.profiles.sort(compare)
+        },
+        descend() {
+            function compare(a, b) {
+                if (a.rating > b.rating)
+                    return -1;
+                if (a.rating < b.rating)
+                    return 1;
+                return 0;
+    }
+            this.profiles = this.profiles.sort(compare)
+        },      
+        },
+    
+    data() {
+        return {
+            search: '',
+            showFilterDropdown: false,
+            showSortDropdown: false,
+            profiles : [],
+            items: [
+                {title: "Rating"},
+            ],
+            item: [
+                {title: "Home Renovation and Interior Design"},
+                {title: "Living Room Renovation"},
+                {title: "Kitchen Renovation"},
+                {title: "Bathroom and Toilet"},
+                {title: "Bedroom"},
+                {title: "Exterior"},
+                {title: "Window"},
+                {title: "Roof Flooring and Tiling"},
+                {title: "Others"}
+            ], 
+            favorites: []
+        }
+
     },
   },
 
@@ -108,8 +197,12 @@ export default {
       console.log(profiles);
       this.profiles = profiles;
     },
-    toggleFilterDropdown() {
-      this.showFilterDropdown = !this.showFilterDropdown;
+        toggleFilterDropdown() {
+            this.showFilterDropdown = !this.showFilterDropdown;
+        },
+        toggleSortDropdown() {
+            this.showSortDropdown = !this.showSortDropdown;
+        },
     },
     toggleSortDropdown() {
       this.showSortDropdown = !this.showSortDropdown;
