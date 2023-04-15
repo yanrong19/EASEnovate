@@ -17,7 +17,7 @@
                                 :items="item"
                                 label="Filter by Services"
                                 multiple
-                                style="width: 200px;"
+                                style="width: 400px;"
                             ></v-select>
                         </template>
 
