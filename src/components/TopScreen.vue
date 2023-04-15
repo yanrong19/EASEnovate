@@ -11,7 +11,7 @@
         <v-navigation-drawer app v-model="drawer">
             <v-list dense nav>
                 <v-list-item
-                    prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+                    prepend-avatar="https://www.lightsong.net/wp-content/uploads/2020/12/blank-profile-circle.png"
                     :title="name"
                     :subtitle="email"
                 ></v-list-item>
