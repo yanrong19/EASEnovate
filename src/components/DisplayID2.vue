@@ -1,3 +1,5 @@
+<!-- Similar to DisplayID but no props are accepted in this component -->
+<!-- This component is reserved for interior designers to access their own profile page -->
 <template>
     <v-container align="center" class="d-flex flex-row">
         <v-card
@@ -64,18 +66,6 @@
                 <div class="pastProjects">
                     <div class="scroll_container">
                         <CloudImage2 :path="this.idemailforprojpic" />
-                        <!-- <div class="pp">
-              <img src="/assets/room1.jpg" />
-            </div>
-            <div class="pp">
-              <img src="/assets/room2.jpg" />
-            </div>
-            <div class="pp">
-              <img src="/assets/room3.jpg" />
-            </div>
-            <div class="pp">
-              <img src="/assets/room4.jpg" />
-            </div> -->
                     </div>
                 </div>
             </v-card>

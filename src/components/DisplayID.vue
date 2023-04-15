@@ -1,5 +1,6 @@
 <template>
     <v-container align="center" class="d-flex flex-row">
+        <!-- card consisting of name, avatar, title, rating and services provided -->
         <v-card
             position="absolute"
             elevation="10"
@@ -10,10 +11,7 @@
                 style="top: 7%; left: -44%; right: 40%; bottom: 65%"
                 size="x-large"
             >
-                <!-- <v-img
-          src="https://cdn.vuetifyjs.com/images/john.jpg"
-          alt="John"
-        ></v-img> -->
+            <!-- Retrieve image from firebase storage through CloudImage Component -->
                 <CloudImage :path="this.idemailforpic" />
             </v-avatar>
             <v-card
@@ -35,6 +33,7 @@
                         v-model="rating"
                         color="orange"
                         readonly
+                        half-increments
                         align="left"
                     >
                     </v-rating>
@@ -55,6 +54,7 @@
                 </v-card-text>
             </v-card>
         </v-card>
+        <!-- card for portfolio, including featured project picture, self description, website, past projects and reviews -->
         <v-card
             position="absolute"
             elevation="5"
@@ -64,18 +64,6 @@
                 <div class="pastProjects">
                     <div class="scroll_container">
                         <CloudImage2 :path="this.idemailforprojpic" />
-                        <!-- <div class="pp">
-              <img src="/assets/room1.jpg" />
-            </div>
-            <div class="pp">
-              <img src="/assets/room2.jpg" />
-            </div>
-            <div class="pp">
-              <img src="/assets/room3.jpg" />
-            </div>
-            <div class="pp">
-              <img src="/assets/room4.jpg" />
-            </div> -->
                     </div>
                 </div>
             </v-card>
@@ -149,7 +137,7 @@
             </v-card>
         </v-card>
         <br />
-
+        <!-- card with fixed position containing contact details and option for customers to engage with the interior designer -->
         <v-hover v-slot="{ isHovering, props }">
             <v-card
                 position="fixed"
@@ -206,12 +194,14 @@
                                         >Engage a Project</v-btn
                                     >
                                     <br /><br />
+                                    <!-- Opens a dialong when clicked -->
                                 </template>
                                 <v-card>
                                     <v-card-title class="text-h4" align="center"
                                         >Engage a Project with
                                         {{ IDname }}</v-card-title
                                     >
+                                    <!-- form that takes in desired services by the customer and details of the project to be sent to the interior designer -->
                                     <v-form>
                                         <v-container>
                                             <v-row>
@@ -283,6 +273,7 @@
     const db = getFirestore(firebaseApp);
 
     export default {
+        // accepts a prop to ensure the credentials of the selected interior designer is displayed
         props: ["profile"],
         data() {
             return {
@@ -293,6 +284,7 @@
                 useremail: "",
                 uid: "",
                 cusName: "",
+                cusEmail:"",
                 IDname: "",
                 IDemail: "",
                 IDphone: "",
@@ -305,7 +297,7 @@
                 jobReq: [],
                 show: [],
                 engageProj: false,
-                services: [
+                services: [ //some default services for an interior designer
                     "In-home Consultation",
                     "E-Design",
                     "Full-Service",
@@ -323,16 +315,14 @@
             console.log("mounted in in display id component");
             const auth = getAuth();
             const user = auth.currentUser;
-            console.log();
-            console.log(this.profile);
             // this.useremail = JSON.parse(this.profile).email;
-            console.log(this.useremail);
-            if (this.useremail !== undefined) {
-                this.display(this.useremail);
-                console.log("not undefined in mounted");
-            }
+            // if (this.useremail !== undefined) {
+            //     console.log('NXXXT')
+            //     this.display(this.useremail); //
+            // }
             onAuthStateChanged(auth, (user) => {
                 if (user) {
+                    this.uid = user.uid;
                     this.currentEmail = user.email;
                 }
             });
@@ -348,27 +338,25 @@
             //   }
             // });
         },
-        watch: {
+        watch: { //watch for a change in props value. Once a prop is detected, data will be updated with new values from the prop
             profile: function (newVal, oldVal) {
                 // watch it
                 console.log("watcher for display id comp");
                 console.log("Prop changed: ", newVal, " | was: ", oldVal);
                 this.useremail = JSON.parse(this.profile).email;
                 console.log(this.useremail);
-                console.log("in watcher ");
                 this.display(this.useremail);
             },
         },
         methods: {
+            //display information of the interior designer
             async display(useremail) {
                 const db = getFirestore(firebaseApp);
-                try {
-                    console.log(useremail)
-                    const docRef = doc(db, "portfolio", String(useremail)); //check if portfolio already created
+                try { //check if the interior designer has created their portfolio
+                    const docRef = doc(db, "portfolio", String(useremail)); //retrieve portfolio information from firebase
                     let credentials = await getDoc(docRef);
                     let cred = credentials.data();
                     console.log(cred);
-                    console.log("in display");
                     this.IDname = cred.name;
                     this.IDemail = cred.email;
                     this.IDphone = cred.phone;
@@ -376,7 +364,6 @@
                     this.pastProjects = cred.PastProjects;
                     this.website = cred.website;
                     this.jobReq = cred.requests;
-                    console.log("finding job req " + this.jobReq);
                     this.services = cred.services;
                     this.show = new Array(this.pastProjects.length).fill(false);
                     this.idemailforpic = String(`folder/${this.IDemail}.png`);
@@ -385,10 +372,11 @@
                     );
                     console.log(this.idemailforprojpic);
                     console.log(this.idemailforpic);
-                    let totalRating = 0;
+
+                    let totalRating = 0; //sum the ratings from job requests and display the average rating
                     for (let i = 0; i < this.jobReq.length; i++) {
                         let arr = [];
-                        const docRef2 = doc(db, "Job Requests", this.jobReq[i]);
+                        const docRef2 = doc(db, "Job Requests", this.jobReq[i]); //pull the rating and review information from job request collection to display
                         let jrs = await getDoc(docRef2);
                         let jr = jrs.data();
                         arr.Review = jr.Review;
@@ -402,22 +390,20 @@
                     try {
                         this.rating = totalRating / this.jobReq.length;
                     } catch {
-                        this.rating = 0;
+                        this.rating = 0; //no ratings at the moment
                     }
                 } catch {
-                    // portfolio not created, can only display limited information
-                    console.log("in catch");
+                    // portfolio not created, can only display limited information from user collection
                     console.log(this.IDemail);
                     this.jobReq = [];
                     const docRef = doc(db, "users", String(this.IDemail));
                     let credentials = await getDoc(docRef);
                     let cred = credentials.data();
-                    console.log(cred);
                     this.IDname = cred.name;
                     this.IDemail = cred.email;
                 }
             },
-            required(value) {
+            required(value) { //requirement for fields when filling in the engage form
                 if (value.length == 0) {
                     return "Required.";
                 }
@@ -425,21 +411,23 @@
             goEdit() {
                 this.$router.push("/profile/edit");
             },
+            //submit request to the interior designer by creating a new job request and storing it under job request collection
             async submitRequest() {
-                //only customers can submit request
                 const docRef = doc(db, "users", String(this.uid));
                 let customerDoc = await getDoc(docRef);
                 let customerData = customerDoc.data();
                 this.cusName = customerData.name;
-                let jr_col = collection(db, "Job Requests"); //count number of job requests
-                const counts = await getCountFromServer(jr_col);
-                let jrid = counts.data().count + 123153;
-                console.log(jrid);
+                this.cusEmail = customerData.email;
+                let jr_col = collection(db, "Job Requests");
+                const counts = await getCountFromServer(jr_col); //count the current number of job requests in the collection
+                let jrid = counts.data().count + 123159; //arbitrary number to get the job request id
+                console.log(this.cusEmail);
+                //add the new job request into the collection
                 await setDoc(doc(db, "Job Requests", jrid.toString()), {
                     ID: jrid,
                     DesignerEmail: this.IDemail,
                     DesignerName: this.IDname,
-                    CustomerEmail: this.useremail,
+                    CustomerEmail: this.cusEmail,
                     CustomerName: this.cusName,
                     Services: this.idservices,
                     Details: this.details,
@@ -447,7 +435,7 @@
                     Rating: null,
                     Review: null,
                 });
-                this.engageProj = false;
+                this.engageProj = false; //close the dialog after submitting job request
             },
         },
         components: { CloudImage, CloudImage2 },

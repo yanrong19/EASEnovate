@@ -1,16 +1,9 @@
+<!-- Component for Interior Designers to edit their profile/portfolio or create one if they have not done so -->
 <template>
     <v-container align="center">
         <div class="createUpdate" v-if="user">
-            <!-- <h1>CREATE/UPDATE YOUR PORTFOLIO</h1>
-            <br />
-            <div
-                position="absolute"
-                class="pa-1 bg-secondary rounded-circle d-inline-block"
-            >
-                <CloudImage :path="link" />
-            </div>
-            <br /><br /> -->
             <v-form id="credForm">
+                <!-- card for inputing basic details such as name, phone and profile picture (email cannot be changed) -->
                 <v-card class="px-3 py-1" width="80%">
                     <v-card-item>
                         <h1>Update Your Portfolio</h1>
@@ -18,7 +11,7 @@
                         <div
                             position="absolute"
                         >
-                            <CloudImage :path="link" />
+                            <CloudImage :path="link" /> 
                         </div>
                     </v-card-item>
                     <v-card-item>
@@ -59,6 +52,7 @@
                     </v-card-item>
                 </v-card>
                 <br />
+                <!-- card for inputing portfolio details such as feature project picture, descriptions, website, services provided and past projects-->
                 <v-card class="px-3 py-1" width="80%">
                     <h3>Your Portfolio</h3>
                     <br />
@@ -77,13 +71,7 @@
                     </v-row>
                     <v-row>
                         <v-col md="5">
-                            <!-- <v-combobox
-                                v-model="services"
-                                id="services"
-                                label="Services"
-                                multiple
-                                chips
-                            ></v-combobox> --><v-select
+                            <v-select
                                 chips
                                 v-model="services"
                                 :items="allServices"
@@ -101,6 +89,7 @@
                             ></v-text-field>
                         </v-col>
                     </v-row>
+                    <!-- interior designers allowed to add as many past projects as they want, they may also delete previously inputted past projects -->
                     <h3>Past Projects</h3>
                     <br />
                     <v-row>
@@ -209,11 +198,12 @@
                     this.id_email = user.email;
                     console.log(this.id_email);
                     this.display(this.uid);
-                    this.link = String(`folder/${this.id_email}.png`);
+                    this.link = String(`folder/${this.id_email}.png`); //link to profile picture
                 }
             });
         },
         methods: {
+            // display current information in the fields of the form that can be editted
             async display(uid) {
                 const db = getFirestore(firebaseApp);
                 const docRef = doc(db, "users", String(uid)); //change
@@ -221,7 +211,7 @@
                 let cred = credentials.data();
                 this.id_name = cred.name;
                 this.id_email = cred.email;
-                try {
+                try { //check if a portfolio has already been created, then update the information
                     const docRef2 = doc(db, "portfolio", String(this.id_email)); //change
                     let credentials2 = await getDoc(docRef2);
                     let cred2 = credentials2.data();
@@ -231,7 +221,7 @@
                     this.id_phone = cred2.phone;
                     this.services = cred2.services;
                     this.reviews = cred2.reviews;
-                } catch {
+                } catch { //no portfolio created
                     this.reviews = [
                         {
                             description: "",
@@ -240,6 +230,7 @@
                     ];
                 }
             },
+            // function to upload photos
             upload: function () {
                 console.log(this.link);
                 const storageRef = ref(storage, this.link);
@@ -250,6 +241,7 @@
                     }
                 );
             },
+            // function to upload all changes into the firestore database
             async uploadChange() {
                 const db = getFirestore(firebaseApp);
                 let id_name = this.id_name;
@@ -261,9 +253,11 @@
                 let website = this.website;
                 let reviews = this.reviews;
                 this.upload();
+                //update the user collection if there is a change in name
                 await updateDoc(doc(db, "users", String(this.uid)), {
                     name: id_name,
                 });
+                //update/add into portfolio collection
                 await setDoc(doc(db, "portfolio", email), {
                     name: id_name,
                     email: email,
@@ -275,7 +269,7 @@
                     reviews: reviews,
                 });
                 document.getElementById("credForm").reset();
-                this.$router.push("/profile");
+                this.$router.push({ name: "DisplayID2" }); //go back to display profile view
                 console.log("UPLOADING CHANGE");
             },
             addProj() {
