@@ -201,7 +201,7 @@
                                         class="engage"
                                         rounded="xl"
                                         elevation="4"
-                                        height="6vh"
+                                        height="6%"
                                         tonal
                                         >Engage a Project</v-btn
                                     >
