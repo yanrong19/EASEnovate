@@ -169,12 +169,7 @@
                 ],
                 services: "",
                 website: "",
-                reviews: [
-                    {
-                        description: "",
-                        ratings: "",
-                    },
-                ],
+                requests: [],
                 allServices: [
                     "Home Renovation and Interior Design",
                     "Living Room Renovation",
@@ -220,14 +215,8 @@
                     this.website = cred2.website;
                     this.id_phone = cred2.phone;
                     this.services = cred2.services;
-                    this.reviews = cred2.reviews;
+                    this.requests = cred2.requests;
                 } catch { //no portfolio created
-                    this.reviews = [
-                        {
-                            description: "",
-                            ratings: "",
-                        },
-                    ];
                 }
             },
             // function to upload photos
@@ -245,13 +234,20 @@
             async uploadChange() {
                 const db = getFirestore(firebaseApp);
                 let id_name = this.id_name;
+                console.log(id_name)
                 let phone = this.id_phone;
+                console.log(phone)
                 let email = this.id_email;
+                console.log(email)
                 let desc = this.description;
+                console.log(desc)
                 let pastProjs = this.pastProjects;
+                console.log(pastProjs)
                 let services = this.services;
+                console.log(services)
                 let website = this.website;
-                let reviews = this.reviews;
+                console.log(website)
+                let requests = this.requests;
                 this.upload();
                 //update the user collection if there is a change in name
                 await updateDoc(doc(db, "users", String(this.uid)), {
@@ -266,7 +262,7 @@
                     PastProjects: pastProjs,
                     services: services,
                     website: website,
-                    reviews: reviews,
+                    requests: requests,
                 });
                 document.getElementById("credForm").reset();
                 this.$router.push({ name: "DisplayID2" }); //go back to display profile view

@@ -1,3 +1,4 @@
+<!-- Component for a customer/interior designer to view the profile page of interior designers -->
 <template>
     <v-container align="center" class="d-flex flex-row">
         <!-- card consisting of name, avatar, title, rating and services provided -->
@@ -38,6 +39,7 @@
                     >
                     </v-rating>
                     </div>
+                    <!-- display serves that the interior designer offers -->
                     <div class="text-h10 d-flex">
                         <v-card-text class="text-h6 flex-col" align="left">
                         Services:
@@ -106,6 +108,7 @@
                     </v-expand-transition>
                 </v-card>
             </v-card-text>
+            <!-- iterate through all reviews and display -->
             <v-card elevation="5" class="mb-5">
                 <h2 align="left" class="ma-3">Reviews <span>({{ jobReq.length }})</span></h2>
                 <div class="checkreviews">
@@ -167,6 +170,7 @@
                                 </v-expansion-panel>
                             </v-expansion-panels>
                         </v-col>
+                        <!-- only the interior designer themselves can edit their own portfolio -->
                         <v-col class="d-flex justify-end">
                             <v-btn
                                 class="engage"

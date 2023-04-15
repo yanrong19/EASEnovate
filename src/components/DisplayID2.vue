@@ -12,10 +12,6 @@
                 style="top: 7%; left: -44%; right: 40%; bottom: 65%"
                 size="x-large"
             >
-                <!-- <v-img
-          src="https://cdn.vuetifyjs.com/images/john.jpg"
-          alt="John"
-        ></v-img> -->
                 <CloudImage :path="this.idemailforpic" />
             </v-avatar>
             <v-card

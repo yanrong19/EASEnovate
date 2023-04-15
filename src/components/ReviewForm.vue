@@ -102,7 +102,7 @@
                             v-else
                         >
                             <p class="mb-8">
-                                {{ review }}
+                                {{ description }}
                             </p>
                         </v-sheet>
                     </v-container>
@@ -171,7 +171,6 @@
                     Review: this.review,
                     Status: "Reviewed",
                 });
-                console.log("Updated Doc");
                 // Updates the ID portfolio to add a new pointer to a completed review of a job request
                 const docRef = doc(db, "portfolio", this.idEmail);
                 const docSnap = await getDoc(docRef);
@@ -201,10 +200,6 @@
                     this.services = docSnap.data().Services;
                     this.status = docSnap.data().Status;
                     this.idEmail = docSnap.data().DesignerEmail;
-                    this.review = docSnap.data().Review;
-                    if (!(this.review == "")) {
-                        this.rating = docSnap.data().Rating;
-                    }
                 }
             },
         },
