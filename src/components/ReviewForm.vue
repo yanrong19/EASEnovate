@@ -165,6 +165,8 @@
                 this.$router.push("/jobrequest");
             },
             async updateRatings() {
+                // Function calculates the average rating of an ID based on list of reviewed
+                // Jobs which will be used to update the firebase document
                 let totalRating = 0;
                 for (let i = 0; i < this.jobs.length; i++) {
                     const docRef2 = doc(db, "Job Requests", this.jobs[i]);
@@ -189,6 +191,7 @@
                     Status: "Reviewed",
                 });
                 // Updates the ID portfolio to add a new pointer to a completed review of a job request
+                // Also updates the ID portfolio with a new average rating inclusive of this review
                 const docRef = doc(db, "portfolio", this.idEmail);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
@@ -219,6 +222,8 @@
                     this.services = docSnap.data().Services;
                     this.status = docSnap.data().Status;
                     this.idEmail = docSnap.data().DesignerEmail;
+                    // If the job has already been reviewed then the review and rating
+                    // data will be populated with the firebase document
                     if (this.status == "Reviewed") {
                         this.review = docSnap.data().Review;
                         this.rating = docSnap.data().Rating;
