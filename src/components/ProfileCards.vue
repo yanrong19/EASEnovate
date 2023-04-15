@@ -17,6 +17,7 @@
                                 :items="item"
                                 label="Filter by Services"
                                 multiple
+                                style="width: 200px;"
                             ></v-select>
                         </template>
 
@@ -41,7 +42,7 @@
                     >
                         <template v-slot:activator="{ props }">
                             <v-btn
-                                color="primary"
+                                color="secondary"
                                 v-bind="props"
                             >
                             Sort
