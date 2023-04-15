@@ -26,14 +26,14 @@
                                         Interior Designer
                                     </v-card-title>
                                     <v-card-subtitle>
-                                        {{ idName }}
+                                        {{ idName }} <b>{{ idEmail }}</b>
                                     </v-card-subtitle>
                                 </v-sheet></v-col
                             ><v-col>
                                 <v-sheet>
                                     <v-card-title> Customer </v-card-title>
                                     <v-card-subtitle>
-                                        {{ custName }}
+                                        {{ custName }} <b>{{ custEmail }}</b>
                                     </v-card-subtitle>
                                 </v-sheet></v-col
                             ></v-row
@@ -102,7 +102,7 @@
                             v-else
                         >
                             <p class="mb-8">
-                                {{ description }}
+                                {{ review }}
                             </p>
                         </v-sheet>
                     </v-container>
@@ -146,6 +146,7 @@
         data() {
             return {
                 jobID: "",
+                custEmail: "",
                 custName: "",
                 idName: "",
                 idEmail: "",
@@ -155,12 +156,28 @@
                 review: "",
                 status: "",
                 jobs: [],
+                averageRating: 0,
                 dataLoaded: false,
             };
         },
         methods: {
             async goRequest() {
                 this.$router.push("/jobrequest");
+            },
+            async updateRatings() {
+                let totalRating = 0;
+                for (let i = 0; i < this.jobs.length; i++) {
+                    const docRef2 = doc(db, "Job Requests", this.jobs[i]);
+                    let jrs = await getDoc(docRef2);
+                    let jr = jrs.data();
+                    totalRating += jr.Rating;
+                }
+                try {
+                    this.averageRating = totalRating / this.jobs.length;
+                } catch {
+                    this.averageRating = 0;
+                }
+                console.log(this.averageRating);
             },
 
             // Function used to submit the contents of the form and update the firebase job document
@@ -178,10 +195,11 @@
                     this.jobs = docSnap.data().requests;
                     this.jobs.push(this.jobID);
                 }
+                await this.updateRatings();
                 await updateDoc(doc(db, "portfolio", this.idEmail), {
                     requests: this.jobs,
+                    rating: this.averageRating,
                 });
-
                 this.goRequest();
             },
 
@@ -197,9 +215,14 @@
                     this.jobID = this.requestID;
                     this.idName = docSnap.data().DesignerName;
                     this.custName = docSnap.data().CustomerName;
+                    this.custEmail = docSnap.data().CustomerEmail;
                     this.services = docSnap.data().Services;
                     this.status = docSnap.data().Status;
                     this.idEmail = docSnap.data().DesignerEmail;
+                    if (this.status == "Reviewed") {
+                        this.review = docSnap.data().Review;
+                        this.rating = docSnap.data().Rating;
+                    }
                 }
             },
         },
