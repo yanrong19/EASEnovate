@@ -12,17 +12,17 @@
                       open-on-hover
                     >
                         <template v-slot:activator="{ props }">
-                            <v-btn
-                                color="primary"
-                                v-bind="props"
-                            >
-                            Filter
-                            </v-btn>
+                            <v-select
+                                v-model="favorites"
+                                :items="item"
+                                label="Filter by Services"
+                                multiple
+                            ></v-select>
                         </template>
 
                         <v-list>
                             <v-list-item
-                            v-for="(item, index) in items"
+                            v-for="(item, index) in item"
                             :key="index"
                             >
                             <v-list-item-title>{{ item.title }}</v-list-item-title>
@@ -64,7 +64,7 @@
     </div>
     <div v-else>
         <div class = "company">
-            <div v-for="profile in this.profiles">
+            <div v-for="profile in filteredProfiles">
                 <CompanyProfile :profile="profile"></CompanyProfile>
             </div>
         </div>
@@ -91,14 +91,34 @@ export default {
     components: {CompanyProfile},
     computed : {
         filteredProfiles() {
-            this.profiles = this.profiles.filter((profile) => {
+             let updated = this.profiles.filter((profile) => {
+                console.log(profile)
                 return (
-                    profile.name
+                    (profile.name
                            .toLowerCase()
-                           .indexOf(this.search.toLowerCase()) != -1
+                           .indexOf(this.search.toLowerCase()) != -1)
                         );
                     });
-                },
+                    let updated2 = []
+                    updated.forEach((profile) => {
+                        let hasService = false;
+                        if (this.favorites.length === 0) {
+                            hasService = true
+                        }
+                        else {
+                            this.favorites.forEach((service) => {
+                                if (profile.services.includes(service)) {
+                                hasService = true;
+                                }
+                            })
+                        }
+                        if (hasService) {
+                           updated2.push(profile)
+                        }
+                    })
+                    return updated2
+            
+                }, 
         ascend() {
             function compare(a, b) {
                 if (a.rating < b.rating)
@@ -118,8 +138,8 @@ export default {
                 return 0;
     }
             this.profiles = this.profiles.sort(compare)
-        },       
-    },
+        },      
+        },
     
     data() {
         return {
@@ -129,7 +149,19 @@ export default {
             profiles : [],
             items: [
                 {title: "Rating"},
-            ]
+            ],
+            item: [
+                {title: "Home Renovation and Interior Design"},
+                {title: "Living Room Renovation"},
+                {title: "Kitchen Renovation"},
+                {title: "Bathroom and Toilet"},
+                {title: "Bedroom"},
+                {title: "Exterior"},
+                {title: "Window"},
+                {title: "Roof Flooring and Tiling"},
+                {title: "Others"}
+            ], 
+            favorites: []
         }
     },
 
@@ -150,7 +182,7 @@ export default {
         },
         toggleSortDropdown() {
             this.showSortDropdown = !this.showSortDropdown;
-        }
+        },
     },
     mounted() {
     this.fetchProfiles();
