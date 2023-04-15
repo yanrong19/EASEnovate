@@ -7,15 +7,15 @@
     </div>
 -->
   <div class="card">
-    <v-card class="mx-auto" max-width="400">
+    <v-card class="mx-auto" max-width="400" max-height="50%">
       <v-img
         class="align-end text-white"
-        height="200"
-        src="https://images-platform.99static.com//9w6j6Mz0QaUGaODZEd0S3Z7WkpY=/407x200:907x700/fit-in/500x500/99designs-contests-attachments/70/70543/attachment_70543787"
+        height="100%"
         cover
       >
-        <v-card-title>{{ profile.name }}</v-card-title>
+      <CloudImage3 :path="this.idemailforprojpic" />
       </v-img>
+      <v-card-title>{{ profile.name }}</v-card-title>
 
       <v-card-subtitle class="pt-4">
         {{ profile.email }}
@@ -46,8 +46,19 @@
 </template>
 
 <script>
+import CloudImage3 from "./CloudImage3.vue";
 export default {
+  data(){
+    return {
+      idemailforprojpic: ""
+    }
+  },
+  components:{CloudImage3},
   props: ["profile"],
+  mounted(){
+    this.idemailforprojpic = String(`folder/${this.profile.email}_project.png`);
+    console.log(this.idemailforprojpic)
+  },
   methods: {
     shareProfile(companyProfile) {
       console.log("going to this company");
@@ -60,7 +71,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card {
   padding-left: 1vw;
   padding-right: 1vw;
