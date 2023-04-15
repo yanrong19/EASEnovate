@@ -58,6 +58,15 @@
                     <br />
                     <v-row>
                         <v-col>
+                            <v-file-input
+                                    type="file"
+                                    ref="myfile2"
+                                    label="Featured Project Photo"
+                                ></v-file-input>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
                             <v-textarea
                                 v-model="description"
                                 id="description"
@@ -157,6 +166,7 @@
                 user: false,
                 uid: "",
                 link: "",
+                link2:"",
                 id_name: "",
                 id_email: "",
                 id_phone: "",
@@ -194,6 +204,7 @@
                     console.log(this.id_email);
                     this.display(this.uid);
                     this.link = String(`folder/${this.id_email}.png`); //link to profile picture
+                    this.link2 = String(`folder/${this.id_email}_project.png`);
                 }
             });
         },
@@ -221,32 +232,33 @@
             },
             // function to upload photos
             upload: function () {
-                console.log(this.link);
                 const storageRef = ref(storage, this.link);
-                console.log();
-                uploadBytes(storageRef, this.$refs.myfile.files[0]).then(
-                    (snapshot) => {
-                        console.log("uploaded");
-                    }
-                );
+                if (this.$refs.myfile.files.length != 0){
+                    uploadBytes(storageRef, this.$refs.myfile.files[0]).then(
+                        (snapshot) => {
+                            console.log("uploaded");
+                        }
+                    );
+                }
+                const storageRef2 = ref(storage, this.link2);
+                if (this.$refs.myfile2.files.length != 0){
+                    uploadBytes(storageRef2, this.$refs.myfile2.files[0]).then(
+                        (snapshot) => {
+                            console.log("uploaded");
+                        }
+                    );
+                }
             },
             // function to upload all changes into the firestore database
             async uploadChange() {
                 const db = getFirestore(firebaseApp);
                 let id_name = this.id_name;
-                console.log(id_name)
                 let phone = this.id_phone;
-                console.log(phone)
                 let email = this.id_email;
-                console.log(email)
                 let desc = this.description;
-                console.log(desc)
                 let pastProjs = this.pastProjects;
-                console.log(pastProjs)
                 let services = this.services;
-                console.log(services)
                 let website = this.website;
-                console.log(website)
                 let requests = this.requests;
                 this.upload();
                 //update the user collection if there is a change in name
