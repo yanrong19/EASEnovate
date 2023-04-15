@@ -1,11 +1,11 @@
 <script>
-    import DisplayID from "../components/DisplayID.vue";
+    import DisplayID2 from "../components/DisplayID2.vue";
     import SideBar2 from "../components/SideBar2.vue";
 
     export default {
         components: {
             SideBar2,
-            DisplayID,
+            DisplayID2,
         },
         created: function () {
             document.body.style.backgroundColor = "#c6eeec";
@@ -15,8 +15,6 @@
         },
         data() {
             return {
-                profile: [],
-                dataLoaded: true,
             };
         },
 
@@ -24,11 +22,6 @@
             console.log("before mount in display id view");
         },
         mounted() {
-            console.log("mounted in display id view trying twice");
-            console.log(this.$route);
-            this.profile = this.$route.params.profile;
-            console.log(this.profile);
-            console.log("in display ID view");
         },
 
         //   methods: {
@@ -54,7 +47,7 @@
             <div style="height: 100vh"></div>
         </div>
         <div class="displayID">
-            <DisplayID :profile="profile" />
+            <DisplayID2/>
         </div>
     </div>
 </template>

@@ -3,10 +3,11 @@ import Start from "../Views/Start.vue";
 import Home from "../Views/Home.vue";
 import Landing from "../Views/Landing.vue";
 import EditProfile from "../Views/EditProfile.vue";
-import DisplayProfile from "../views/DisplayProfile.vue";
-import JobRequest from "@/views/JobRequest.vue";
-import LeaveReview from "@/views/LeaveReview.vue";
-import DisplayID from "@/views/DisplayID.vue";
+import DisplayProfile from "../Views/DisplayProfile.vue";
+import JobRequest from "../Views/JobRequest.vue";
+import LeaveReview from "../Views/LeaveReview.vue";
+import DisplayID from "../Views/DisplayID.vue";
+import DisplayID2 from "../Views/DisplayID2.vue";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const routes = [
@@ -30,9 +31,14 @@ const routes = [
   },
   {
     path: "/displayid/:profile",
-    name: "DisplayID",
+    name: "DisplayIDView",
     component: DisplayID,
-    props:true
+    props: true,
+  },
+  {
+    path: "/displayid/",
+    name: "DisplayID2",
+    component: DisplayID2,
   },
   {
     path: "/profile",
@@ -64,9 +70,9 @@ const routes = [
     name: "LeaveReview",
     component: LeaveReview,
     meta: {
-      requiresAuth:true,
+      requiresAuth: true,
     },
-    props:true
+    props: true,
   },
 
   {
@@ -131,7 +137,7 @@ const router = createRouter({
     },
   },*/
 
-  /*
+/*
   {
     path: "/displayid",
     name: "DisplayID",

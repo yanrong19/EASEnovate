@@ -1,19 +1,20 @@
 <template>
-  <!-- <SideBar :menuList="menu" /> -->
-  <!-- <SideBar2 /> -->
-  <!-- <div>Home testing</div> -->
-  <div v-if="dataLoaded">
-    <div class="home">
-      <v-app> 
-        <TopScreen />
-        <div class="profile">
-          <ProfileCards />
+    <!-- <SideBar :menuList="menu" /> -->
+    <!-- <SideBar2 /> -->
+    <!-- <div>Home testing</div> -->
+    <div>Loading</div>
+    <div v-if="dataLoaded">
+        <div class="home">
+            <v-app>
+                <TopScreen />
+                <div class="profile">
+                    <ProfileCards />
+                </div>
+            </v-app>
         </div>
-      </v-app>
     </div>
-  </div>
-  <div v-else>Loading</div>
-  <!-- <div style="height: 100vh"></div>
+    <div v-else>Loading</div>
+    <!-- <div style="height: 100vh"></div>
   <div style="height: 100vh"></div> -->
 </template>
 
@@ -64,6 +65,7 @@
             console.log("created");
         },
         beforeMount() {
+            console.log("before mount");
             const auth = getAuth();
             // auth state listener to know if authentication changes and so that uid wont be undefined
             onAuthStateChanged(auth, (user) => {
@@ -79,6 +81,9 @@
                 });
             });
         },
+        mounted() {
+            console.log("mounted in home");
+        },
         unmounted() {
             console.log("unmounted");
         },
@@ -86,10 +91,10 @@
 </script>
 
 <style scoped>
-.home {
-  background-color: #f1f2f3;
-}
-.profile {
-  padding-top: 7vw;
-}
+    .home {
+        background-color: #f1f2f3;
+    }
+    .profile {
+        padding-top: 7vw;
+    }
 </style>

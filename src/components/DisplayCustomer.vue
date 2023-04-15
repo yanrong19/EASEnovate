@@ -1,56 +1,60 @@
 <template>
-    <div class="d-flex align-center flex-column">
-        <!-- Card View displaying customer profile information
+    <v-container>
+        <div class="d-flex align-center flex-column">
+            <!-- Card View displaying customer profile information
         Uses data from firebase collections to display customer name,
         customer email address, contact number and desired services -->
-        <v-card width="80%" class="mx-auto">
-            <v-card-item>
-                <h1>Your Profile</h1>
-            </v-card-item>
-            <v-card-actions>
-                <v-spacer />
-                <v-avatar color="info" size="100">
-                    <v-icon icon="mdi-account-circle" size="100"> </v-icon>
-                </v-avatar>
-                <v-spacer />
-            </v-card-actions>
-            <v-card-item>
-                <v-card-title co> Name </v-card-title>
-                <v-card-subtitle> {{ name }} </v-card-subtitle>
-            </v-card-item>
-            <v-card-item>
-                <v-card-title> Email Address </v-card-title>
-                <v-card-subtitle> {{ email }} </v-card-subtitle>
-            </v-card-item>
-            <v-card-item>
-                <v-card-title> Contact Number </v-card-title>
-                <v-card-subtitle> {{ contact }} </v-card-subtitle>
-            </v-card-item>
-            <v-card-item>
-                <v-card-title> Service Preferences </v-card-title>
-                <div id="list">
-                    <v-card-actions>
-                        <v-chip
-                            color="teal"
-                            v-for="item in services"
-                            size="large"
-                        >
-                            {{ item }}
-                        </v-chip>
-                    </v-card-actions>
-                </div>
-            </v-card-item>
-            <v-card-actions>
-                <!-- Option to edit customer profile details and be routed to editprofile view -->
-                <v-spacer />
-                <v-btn variant="outlined" @click.native="editDetails">
-                    Update Profile
-                    <v-icon end icon="mdi-account-edit"></v-icon>
-                </v-btn>
-                <v-spacer />
-            </v-card-actions>
-        </v-card>
-    </div>
+            <v-card width="80%" class="mx-auto">
+                <v-card-item>
+                    <h1 align="center">Your Profile</h1>
+                </v-card-item>
+                <v-card-actions>
+                    <v-spacer />
+                    <v-avatar color="info" size="100">
+                        <v-icon icon="mdi-account-circle" size="100"> </v-icon>
+                    </v-avatar>
+                    <v-spacer />
+                </v-card-actions>
+                <v-card-item>
+                    <v-card-title co> Name </v-card-title>
+                    <v-card-subtitle> {{ name }} </v-card-subtitle>
+                </v-card-item>
+                <v-card-item>
+                    <v-card-title> Email Address </v-card-title>
+                    <v-card-subtitle> {{ email }} </v-card-subtitle>
+                </v-card-item>
+                <v-card-item>
+                    <v-card-title> Contact Number </v-card-title>
+                    <v-card-subtitle> {{ contact }} </v-card-subtitle>
+                </v-card-item>
+                <v-card-item>
+                    <v-card-title> Service Preferences </v-card-title>
+                    <div id="list">
+                        <v-card-actions>
+                            <v-chip
+                                color="teal"
+                                v-for="item in services"
+                                size="large"
+                            >
+                                {{ item }}
+                            </v-chip>
+                        </v-card-actions>
+                    </div>
+                </v-card-item>
+                <v-card-actions>
+                    <!-- Option to edit customer profile details and be routed to editprofile view -->
+                    <v-spacer />
+                    <v-hover>
+                        <v-btn @click.native="editDetails">
+                            Update Profile
+                            <v-icon end icon="mdi-account-edit"></v-icon>
+                        </v-btn>
+                    </v-hover>
+                    <v-spacer />
+                </v-card-actions>
+            </v-card>
+        </div>
+    </v-container>
 </template>
 
 <script>
@@ -124,13 +128,15 @@
     }
 
     button {
-        background-color: #3aafa9;
-        border: 2px solid #3aafa9;
+        background-color: #6b3fc8;
+        border: 2px solid #6b3fc8;
+        color: white;
         transition-duration: 0.4s;
     }
 
     button:hover {
         background-color: white;
+        color: black;
     }
     .detailContainer {
         padding: 15px;

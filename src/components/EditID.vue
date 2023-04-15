@@ -1,7 +1,7 @@
 <template>
     <v-container align="center">
         <div class="createUpdate" v-if="user">
-            <h1>CREATE/UPDATE YOUR PORTFOLIO</h1>
+            <!-- <h1>CREATE/UPDATE YOUR PORTFOLIO</h1>
             <br />
             <div
                 position="absolute"
@@ -9,43 +9,54 @@
             >
                 <CloudImage :path="link" />
             </div>
-            <br /><br />
+            <br /><br /> -->
             <v-form id="credForm">
                 <v-card class="px-3 py-1" width="80%">
-                    <h3>Personal Details</h3>
-                    <br />
-                    <v-row>
-                        <v-col md="12">
-                            <v-text-field
-                                v-model="id_name"
-                                id="id_name"
-                                label="Name"
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col md="5">
-                            <v-text-field
-                                v-model="id_email"
-                                id="id_email"
-                                disabled
-                            ></v-text-field>
-                        </v-col>
-                        <v-col md="3">
-                            <v-text-field
-                                v-model="id_phone"
-                                id="id_phone"
-                                label="Phone"
-                            ></v-text-field>
-                        </v-col>
-                        <v-col md="4">
-                            <v-file-input
-                                type="file"
-                                ref="myfile"
-                                label="Profile Photo"
-                            ></v-file-input>
-                        </v-col>
-                    </v-row>
+                    <v-card-item>
+                        <h1>Update Your Portfolio</h1>
+                        <br />
+                        <div
+                            position="absolute"
+                        >
+                            <CloudImage :path="link" />
+                        </div>
+                    </v-card-item>
+                    <v-card-item>
+                        <h3>Personal Details</h3>
+                        <br />
+                        <v-row>
+                            <v-col md="12">
+                                <v-text-field
+                                    v-model="id_name"
+                                    id="id_name"
+                                    label="Name"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col md="5">
+                                <v-text-field
+                                    v-model="id_email"
+                                    id="id_email"
+                                    disabled
+                                ></v-text-field>
+                            </v-col>
+                            <v-col md="3">
+                                <v-text-field
+                                    v-model="id_phone"
+                                    id="id_phone"
+                                    label="Phone"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col md="4">
+                                <v-file-input
+                                    type="file"
+                                    ref="myfile"
+                                    label="Profile Photo"
+                                ></v-file-input>
+                            </v-col>
+                        </v-row>
+                    </v-card-item>
                 </v-card>
                 <br />
                 <v-card class="px-3 py-1" width="80%">
@@ -66,13 +77,21 @@
                     </v-row>
                     <v-row>
                         <v-col md="5">
-                            <v-combobox
+                            <!-- <v-combobox
                                 v-model="services"
                                 id="services"
                                 label="Services"
                                 multiple
                                 chips
-                            ></v-combobox>
+                            ></v-combobox> --><v-select
+                                chips
+                                v-model="services"
+                                :items="allServices"
+                                label="Select"
+                                multiple
+                                hint="Pick your provided services"
+                                persistent-hint
+                            ></v-select>
                         </v-col>
                         <v-col md="7">
                             <v-text-field
@@ -122,12 +141,11 @@
                     </div>
                 </v-card>
                 <br />
+                <!-- color="primary" -->
                 <v-btn
                     id="uploadbutton"
-                    color="primary"
                     elevation="4"
                     height="5vh"
-                    tonal
                     v-on:click="uploadChange"
                     >Upload</v-btn
                 >
@@ -168,6 +186,17 @@
                         ratings: "",
                     },
                 ],
+                allServices: [
+                    "Home Renovation and Interior Design",
+                    "Living Room Renovation",
+                    "Kitchen Renovation",
+                    "Bathroom and Toilet",
+                    "Bedroom",
+                    "Exterior",
+                    "Window",
+                    "Roof Flooring and Tiling",
+                    "Others",
+                ],
             };
         },
         beforeMount() {
@@ -177,9 +206,10 @@
                 if (user) {
                     this.user = user;
                     this.uid = user.uid;
-                    console.log(this.uid);
+                    this.id_email = user.email;
+                    console.log(this.id_email);
                     this.display(this.uid);
-                    this.link = String(`folder/${this.uid}.png`);
+                    this.link = String(`folder/${this.id_email}.png`);
                 }
             });
         },
@@ -246,6 +276,7 @@
                 });
                 document.getElementById("credForm").reset();
                 this.$router.push("/profile");
+                console.log("UPLOADING CHANGE");
             },
             addProj() {
                 this.pastProjects.push({
@@ -269,5 +300,17 @@
         margin-bottom: 10px;
         display: inline-block;
         text-align: center;
+    }
+
+    button {
+        background-color: #6b3fc8;
+        border: 2px solid #6b3fc8;
+        color: white;
+        transition-duration: 0.4s;
+    }
+
+    button:hover {
+        background-color: white;
+        color: black;
     }
 </style>

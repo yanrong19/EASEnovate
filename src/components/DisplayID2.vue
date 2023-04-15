@@ -283,7 +283,6 @@
     const db = getFirestore(firebaseApp);
 
     export default {
-        props: ["profile"],
         data() {
             return {
                 idemailforpic: "",
@@ -327,13 +326,11 @@
             console.log(this.profile);
             // this.useremail = JSON.parse(this.profile).email;
             console.log(this.useremail);
-            if (this.useremail !== undefined) {
-                this.display(this.useremail);
-                console.log("not undefined in mounted");
-            }
             onAuthStateChanged(auth, (user) => {
                 if (user) {
+                    this.useremail = user.email;
                     this.currentEmail = user.email;
+                    this.display(this.useremail)
                 }
             });
             // onAuthStateChanged(auth, (user) => {
@@ -347,17 +344,6 @@
             //     }
             //   }
             // });
-        },
-        watch: {
-            profile: function (newVal, oldVal) {
-                // watch it
-                console.log("watcher for display id comp");
-                console.log("Prop changed: ", newVal, " | was: ", oldVal);
-                this.useremail = JSON.parse(this.profile).email;
-                console.log(this.useremail);
-                console.log("in watcher ");
-                this.display(this.useremail);
-            },
         },
         methods: {
             async display(useremail) {

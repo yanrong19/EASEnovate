@@ -4,7 +4,7 @@
         <hr />
 
         <div id="container3">
-            <img src="src/assets/landingpage.png" />
+            <img src="/src/assets/landingpage.png" />
         </div>
 
         <h2>
@@ -25,6 +25,12 @@
             enter() {
                 this.$router.push({ name: "Start" });
             },
+        },
+        created: function () {
+            document.body.style.backgroundColor = "#c6eeec";
+        },
+        destroyed: function () {
+            document.body.style.backgroundColor = null;
         },
     };
 </script>
