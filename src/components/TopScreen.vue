@@ -57,7 +57,7 @@
                     prepend-icon="mdi-logout"
                     title="Logout"
                     value="logout"
-                    href="/"
+                    @click="logOut"
                 ></v-list-item>
             </v-list>
         </v-navigation-drawer>
@@ -68,7 +68,7 @@
     import SideBar2 from "../components/SideBar2.vue";
     import { getDoc, doc } from "@firebase/firestore";
     import firebaseApp from "../firebase";
-    import { getAuth, onAuthStateChanged } from "@firebase/auth";
+    import { getAuth, onAuthStateChanged, signOut } from "@firebase/auth";
     import { getFirestore } from "@firebase/firestore";
 
     export default {
@@ -98,18 +98,28 @@
             goRequests() {
                 this.$router.push("/profile/jobrequest");
             },
+            logOut() {
+                const auth = getAuth();
+                signOut(auth)
+                    .then(() => {
+                        this.$router.push("/");
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
             async shareProfile() {
-                if (this.usertype=="Interior Designer") {
+                if (this.usertype == "Interior Designer") {
                     // const db = getFirestore(firebaseApp);
                     // const docRef = doc(db, "portfolio", this.email);
                     // let credentials = await getDoc(docRef);
                     // let cred = credentials.data();
                     // console.log(cred);
-                    this.$router.push({name: "DisplayID2"});
+                    this.$router.push({ name: "DisplayID2" });
                 } else {
-                    this.$router.push({name: "DisplayProfile"});
+                    this.$router.push({ name: "DisplayProfile" });
                 }
-            }
+            },
         },
         beforeCreate() {
             console.log("beforecreate");
@@ -118,7 +128,7 @@
             console.log("created");
         },
         beforeMount() {
-            console.log("hi")
+            console.log("hi");
             const auth = getAuth();
             // auth state listener to know if authentication changes and so that uid wont be undefined
             onAuthStateChanged(auth, (user) => {
