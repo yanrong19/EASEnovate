@@ -7,6 +7,7 @@ import DisplayProfile from "../Views/DisplayProfile.vue";
 import JobRequest from "../Views/JobRequest.vue";
 import LeaveReview from "../Views/LeaveReview.vue";
 import DisplayID from "../Views/DisplayID.vue";
+import DisplayID2 from "../Views/DisplayID2.vue";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const routes = [
@@ -33,6 +34,11 @@ const routes = [
     name: "DisplayIDView",
     component: DisplayID,
     props: true,
+  },
+  {
+    path: "/displayid/",
+    name: "DisplayID2",
+    component: DisplayID2,
   },
   {
     path: "/profile",

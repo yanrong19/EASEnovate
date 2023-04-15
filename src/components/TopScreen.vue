@@ -37,7 +37,7 @@
                     prepend-icon="mdi-account"
                     title="Profile"
                     value="profile"
-                    href="/profile"
+                    @click="shareProfile()"
                 ></v-list-item>
                 <v-list-item
                     prepend-icon="mdi-home"
@@ -98,6 +98,18 @@
             goRequests() {
                 this.$router.push("/profile/jobrequest");
             },
+            async shareProfile() {
+                if (this.usertype=="Interior Designer") {
+                    // const db = getFirestore(firebaseApp);
+                    // const docRef = doc(db, "portfolio", this.email);
+                    // let credentials = await getDoc(docRef);
+                    // let cred = credentials.data();
+                    // console.log(cred);
+                    this.$router.push({name: "DisplayID2"});
+                } else {
+                    this.$router.push({name: "DisplayProfile"});
+                }
+            }
         },
         beforeCreate() {
             console.log("beforecreate");
@@ -106,6 +118,7 @@
             console.log("created");
         },
         beforeMount() {
+            console.log("hi")
             const auth = getAuth();
             // auth state listener to know if authentication changes and so that uid wont be undefined
             onAuthStateChanged(auth, (user) => {

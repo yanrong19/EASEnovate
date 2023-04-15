@@ -17,7 +17,6 @@
                         <br />
                         <div
                             position="absolute"
-                            class="pa-1 bg-secondary rounded-circle d-inline-block"
                         >
                             <CloudImage :path="link" />
                         </div>
@@ -206,9 +205,10 @@
                 if (user) {
                     this.user = user;
                     this.uid = user.uid;
-                    console.log(this.uid);
+                    this.id_email = user.email;
+                    console.log(this.id_email);
                     this.display(this.uid);
-                    this.link = String(`folder/${this.uid}.png`);
+                    this.link = String(`folder/${this.id_email}.png`);
                 }
             });
         },
