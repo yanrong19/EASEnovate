@@ -1,12 +1,13 @@
 <template>
-    <v-container align="center">
+    <v-container align="center" class="d-flex flex-row">
         <v-card
             position="absolute"
             elevation="10"
-            style="top: 5vh; left: 10vw; right: 40vw; bottom: 64vh"
+            style="top: 5%; left: 10%; right: 40%; bottom: 64%"
         >
             <v-avatar
-                style="top: 2vh; left: -22vw; right: 40vw; bottom: 65vh"
+                class="d-flex flex-column"
+                style="top: 7%; left: -44%; right: 40%; bottom: 65%"
                 size="x-large"
             >
                 <!-- <v-img
@@ -16,35 +17,30 @@
                 <CloudImage :path="this.idemailforpic" />
             </v-avatar>
             <v-card
-                style="top: -6vh; left: 1vw"
+                style="top: -19%; left: 1%"
                 variant="outlined"
                 max-width="40vw"
             >
-                <v-card-title class="text-h4" align="left">{{
+                <v-card-title class="text-h4 d-flex flex-column" align="left">{{
                     IDname
                 }}</v-card-title>
                 <v-card-subtitle class="text-h6" align="left"
                     >Interior Designer</v-card-subtitle
                 >
             </v-card>
-            <v-card style="top: -5vh; left: 0vw" max-width="48vw">
+            <v-card style="top: -15%;" max-width="100%">
                 <v-card-text class="text-h6" align="left">
-                    <v-rating
+                    <div class="text-h10 d-flex flex-row" style="position:sticky; top:10%">
+                        <v-rating
                         v-model="rating"
                         color="orange"
                         readonly
                         align="left"
-                    ></v-rating>
-                    <span
-                        style="
-                            font-size: 16px;
-                            position: absolute;
-                            top: 4vh;
-                            left: 15.5vw;
-                        "
-                        >({{ jobReq.length }})</span
                     >
-                    <v-card-text class="text-h6" align="left">
+                    </v-rating>
+                    </div>
+                    <div class="text-h10 d-flex">
+                        <v-card-text class="text-h6 flex-col" align="left">
                         Services:
                         <v-chip
                             class="ma-2"
@@ -54,14 +50,15 @@
                         >
                             {{ serv }}</v-chip
                         >
-                    </v-card-text>
+                        </v-card-text>
+                    </div>
                 </v-card-text>
             </v-card>
         </v-card>
         <v-card
             position="absolute"
             elevation="5"
-            style="top: 38vh; left: 10vw; right: 40vw"
+            style="top: 38%; left: 10%; right: 40%"
         >
             <v-card height="40vh">
                 <div class="pastProjects">
@@ -122,7 +119,7 @@
                 </v-card>
             </v-card-text>
             <v-card elevation="5" class="mb-5">
-                <h2 align="left" class="ma-3">Reviews</h2>
+                <h2 align="left" class="ma-3">Reviews <span>({{ jobReq.length }})</span></h2>
                 <div class="checkreviews">
                     <div v-for="rev in reviews" :key="rev">
                         <v-card
@@ -159,18 +156,18 @@
                 rounded="xl"
                 v-bind="props"
                 :elevation="isHovering ? 15 : 6"
-                style="top: 5vh; left: 60vw; right: 5vw"
+                style="top: 5%; left: 61%; right: 5%"
             >
                 <v-card-title class="text-h4">{{ IDname }}</v-card-title>
                 <v-card-subtitle>Interior Designer</v-card-subtitle>
                 <v-card-actions>
                     <v-row>
-                        <v-col class="d-flex justify-start">
-                            <v-expansion-panels>
+                        <v-col class="d-flex justify-start flex-column">
+                            <v-expansion-panels >
                                 <v-expansion-panel elevation="5" rounded="xl">
-                                    <v-expansion-panel-title color="primary"
-                                        >CONTACT ME</v-expansion-panel-title
-                                    >
+                                    <v-expansion-panel-title color="primary">
+                                        CONTACT ME
+                                    </v-expansion-panel-title>
                                     <v-expansion-panel-text>
                                         Email:
                                         {{ IDemail }}</v-expansion-panel-text
@@ -468,7 +465,7 @@
     .pastProjects {
         height: 100%;
         max-width: 100vw;
-        overflow-x: scroll;
+        overflow-x: hidden;
         overflow-y: hidden;
         white-space: nowrap;
         background-color: rgb(168, 198, 224);
