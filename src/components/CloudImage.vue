@@ -1,5 +1,5 @@
 <template>
-  <img style="height: 20vh" :src="url" alt="" />
+  <img style="height: 20vh; width:10vw; border-radius:100% ;" :src="url" alt="" />
 </template>
 
 <script>
@@ -17,6 +17,11 @@ export default {
   },
   async mounted() {
     console.log(this.path);
+    if (this.path !== undefined) {
+      await getDownloadURL(ref(storage, this.path)).then(
+        (download_url) => (this.url = download_url)
+      );
+    }
     console.log("mounted for cloud image");
   },
   watch: {
