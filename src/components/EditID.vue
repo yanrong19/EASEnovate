@@ -178,7 +178,7 @@
                         description: "",
                     },
                 ],
-                services: "",
+                services: [],
                 website: "",
                 requests: [],
                 allServices: [
