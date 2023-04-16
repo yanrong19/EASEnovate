@@ -171,6 +171,7 @@
                 id_email: "",
                 id_phone: "",
                 description: "",
+                rating: "",
                 pastProjects: [
                     {
                         title: "",
@@ -227,6 +228,7 @@
                     this.id_phone = cred2.phone;
                     this.services = cred2.services;
                     this.requests = cred2.requests;
+                    this.rating = cred2.rating;
                 } catch { //no portfolio created
                 }
             },
@@ -260,6 +262,7 @@
                 let services = this.services;
                 let website = this.website;
                 let requests = this.requests;
+                let rating = this.rating;
                 this.upload();
                 //update the user collection if there is a change in name
                 await updateDoc(doc(db, "users", String(this.uid)), {
@@ -275,6 +278,7 @@
                     services: services,
                     website: website,
                     requests: requests,
+                    rating: rating,
                 });
                 document.getElementById("credForm").reset();
                 this.$router.push({ name: "DisplayID2" }); //go back to display profile view
