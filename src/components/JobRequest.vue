@@ -1,7 +1,9 @@
+<!-- component for handling job requests -->
 <template>
     <v-container align="center">
         <h1 id="jobRequest">Job Requests</h1>
         <br /><br />
+        <!-- table with the details of the job requests -->
         <v-table>
             <thead>
                 <tr>
