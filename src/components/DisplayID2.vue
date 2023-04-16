@@ -144,7 +144,7 @@
                                 ></v-rating>
                                 <v-card-text
                                     ><i
-                                        ><span style="font-size: 18px">{{
+                                        ><span class="text-wrap" style="font-size: 18px">{{
                                             rev.Review
                                         }}</span></i
                                     ></v-card-text
