@@ -2,20 +2,25 @@
 <!-- This component is reserved for interior designers to access their own profile page -->
 <template>
     <v-container align="center" class="d-flex flex-row">
+        <!-- card consisting of name, avatar, title, rating and services provided -->
         <v-card
-            position="absolute"
+        position="absolute"
             elevation="10"
-            style="top: 5%; left: 10%; right: 40%; bottom: 64%"
+            style="top: 5%; left: 10%; right: 40%"
+        >
+            <v-card
+            
         >
             <v-avatar
                 class="d-flex flex-column"
-                style="top: 7%; left: -44%; right: 40%; bottom: 65%"
+                style="top: 5vh; left: -44%; right: 40%; bottom: 45%"
                 size="x-large"
             >
+            <!-- Retrieve image from firebase storage through CloudImage Component -->
                 <CloudImage :path="this.idemailforpic" />
             </v-avatar>
             <v-card
-                style="top: -19%; left: 1%"
+                style="top: -3vh; left: 1%"
                 variant="outlined"
                 max-width="40vw"
             >
@@ -26,17 +31,19 @@
                     >Interior Designer</v-card-subtitle
                 >
             </v-card>
-            <v-card style="top: -15%;" max-width="100%">
+            <v-card style="top: -1.5vh;" max-width="100%">
                 <v-card-text class="text-h6" align="left">
                     <div class="text-h10 d-flex flex-row" style="position:sticky; top:10%">
                         <v-rating
                         v-model="rating"
                         color="orange"
                         readonly
+                        half-increments
                         align="left"
                     >
                     </v-rating>
                     </div>
+                    <!-- display serves that the interior designer offers -->
                     <div class="text-h10 d-flex">
                         <v-card-text class="text-h6 flex-col" align="left">
                         Services:
@@ -53,38 +60,38 @@
                 </v-card-text>
             </v-card>
         </v-card>
+        <!-- card for portfolio, including featured project picture, self description, website, past projects and reviews -->
         <v-card
-            position="absolute"
-            elevation="5"
-            style="top: 38%; left: 10%; right: 40%"
         >
-            <v-card height="40vh">
+            <v-card height="50vh">
                 <div class="pastProjects">
                     <div class="scroll_container">
                         <CloudImage2 :path="this.idemailforprojpic" />
                     </div>
                 </div>
             </v-card>
-            <v-card-title class="text-h4 my-3" align="left"
+            <v-card-title class="text-h4 my-3 font-weight-bold" align="left "
                 ><strong>About Me</strong></v-card-title
             >
-            <v-card-text class="text-h6 mx-3" align="left">{{
-                desc
-            }}</v-card-text>
+            <v-card-text class="mx-3" align="left">
+                <p class="text-h6 font-weight-light">
+                    {{desc}}
+                </p>
+            </v-card-text>
             <br />
-            <v-card-text class="text-h5" align="left"
+            <!-- <v-card-text class="text-h5 font-weight-light" align="left"
                 ><h4>Website</h4></v-card-text
-            >
-            <v-card-text class="text-h6" align="left"
+            > -->
+            <v-card-text class="text-h6 mx-3" align="left"
                 ><a :href="'//' + website">{{ website }}</a></v-card-text
             >
-            <v-card-text class="text-h5" align="left"
+            <v-card-text class="text-h5 my-3 font-weight-meidum" align="left"
                 ><strong>Past Projects</strong></v-card-text
             >
             <v-card-text class="text-h6" align="left">
                 <v-card v-for="(row, index) in pastProjects" :key="index">
                     <v-card-text class="text-h6" align="left"
-                        ><h4>{{ row.title }}</h4></v-card-text
+                        ><p class="font-weight-medium">{{ row.title }}</p></v-card-text
                     >
                     <v-btn
                         :icon="
@@ -104,6 +111,7 @@
                     </v-expand-transition>
                 </v-card>
             </v-card-text>
+            <!-- iterate through all reviews and display -->
             <v-card elevation="5" class="mb-5">
                 <h2 align="left" class="ma-3">Reviews <span>({{ jobReq.length }})</span></h2>
                 <div class="checkreviews">
@@ -134,8 +142,9 @@
                 </div>
             </v-card>
         </v-card>
+        </v-card>
         <br />
-
+        <!-- card with fixed position containing contact details and option for customers to engage with the interior designer -->
         <v-hover v-slot="{ isHovering, props }">
             <v-card
                 position="fixed"
@@ -165,6 +174,7 @@
                                 </v-expansion-panel>
                             </v-expansion-panels>
                         </v-col>
+                        <!-- only the interior designer themselves can edit their own portfolio -->
                         <v-col class="d-flex justify-end">
                             <v-btn
                                 class="engage"
@@ -187,17 +197,19 @@
                                         class="engage"
                                         rounded="xl"
                                         elevation="4"
-                                        height="6%"
+                                        height="6vh"
                                         tonal
                                         >Engage a Project</v-btn
                                     >
                                     <br /><br />
+                                    <!-- Opens a dialong when clicked -->
                                 </template>
                                 <v-card>
                                     <v-card-title class="text-h4" align="center"
                                         >Engage a Project with
                                         {{ IDname }}</v-card-title
                                     >
+                                    <!-- form that takes in desired services by the customer and details of the project to be sent to the interior designer -->
                                     <v-form>
                                         <v-container>
                                             <v-row>
