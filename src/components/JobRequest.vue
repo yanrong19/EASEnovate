@@ -7,16 +7,16 @@
         <v-table>
             <thead>
                 <tr>
-                    <th width="1%">Index</th>
-                    <th width="11%">Job Request ID</th>
-                    <th width="10%" v-if="usertype == 'Interior Designer'">
+                    <th class="font-weight-bold" width="1%">Index</th>
+                    <th class="font-weight-bold" width="11%">Job Request ID</th>
+                    <th class="font-weight-bold" width="10%" v-if="usertype == 'Interior Designer'">
                         Customer
                     </th>
-                    <th width="10%" v-if="usertype == 'Customer'">Designer</th>
-                    <th width="20%">Services</th>
-                    <th width="30%">Details</th>
-                    <th width="5%">Status</th>
-                    <th width="25%">Action</th>
+                    <th class="font-weight-bold" width="10%" v-if="usertype == 'Customer'">Designer</th>
+                    <th class="font-weight-bold" width="10%">Services</th>
+                    <th class="font-weight-bold" width="30%">Details</th>
+                    <th class="font-weight-bold" width="5%">Status</th>
+                    <th class="font-weight-bold" width="35%">Action</th>
                 </tr>
 
                 <!-- Table renders different views and buttons for Customers and Interior Designers
