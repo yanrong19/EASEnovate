@@ -15,6 +15,9 @@
             <div class="text-center">
                 <v-menu open-on-hover>
                     <template v-slot:activator="{ props }">
+                        <!-- Creating a button that allows multiple selection for customer to 
+                            filter the IDs by their Services that they provide. The filtering
+                        process is done dynamically everytime the customer click on each Service -->
                         <v-select
                             v-model="favorites"
                             :items="item"
@@ -25,6 +28,7 @@
                     </template>
 
                     <v-list>
+                        <!-- The Services are stored in a v-list item -->
                         <v-list-item v-for="(item, index) in item" :key="index">
                             <v-list-item-title>{{
                                 item.title
@@ -46,9 +50,15 @@
 
                     <v-list>
                         <v-list-item>
+                            <!-- When the ascending button is clicked on, the ascend method is called 
+                            upon that allows the sorting function to sort the IDs shown in ascending 
+                        order according to their rating. -->
                             <v-btn @click="ascend()">Ascending</v-btn>
                         </v-list-item>
                         <v-list-item>
+                            <!-- When the descending button is clicked on, the descend method is called 
+                            upon that allows the sorting function to sort the IDs shown in descending 
+                        order according to their rating. -->
                             <v-btn @click="descend()">Descending</v-btn>
                         </v-list-item>
                     </v-list>
@@ -86,17 +96,28 @@
         name: "ProfileCards",
         components: { CompanyProfile },
         computed: {
+            // Filtered Profiles will filter the IDs shown by both their 
+            // name and their services that they provide, depending on 
+            // what the customer selects. 
             filteredProfiles() {
                 let updated = this.profiles.filter((profile) => {
                     console.log(profile);
                     return (
+                        // this allows the customers to dynamically filter the 
+                        // IDs shown by their name when they key in the 
+                        // name of the ID in the search bar and store the IDs 
+                        // into a new array called updated
                         profile.name
                             .toLowerCase()
                             .indexOf(this.search.toLowerCase()) != -1
                     );
                 });
+                // We create a new array, updated2 
                 let updated2 = [];
                 updated.forEach((profile) => {
+                    // We initialise a boolean to be false and loop through the list 
+                    // of services selected by the customers. If the ID provides any 
+                    // of the services listed, they will be appended into the array. 
                     let hasService = false;
                     if (this.favorites.length === 0) {
                         hasService = true;
@@ -111,9 +132,11 @@
                         updated2.push(profile);
                     }
                 });
+                // Finally, we return the array after it has been filtered by their name and service
                 return updated2;
             },
             ascend() {
+                // A compare function is used to compare the ratings of each ID and sort them in ascending order.
                 function compare(a, b) {
                     if (a.rating < b.rating) return -1;
                     if (a.rating > b.rating) return 1;
@@ -122,6 +145,7 @@
                 this.profiles = this.profiles.sort(compare);
             },
             descend() {
+                // A compare function is used to compare the ratings of each ID and sort them in descending order.
                 function compare(a, b) {
                     if (a.rating > b.rating) return -1;
                     if (a.rating < b.rating) return 1;
@@ -139,6 +163,7 @@
                 profiles: [],
                 items: [{ title: "Rating" }],
                 item: [
+                    // List of Services that are provided by the Interior Designers.
                     { title: "Home Renovation and Interior Design" },
                     { title: "Living Room Renovation" },
                     { title: "Kitchen Renovation" },
