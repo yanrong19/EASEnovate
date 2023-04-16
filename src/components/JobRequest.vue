@@ -106,9 +106,14 @@
                         >
                         <v-btn
                             v-if="row.status == 'Accepted'"
-                            color="secondary"
+                            color="red"
                             @click="action(this.useremail, row.jrid, 'Aborted')"
                             >Abort</v-btn
+                        ><v-btn
+                            v-if="row.status == 'Reviewed'"
+                            color="secondary"
+                            @click="shareProfile(row.jrid)"
+                            >View Review</v-btn
                         >
                     </td>
                 </tr>
