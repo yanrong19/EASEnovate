@@ -65,7 +65,7 @@
                         >
                         <v-btn
                             v-if="row.status == 'Accepted'"
-                            color="secondary"
+                            color="red"
                             @click="action(this.useremail, row.jrid, 'Aborted')"
                             >Abort</v-btn
                         >
