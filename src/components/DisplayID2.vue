@@ -4,144 +4,156 @@
     <v-container align="center" class="d-flex flex-row">
         <!-- card consisting of name, avatar, title, rating and services provided -->
         <v-card
-        position="absolute"
+            position="absolute"
             elevation="10"
             style="top: 5%; left: 10%; right: 40%"
         >
-            <v-card
-            
-        >
-            <v-avatar
-                class="d-flex flex-column"
-                style="top: 5vh; left: -44%; right: 40%; bottom: 45%"
-                size="x-large"
-            >
-            <!-- Retrieve image from firebase storage through CloudImage Component -->
-                <CloudImage :path="this.idemailforpic" />
-            </v-avatar>
-            <v-card
-                style="top: -3vh; left: 1%"
-                variant="outlined"
-                max-width="40vw"
-            >
-                <v-card-title class="text-h4 d-flex flex-column" align="left">{{
-                    IDname
-                }}</v-card-title>
-                <v-card-subtitle class="text-h6" align="left"
-                    >Interior Designer</v-card-subtitle
+            <v-card>
+                <v-avatar
+                    class="d-flex flex-column"
+                    style="top: 5vh; left: -44%; right: 40%; bottom: 45%"
+                    size="x-large"
                 >
-            </v-card>
-            <v-card style="top: -1.5vh;" max-width="100%">
-                <v-card-text class="text-h6" align="left">
-                    <div class="text-h10 d-flex flex-row" style="position:sticky; top:10%">
-                        <v-rating
-                        v-model="rating"
-                        color="orange"
-                        readonly
-                        half-increments
+                    <!-- Retrieve image from firebase storage through CloudImage Component -->
+                    <CloudImage :path="this.idemailforpic" />
+                </v-avatar>
+                <v-card
+                    style="top: -3vh; left: 1%"
+                    variant="outlined"
+                    max-width="40vw"
+                >
+                    <v-card-title
+                        class="text-h4 d-flex flex-column"
                         align="left"
+                        >{{ IDname }}</v-card-title
                     >
-                    </v-rating>
-                    </div>
-                    <!-- display serves that the interior designer offers -->
-                    <div class="text-h10 d-flex">
-                        <v-card-text class="text-h6 flex-col" align="left">
-                        Services:
-                        <v-chip
-                            class="ma-2"
-                            color="secondary"
-                            v-for="serv in services"
-                            :key="serv"
-                        >
-                            {{ serv }}</v-chip
-                        >
-                        </v-card-text>
-                    </div>
-                </v-card-text>
-            </v-card>
-        </v-card>
-        <!-- card for portfolio, including featured project picture, self description, website, past projects and reviews -->
-        <v-card
-        >
-            <v-card height="50vh">
-                <div class="pastProjects">
-                    <div class="scroll_container">
-                        <CloudImage2 :path="this.idemailforprojpic" />
-                    </div>
-                </div>
-            </v-card>
-            <v-card-title class="text-h4 my-3 font-weight-bold" align="left "
-                ><strong>About Me</strong></v-card-title
-            >
-            <v-card-text class="mx-3" align="left">
-                <p class="text-h6 font-weight-light">
-                    {{desc}}
-                </p>
-            </v-card-text>
-            <br />
-            <!-- <v-card-text class="text-h5 font-weight-light" align="left"
-                ><h4>Website</h4></v-card-text
-            > -->
-            <v-card-text class="text-h6 mx-3" align="left"
-                ><a :href="'//' + website">{{ website }}</a></v-card-text
-            >
-            <v-card-text class="text-h5 my-3 font-weight-meidum" align="left"
-                ><strong>Past Projects</strong></v-card-text
-            >
-            <v-card-text class="text-h6" align="left">
-                <v-card v-for="(row, index) in pastProjects" :key="index">
-                    <v-card-text class="text-h6" align="left"
-                        ><p class="font-weight-medium">{{ row.title }}</p></v-card-text
+                    <v-card-subtitle class="text-h6" align="left"
+                        >Interior Designer</v-card-subtitle
                     >
-                    <v-btn
-                        :icon="
-                            show[index] ? 'mdi-chevron-up' : 'mdi-chevron-down'
-                        "
-                        @click="show[index] = !show[index]"
-                        size="s"
-                        class="ma-3"
-                    ></v-btn>
-                    <v-expand-transition>
-                        <div v-show="show[index]">
-                            <v-divider></v-divider>
-                            <v-card-text>
-                                {{ row.description }}
-                            </v-card-text>
-                        </div>
-                    </v-expand-transition>
                 </v-card>
-            </v-card-text>
-            <!-- iterate through all reviews and display -->
-            <v-card elevation="5" class="mb-5">
-                <h2 align="left" class="ma-3">Reviews <span>({{ jobReq.length }})</span></h2>
-                <div class="checkreviews">
-                    <div v-for="rev in reviews" :key="rev">
-                        <v-card
-                            width="46.6vw"
-                            height="29.5vh"
-                            align="left"
-                            class="my-2"
+                <v-card style="top: -1.5vh" max-width="100%">
+                    <v-card-text class="text-h6" align="left">
+                        <div
+                            class="text-h10 d-flex flex-row"
+                            style="position: sticky; top: 10%"
                         >
-                            <v-card-title
-                                ><h3>{{ rev.CusName }}</h3></v-card-title
-                            >
                             <v-rating
-                                v-model="rev.Rating"
+                                v-model="rating"
                                 color="orange"
                                 readonly
-                            ></v-rating>
-                            <v-card-text
-                                ><i
-                                    ><span style="font-size: 18px">{{
-                                        rev.Review
-                                    }}</span></i
-                                ></v-card-text
+                                half-increments
+                                align="left"
                             >
-                        </v-card>
-                    </div>
-                </div>
+                            </v-rating>
+                        </div>
+                        <!-- display serves that the interior designer offers -->
+                        <div class="text-h10 d-flex">
+                            <v-card-text class="text-h6 flex-col" align="left">
+                                Services:
+                                <v-chip
+                                    class="ma-2"
+                                    color="secondary"
+                                    v-for="serv in services"
+                                    :key="serv"
+                                >
+                                    {{ serv }}</v-chip
+                                >
+                            </v-card-text>
+                        </div>
+                    </v-card-text>
+                </v-card>
             </v-card>
-        </v-card>
+            <!-- card for portfolio, including featured project picture, self description, website, past projects and reviews -->
+            <v-card>
+                <v-card height="50vh">
+                    <div class="pastProjects">
+                        <div class="scroll_container">
+                            <CloudImage2 :path="this.idemailforprojpic" />
+                        </div>
+                    </div>
+                </v-card>
+                <v-card-title
+                    class="text-h4 my-3 font-weight-bold"
+                    align="left "
+                    ><strong>About Me</strong></v-card-title
+                >
+                <v-card-text class="mx-3" align="left">
+                    <p class="text-h6 font-weight-light">
+                        {{ desc }}
+                    </p>
+                </v-card-text>
+                <br />
+                <!-- <v-card-text class="text-h5 font-weight-light" align="left"
+                ><h4>Website</h4></v-card-text
+            > -->
+                <v-card-text class="text-h6 mx-3" align="left"
+                    ><a :href="'//' + website">{{ website }}</a></v-card-text
+                >
+                <v-card-text
+                    class="text-h5 my-3 font-weight-meidum"
+                    align="left"
+                    ><strong>Past Projects</strong></v-card-text
+                >
+                <v-card-text class="text-h6" align="left">
+                    <v-card v-for="(row, index) in pastProjects" :key="index">
+                        <v-card-text class="text-h6" align="left"
+                            ><p class="font-weight-medium">
+                                {{ row.title }}
+                            </p></v-card-text
+                        >
+                        <v-btn
+                            :icon="
+                                show[index]
+                                    ? 'mdi-chevron-up'
+                                    : 'mdi-chevron-down'
+                            "
+                            @click="show[index] = !show[index]"
+                            size="s"
+                            class="ma-3"
+                        ></v-btn>
+                        <v-expand-transition>
+                            <div v-show="show[index]">
+                                <v-divider></v-divider>
+                                <v-card-text>
+                                    {{ row.description }}
+                                </v-card-text>
+                            </div>
+                        </v-expand-transition>
+                    </v-card>
+                </v-card-text>
+                <!-- iterate through all reviews and display -->
+                <v-card elevation="5" class="mb-5">
+                    <h2 align="left" class="ma-3">
+                        Reviews <span>({{ jobReq.length }})</span>
+                    </h2>
+                    <div class="checkreviews">
+                        <div v-for="rev in reviews" :key="rev">
+                            <v-card
+                                width="46.6vw"
+                                height="29.5vh"
+                                align="left"
+                                class="my-2"
+                            >
+                                <v-card-title
+                                    ><h3>{{ rev.CusName }}</h3></v-card-title
+                                >
+                                <v-rating
+                                    v-model="rev.Rating"
+                                    color="orange"
+                                    readonly
+                                ></v-rating>
+                                <v-card-text
+                                    ><i
+                                        ><span style="font-size: 18px">{{
+                                            rev.Review
+                                        }}</span></i
+                                    ></v-card-text
+                                >
+                            </v-card>
+                        </div>
+                    </div>
+                </v-card>
+            </v-card>
         </v-card>
         <br />
         <!-- card with fixed position containing contact details and option for customers to engage with the interior designer -->
@@ -158,7 +170,7 @@
                 <v-card-actions>
                     <v-row>
                         <v-col class="d-flex justify-start flex-column">
-                            <v-expansion-panels >
+                            <v-expansion-panels>
                                 <v-expansion-panel elevation="5" rounded="xl">
                                     <v-expansion-panel-title color="primary">
                                         CONTACT ME
@@ -326,9 +338,10 @@
             console.log(this.useremail);
             onAuthStateChanged(auth, (user) => {
                 if (user) {
+                    this.uid = user.uid;
                     this.useremail = user.email;
                     this.currentEmail = user.email;
-                    this.display(this.useremail)
+                    this.display(this.useremail);
                 }
             });
             // onAuthStateChanged(auth, (user) => {
@@ -347,7 +360,7 @@
             async display(useremail) {
                 const db = getFirestore(firebaseApp);
                 try {
-                    console.log(useremail)
+                    console.log(useremail);
                     const docRef = doc(db, "portfolio", String(useremail)); //check if portfolio already created
                     let credentials = await getDoc(docRef);
                     let cred = credentials.data();
@@ -393,7 +406,7 @@
                     console.log("in catch");
                     console.log(this.IDemail);
                     this.jobReq = [];
-                    const docRef = doc(db, "users", String(this.IDemail));
+                    const docRef = doc(db, "users", this.uid);
                     let credentials = await getDoc(docRef);
                     let cred = credentials.data();
                     console.log(cred);
