@@ -18,6 +18,8 @@
                     <v-spacer />
                 </v-card-actions>
                 <v-card-item>
+                    <!-- Renders the job request data such as customer and interior designer information,
+                    services provided in the job as well as description of the job -->
                     <v-container margin="0" padding="0" align="center">
                         <v-row
                             ><v-col

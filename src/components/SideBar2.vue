@@ -13,6 +13,9 @@
                 </v-list>
                 <v-divider></v-divider>
                 <v-list density="default" nav>
+                    <!-- Directs to user to a different view depending on whether customer or interior designer
+                Customer - DisplayCustomer component
+                Interior Designer - DisplayID2 component -->
                     <v-list-item
                         prepend-icon="mdi-account"
                         title="Profile"
@@ -25,6 +28,7 @@
                         value="home"
                         href="/home"
                     ></v-list-item>
+                    <!-- Uses to firebase Auth to signout the user and routes them to the landing page -->
                     <v-list-item
                         prepend-icon="mdi-wrench"
                         title="Jobs"
@@ -68,15 +72,6 @@
             async getUserData(docRef) {
                 const docSnap = await getDoc(docRef);
                 return docSnap;
-            },
-            editDetails() {
-                this.$router.push("profile/edit");
-            },
-            goReview() {
-                this.$router.push("/review");
-            },
-            goRequests() {
-                this.$router.push("/profile/jobrequest");
             },
             logOut() {
                 const auth = getAuth();

@@ -15,6 +15,7 @@
     };
 </script>
 <template>
+    <!-- Renders the component to display the list of job requests pertaining to the user -->
     <div><SideBar2 /></div>
     <div>
         <JobRequest />

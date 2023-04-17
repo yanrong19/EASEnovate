@@ -20,6 +20,9 @@
             <v-divider></v-divider>
 
             <v-list density="compact" nav>
+                <!-- Directs to user to a different view depending on whether customer or interior designer
+                Customer - DisplayCustomer component
+                Interior Designer - DisplayID2 component -->
                 <v-list-item
                     prepend-icon="mdi-account"
                     title="Profile"
@@ -40,6 +43,7 @@
                 ></v-list-item>
 
                 <v-divider></v-divider>
+                <!-- Uses to firebase Auth to signout the user and routes them to the landing page -->
                 <v-list-item
                     prepend-icon="mdi-logout"
                     title="Logout"
@@ -110,6 +114,7 @@
             console.log("created");
         },
         beforeMount() {
+            // Instantiates the data by fetching the Firebase datastore
             console.log("hi");
             const auth = getAuth();
             // auth state listener to know if authentication changes and so that uid wont be undefined

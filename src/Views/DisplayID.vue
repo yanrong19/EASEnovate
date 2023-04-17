@@ -33,6 +33,8 @@
     };
 </script>
 <template>
+    <!-- Used for ID Portfolio view, routed from the home page
+    Passes props in to generate a view of the selected ID -->
     <div class="mainContainer">
         <div class="sideBar">
             <SideBar2 />
@@ -43,6 +45,8 @@
             <div style="height: 100vh"></div>
         </div>
         <div class="displayID">
+            <!-- Prop is a JSON String object containing idname, idemail,ratings,reviews, requests
+            past projects -->
             <DisplayID :profile="profile" />
         </div>
     </div>

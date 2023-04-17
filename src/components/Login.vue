@@ -63,7 +63,8 @@
 
         methods: {
             // Uses form inputs to attempt a sign in to Firebase Auth
-            // If User exists
+            // If User exists and password is correct, user is routed to the homepage
+            // Else, respective error message will be thrown in the snackbar
             submitForm() {
                 const auth = getAuth();
                 signInWithEmailAndPassword(auth, this.email, this.password)

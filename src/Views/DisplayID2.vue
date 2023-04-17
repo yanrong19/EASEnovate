@@ -24,6 +24,7 @@
     };
 </script>
 <template>
+    <!-- Template to display ID profile without accepting props in -->
     <div class="mainContainer">
         <div class="sideBar">
             <SideBar2 />
