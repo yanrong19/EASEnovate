@@ -132,7 +132,7 @@
                         const userDoc = doc(db, "users", auth.currentUser.uid);
                         setDoc(userDoc, {
                             name: this.name,
-                            email: this.email,
+                            email: this.email.toLowerCase(),
                             usertype: this.usertype,
                         });
                         const user = userCredential.user;

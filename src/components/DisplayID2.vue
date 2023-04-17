@@ -144,9 +144,11 @@
                                 ></v-rating>
                                 <v-card-text
                                     ><i
-                                        ><span class="text-wrap" style="font-size: 18px">{{
-                                            rev.Review
-                                        }}</span></i
+                                        ><span
+                                            class="text-wrap"
+                                            style="font-size: 18px"
+                                            >{{ rev.Review }}</span
+                                        ></i
                                     ></v-card-text
                                 >
                             </v-card>
@@ -195,78 +197,8 @@
                                 elevation="4"
                                 height="6vh"
                                 tonal
-                                v-if="this.IDemail == this.currentEmail"
                                 >Edit Your Portfolio</v-btn
                             >
-                            <v-dialog
-                                v-model="engageProj"
-                                width="70vw"
-                                v-if="this.IDemail != this.currentEmail"
-                            >
-                                <template v-slot:activator="{ props }">
-                                    <v-btn
-                                        v-bind="props"
-                                        class="engage"
-                                        rounded="xl"
-                                        elevation="4"
-                                        height="6vh"
-                                        tonal
-                                        >Engage a Project</v-btn
-                                    >
-                                    <br /><br />
-                                    <!-- Opens a dialong when clicked -->
-                                </template>
-                                <v-card>
-                                    <v-card-title class="text-h4" align="center"
-                                        >Engage a Project with
-                                        {{ IDname }}</v-card-title
-                                    >
-                                    <!-- form that takes in desired services by the customer and details of the project to be sent to the interior designer -->
-                                    <v-form>
-                                        <v-container>
-                                            <v-row>
-                                                <v-col cols="12" md="4">
-                                                    <v-combobox
-                                                        v-model="idservices"
-                                                        label="services"
-                                                        :items="services"
-                                                        multiple
-                                                        chips
-                                                        hide-selected
-                                                        color="primary"
-                                                        :rules="[required]"
-                                                    ></v-combobox>
-                                                </v-col>
-                                                <v-col md="12">
-                                                    <v-textarea
-                                                        v-model="details"
-                                                        label="Description"
-                                                        clearable
-                                                        no-resize
-                                                        autogrow
-                                                    ></v-textarea>
-                                                </v-col>
-                                            </v-row>
-                                        </v-container>
-                                    </v-form>
-                                    <v-card-actions>
-                                        <v-btn
-                                            color="primary"
-                                            block
-                                            @click="submitRequest"
-                                            >Submit</v-btn
-                                        >
-                                    </v-card-actions>
-                                    <v-card-actions>
-                                        <v-btn
-                                            color="primary"
-                                            block
-                                            @click="engageProj = false"
-                                            >Close</v-btn
-                                        >
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
                         </v-col>
                     </v-row>
                 </v-card-actions>
